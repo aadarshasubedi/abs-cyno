@@ -1,0 +1,70 @@
+@import "../variables.scss";
+@import "../mixin.scss";
+
+#nav-title{
+    transition: all .5s ease-out,opacity .5s ease-out;
+    height: 88px;
+    margin-bottom: 0;
+    box-sizing: border-box;
+    padding: 0px 30px;
+
+    .navbar-nav{
+        .nav-item{
+            padding: 5px 10px !important;
+            .nav-link{
+                color: #000000;
+                &:hover, &:focus {
+                    background: transparent;
+                    color: #22d7bb;
+                }
+            }
+        }
+
+        //注册
+        .btn-regist{
+            margin-top: 5px;
+            min-width: 90px;
+            border: 1px solid #22d7bb;
+            background: #22d7bb;
+            color: #fff!important;
+            padding: 5px 0px 5px 0px !important;
+            border-radius: 3px;
+            font-size: 14px!important;
+            outline: none;
+            -webkit-font-smoothing: subpixel-antialiased;
+            
+            &:hover,&:focus{
+                @include header-shadow(0 2px 5px 1px rgba(24, 191,164, .45));
+            }
+
+        }
+
+        //登录
+        .btn-login{
+            margin-top: 5px;
+            min-width: 90px;
+            border: 1px solid #22d7bb!important;
+            color: #22d7bb!important;
+            padding: 5px 0px 5px 0px !important;
+            border-radius: 3px;
+            font-size: 14px;
+            outline: none;
+            background: transparent;
+            -webkit-font-smoothing: subpixel-antialiased;
+
+            &:hover,&:focus{
+                background: #22d7bb;
+                color: white!important;
+            }
+        }
+    }
+
+    .navbar-collapse{
+        justify-content: flex-end;
+    }
+
+    &.nav-scrolled-shadow{
+        height: 70px;
+        @include header-shadow(0 2px 5px 1px rgba(24, 191,164, .45));
+    }
+}

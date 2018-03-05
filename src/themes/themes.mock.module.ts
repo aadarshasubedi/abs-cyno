@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
-import { MenuMock } from './main/mock/menu.mock';
 @NgModule({
     declarations: [],
     imports: [],
-    providers: [MenuMock],
+    providers: [],
     bootstrap: []
   })
 export class ThemesMockModule {
-    constructor(menuMock: MenuMock) {
-        menuMock.buildMock();
+    constructor() {
+
     }
 }

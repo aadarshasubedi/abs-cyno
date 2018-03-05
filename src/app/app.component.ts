@@ -45,7 +45,7 @@ export class AppComponent implements OnDestroy, AfterContentInit, OnInit {
           r.style.display = 'none';
         });
         r.style.opacity = 0;
-      }, 10);
+      }, 0);
     }, this, true);
   }
 

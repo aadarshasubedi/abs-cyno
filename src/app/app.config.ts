@@ -7,7 +7,7 @@ export class AppConfig {
     icon: string = "assets/favicon.ico";
 
     /** 图标 */
-    titlePrefix: string = "Dev-Ng-JoyinWeb";
+    titlePrefix: string = "ABS-CYNO";
 
     /** 开发菜单 */
     showDevMenusWhenDev: boolean = environment.production;

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg fixed-top" id="nav-title" [ngClass]="{'nav-scrolled-shadow': scrolled}">
+    <a class="navbar-brand" href="javascript:void(0)">ABS-CYNO{{scrolled}}</a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+        
+    <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="javascript:void(0)" (click)="this.scrolled = true">产品介绍</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">价格方案</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">解决方案</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">服务支持</a>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-regist">注册</button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-login">登录</button>
+                </li>
+
+                </ul>
+            
+    </div>
+
+</nav>
