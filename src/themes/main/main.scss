@@ -1,0 +1,50 @@
+@import "../variables.scss";
+@import "../mixin.scss";
+
+.main-container {
+    position: relative;
+    height: 100%;
+    background: #f3f3f3;
+    transition: all .25s ease-in-out;
+    .main-content{
+        height: 100%;
+        padding: 15px;
+    }
+
+    @extend %main-container-lg-sidebar-mode;
+    @extend %main-container-sm-sidebar-mode;
+}
+
+
+.mini-sidebar-mode {
+    .main-container{
+        @extend %main-container-lg-mini-sidebar-mode;
+        @extend %main-container-sm-mini-sidebar-mode;
+    }
+}
+
+//大屏模式
+%main-container-lg-sidebar-mode{
+    @include screen-min(768px){
+        padding: 64px 0 0 220px;
+    }
+}
+
+%main-container-lg-mini-sidebar-mode{
+    @include screen-min(768px){
+        padding: 64px 0 0 55px;
+    }
+}
+
+//小屏模式
+%main-container-sm-sidebar-mode{
+    @include screen-max(768px){
+        padding: 128px 0 0 220px;
+    }
+}
+
+%main-container-sm-mini-sidebar-mode{
+    @include screen-max(768px){
+        padding: 128px 0 0 55px;
+    }
+}

@@ -1,0 +1,8 @@
+<div class="jy-dialog">
+    <h2 mat-dialog-title><mat-icon [color]="data.iconColor">{{icon}}</mat-icon><span>{{data.title}}</span></h2>
+    <mat-dialog-content>{{data.content}}</mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="false" *ngIf="data.showNoBtn === true">{{data.noBtnText}}</button>
+      <button mat-button [mat-dialog-close]="true" *ngIf="data.showYesBtn === true">{{data.yesBtnText}}</button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,56 @@
+@import "../variables.scss";
+@import "../mixin.scss";
+@import "styles/logo.scss";
+@import "styles/nav.scss";
+
+%jy-header-base {
+    height: $header-height;
+    @include header-box-size();
+    @include header-shadow();
+
+    .logo{
+        @extend %logo;
+    }
+    nav{
+        @extend %nav;
+    }
+
+    //解决与materal2.overlay的zIndex值相冲突的问题
+    &.fixed-top{
+        z-index: 1000;
+    }
+}
+
+%jy-mini-header-base {
+   .logo {
+            //大屏 mini模式
+            @extend %logo-lg-mini-sidebar-mode;
+            //小屏mini模式
+            @extend %logo-sm-mini-sidebar-mode;
+        }
+    nav {
+        @extend %nav-lg-mini-sidebar-mode;
+        @extend %nav-sm-mini-sidebar-mode;
+    }
+}
+
+.jy-page-header{
+    @extend %jy-header-base;
+}
+
+.mini-sidebar-mode {
+    .jy-page-header{
+        @extend %jy-mini-header-base;
+    }
+}
+
+//pace loading
+.pace {
+    &.pace-active{
+        z-index: 1001;
+    }
+}
+
+
+
+

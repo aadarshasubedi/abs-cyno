@@ -1,0 +1,22 @@
+描述:
+
+    在angular-cli.json文件中有如下配置:
+
+        ....
+        ...
+        "environmentSource": "environments/environment.ts",
+        "environments": {
+            "dev": "environments/environment.ts",
+            "prod": "environments/environment.prod.ts"
+        }
+        ...
+        ...
+
+    environments配置集成了build环境，例如我们在代码中引入如下代码时:
+        require('.../../environments/environment');
+
+    当我们采用prod编译模式时, 实际加载的是 require('.../../environments/environment.prod'); 文件.
+    dev模式时 加载的则是 require('.../../environments/environment');
+
+    基于以上的机制，我们可以分别在开发环境、生成环境 灵活定制不同的服务，而且构建时互补影响
+    

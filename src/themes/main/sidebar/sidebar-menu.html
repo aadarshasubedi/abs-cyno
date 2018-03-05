@@ -1,0 +1,17 @@
+<li class="list-group-item">
+    <!-- 叶子节点 -->
+    <a mat-button *ngIf="!hasChildren()" [routerLink]="menuData.url">
+        <i class="material-icons">{{menuData.icon}}</i>
+        <span class="menu-title">{{menuData.text}}</span>
+    </a>
+    <!-- 非叶子节点 -->
+    <a mat-button *ngIf="hasChildren()" [sidebarMenuTriggerFor]="menu" (onOpen)="onOpenChildMenu($event)">
+            <i class="material-icons">{{menuData.icon}}</i>
+            <span class="menu-title">{{menuData.text}}</span>
+            <i class="material-icons menu-state-icon">navigate_next</i>
+    </a>
+    <!-- 子节点 -->
+    <mat-menu #menu="matMenu">
+        <sidebar-menu *ngFor="let sunMenu of children" [menuData]="sunMenu" [parentId]="menuData.id" childLevel="true"></sidebar-menu>
+    </mat-menu>  
+</li>

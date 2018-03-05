@@ -1,0 +1,19 @@
+{
+    "dependencies": {
+        "@angular/material": "^5.2.0",
+        "@angular/cdk": "^5.2.0",
+        "classlist.js": "^1.1.20150312",
+        "font-awesome": "^4.7.0",
+        "material-design-icons": "^3.0.1",
+        "normalize.css": "^7.0.0",
+        "pace-js": "^1.0.2",
+        "web-animations-js": "^2.3.1"
+    },
+
+    "devDependencies": {
+        "html-loader": "^0.5.5",
+        "markdown-loader": "^2.0.2",
+        "node-sass": "^4.7.2",
+        "html-loader": "^0.5.5"
+    }
+}

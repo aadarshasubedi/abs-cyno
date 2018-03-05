@@ -1,0 +1,46 @@
+描述:
+    框架中提供了两种类型的服务：MockeServe HttpProxy, 很多时候我们需要连接真实环境的后台服务，那么我们可以通过配置
+    http-proxy.json文件来实现, 详细参考文档:https://webpack.js.org/configuration/dev-server/#devserver-proxy
+
+场景1:
+    from url: /api
+    to ul: http://server2:port2/api
+
+配置:
+    proxy: {
+        "/api": "http://server2:port2/api"
+    }
+
+-------------------------------------------------------------------------------------
+场景2:
+    from url: /basePath/api/
+    to ul: http://server2:port2/api  (注意：实际代理的地址是没有basePath的，所以我们需要通过pathRewrite配置来实现)
+
+配置:
+    proxy: {
+        "/api": {
+            "target": "http://server2:port2/api",
+            "pathRewrite": {
+                "^/basePath": "" //将/basePath替换为空
+            }
+        }
+    } 
+
+------------------------------------------------------------------------------------------
+场景3:
+    from url: /api/
+    to ul: https://server2:port2/api  (注意:代理地址协议是https)
+
+配置:
+    proxy: {
+        "/api": {
+            "target": "http://server2:port2/api",
+            "secure": true
+        }
+    }
+
+-------------------------------------------------------------------------------------------
+
+  更深入的部分，我们会在以后根据开发需求来定灵活定制
+
+    
