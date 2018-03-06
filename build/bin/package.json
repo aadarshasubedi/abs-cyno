@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host localhost --port 4200",
-    "build": "ng build --prod",
+    "build": "ng build --prod --base-href /abs-cyno/dist/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

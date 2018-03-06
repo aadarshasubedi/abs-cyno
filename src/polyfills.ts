@@ -75,6 +75,7 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 
 /***************************************************************************************************
- * APPLICATION IMPORTS
+ * Bootstrap
  */
+import 'popper.js/dist/umd/popper.js';  // Run `npm install --save popper.js`.
 

@@ -6,8 +6,9 @@
     height: 88px;
     margin-bottom: 0;
     box-sizing: border-box;
-    padding: 0px 30px;
-
+    padding: 0px 70px;
+    z-index: 9999;
+    background: white;
     .navbar-nav{
         .nav-item{
             padding: 5px 10px !important;
@@ -64,7 +65,8 @@
     }
 
     &.nav-scrolled-shadow{
-        height: 70px;
-        @include header-shadow(0 2px 5px 1px rgba(24, 191,164, .45));
+        height: 66px;
+        @include header-shadow(0 0 10px rgba(0,0,0, 0.5));
+        background: hsla(0,0%,100%,.5);
     }
 }
