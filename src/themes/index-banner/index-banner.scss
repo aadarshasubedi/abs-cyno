@@ -1,0 +1,35 @@
+@import "../variables.scss";
+@import "../mixin.scss";
+
+.index-banner {
+    position: fixed;
+    z-index: -1;
+    left: 0px;
+    top: 0px;
+    padding-top: 100px;
+    background: #fff;
+    border-width: 0px;
+    height: 100%;
+    width: 100%;
+    padding: 110px 70px 20px 70px;
+
+    .col-sm {
+        background:#fff;
+    }
+
+    .index-banner-title{
+        font-size: 58px;
+        color: #485778;
+        margin-top: 77px;
+    }
+
+    .index-banner-desc{
+        font-size: 16px;
+        margin-top: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        line-height: 30px;
+        max-width: 500px;
+        color: #a0a4ad;
+    }
+}

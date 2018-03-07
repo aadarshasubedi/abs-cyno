@@ -19,13 +19,15 @@ import { NavComponent } from './nav/nav.component';
 import { IndexComponent } from './index.component';
 import { LoginComponent } from './login.component';
 import { MainComponent } from './main/main.component';
+import { IndexBanner } from './index-banner/index-banner';
 
 @NgModule({
   declarations: [
     IndexComponent,
     LoginComponent,
     MainComponent,
-    NavComponent
+    NavComponent,
+    IndexBanner
   ],
   imports: [
     CommonModule,
