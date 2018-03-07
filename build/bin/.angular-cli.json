@@ -22,12 +22,14 @@
       "styles": [
         "../node_modules/normalize.css/normalize.css",
         "../node_modules/pace-js/themes/yellow/pace-theme-flat-top.css",
+        "../node_modules/animate.css/animate.css",
         "styles.scss",
         "styles.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/pace-js/pace.js"
+        "../node_modules/pace-js/pace.js",
+        "../node_modules/wowjs/dist/wow.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
