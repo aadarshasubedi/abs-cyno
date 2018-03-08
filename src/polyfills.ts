@@ -73,9 +73,3 @@ import 'core-js/es7/reflect';
 import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 
-
-/***************************************************************************************************
- * Bootstrap
- */
-import 'popper.js/dist/umd/popper.js';  // Run `npm install --save popper.js`.
-
