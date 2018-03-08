@@ -27,7 +27,7 @@ export class IndexComponent implements OnInit, AfterViewInit, OnDestroy{
     ) { }
 
     ngOnInit() {
-        this.unsubscribeScroll = this.unsubscribeScroll = this.scrollDispatcher.scrolled().subscribe(() => {
+        this.unsubscribeScroll = this.scrollDispatcher.scrolled().subscribe(() => {
             this.updateScrollStatus();
          });
      }

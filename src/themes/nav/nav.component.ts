@@ -29,7 +29,9 @@ export class NavComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.unsubscribeScroll();
+        if (this.unsubscribeScroll){
+            //this.unsubscribeScroll();
+        }
     }
 
     private updateScrollStatus() {
