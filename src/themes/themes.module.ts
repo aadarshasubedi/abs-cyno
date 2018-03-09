@@ -22,6 +22,7 @@ import { MainComponent } from './main/main.component';
 import { IndexBanner } from './index-banner/index-banner';
 
 import { Index1Component } from './index1';
+import { Index2Component } from './index2';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { Index1Component } from './index1';
     MainComponent,
     NavComponent,
     IndexBanner,
-    Index1Component
+    Index1Component,
+    Index2Component
   ],
   imports: [
     CommonModule,
