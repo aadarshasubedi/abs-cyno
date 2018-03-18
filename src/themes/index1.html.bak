@@ -1,0 +1,271 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="javascript:void(0)">
+    <img src="assets/favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
+    Abs-cyno
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0)" style="font-size: 1.25em;"><i class="fa fa-bars"></i></a>
+      </li>
+    </ul>
+    <span style="flex: 1 1 auto;"></span>
+    <div class="progress" style="flex-basis: 150px;position:relative;">
+        <span style="
+          position: absolute;
+          right: 5px;
+          top: 0px;
+        ">还剩下100天</span>
+        <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="width: 100px">
+        <li class="nav-item">
+            <a class="nav-link" href="#" style="font-size: 1.25em;"><i class="fa fa-bell-o fa-fw"></i></a>
+          </li>
+      <li class="nav-item btn-group">
+        <a class="nav-link dropdown-toggle" href="#" style="font-size: 1.25em;" data-toggle="dropdown">
+        <i class="fa fa-user-o"></i></a>
+        <div class="dropdown-menu" style="left: -120px;">
+            <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> 退出</a>
+            <a class="dropdown-item" href="#"><i class="fa fa-question"></i> 反馈</a>
+          </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<ul class="list-group" style="position: fixed; left: 0px; top: 62px; width: 220px; height: 90%;overflow-y: auto;">
+    <li class="list-group-item active" style="border-top-right-radius: 0rem;border-top-left-radius: 0rem;">我的自选</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item">上海交易所1</li>
+    <li class="list-group-item">上海交易所2</li>
+    <li class="list-group-item">上海交易所3</li>
+    <li class="list-group-item" style="border-top-right-radius: 0rem;border-top-left-radius: 0rem;">上海交易所4</li>
+  </ul>
+
+<div style="height: 100%; padding: 70px 10px 10px 230px">
+    <div class="card" style="border: none;">
+        <div class="card-header" style="display:flex;background-color: #fff;">
+            <h5 class="card-title" style="margin-bottom:0rem;flex: 1 1 auto;">我的自选<span class="badge badge-primary">9</span></h5>
+            <div class="btn-group position-static">
+                <button type="button" class="btn dropdown-toggle" style="padding: 0.15rem 0.75rem; border:none;background: none" title="排序" data-toggle="dropdown"><i class="fa fa-sort"></i></button>
+                <div class="dropdown-menu" style="left: -100px;">
+                    <a class="dropdown-item" href="#">产品排序</a>
+                    <a class="dropdown-item" href="#">日期排序</a>
+                    <a class="dropdown-item" href="#">关注度排序</a>
+                  </div>
+            </div>
+            <div class="btn-group position-static">
+                <button type="button" class="btn dropdown-toggle" style="padding: 0.15rem 0.75rem; border:none;background: none" title="查询" data-toggle="dropdown"><i class="fa fa-search"></i></button>
+                <div class="dropdown-menu" style="width: 50vw; height: 400px;" data-placement="auto-right">
+                    
+                </div>
+            </div>
+            <div class="btn-group position-static">
+                <button type="button" class="btn dropdown-toggle" data-placement="top-end" style="padding: 0.15rem 0.75rem; border:none;background: none" title="操作" data-toggle="dropdown"><i class="fa fa-bars"></i></button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">删除自选</a>
+                    <a class="dropdown-item" href="#">添加自选</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body" style=" overflow-y: auto;margin: 5px 30px 20px 10px;">
+
+            <table class="table table-sm" style="width: 3000px;">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">序号</th>
+                    <th scope="col">产品名称</th>
+                    <th scope="col">发行方式</th>
+                    <th scope="col">兑付频率</th>
+                    <th scope="col">交易场所</th>
+                    <th scope="col">循环购买</th>
+                    <th scope="col">发行金额(亿)</th>
+                    <th scope="col">次级占比(%)</th>
+                    <th scope="col">市场分类</th>
+                    <th scope="col">产品分类</th>
+                    <th scope="col">起息日</th>
+                    <th scope="col">法定到期日</th>
+                    <th scope="col">发起机构/原始权益人</th>
+                    <th scope="col">次级期限</th>
+                    <th scope="col">次级剩余期限</th>
+                    <th scope="col">次级收益率均值</th>
+                    <th scope="col">次级收益率中位数</th>
+                    <th scope="col">次级收益率分位点（0.25）</th>
+                    <th scope="col">次级收益率分位点</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                        <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                        <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                        <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                        <td></td><td></td><td></td><td></td><td></td>
+                      </tr>
+                      <tr>
+                          <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                          <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                          <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                          <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                          <td></td><td></td><td></td><td></td><td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                            <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                            <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                            <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                            <td></td><td></td><td></td><td></td><td></td>
+                          </tr>
+                          <tr>
+                              <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                              <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                              <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                              <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                              <td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                              </tr>
+                              <tr>
+                                  <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                  <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                  <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                  <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                  <td></td><td></td><td></td><td></td><td></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                    <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                    <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                    <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                    <td></td><td></td><td></td><td></td><td></td>
+                                  </tr>
+                                  <tr>
+                                      <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                      <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                      <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                      <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                      <td></td><td></td><td></td><td></td><td></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                        <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                        <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                        <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                        <td></td><td></td><td></td><td></td><td></td>
+                                      </tr>
+                                      <tr>
+                                          <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                          <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                          <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                          <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                          <td></td><td></td><td></td><td></td><td></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                            <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                            <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                            <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                            <td></td><td></td><td></td><td></td><td></td>
+                                          </tr>
+                                          <tr>
+                                              <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                              <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                              <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                              <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                              <td></td><td></td><td></td><td></td><td></td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                                <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                                <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                                <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                                <td></td><td></td><td></td><td></td><td></td>
+                                              </tr>
+                                              <tr>
+                                                  <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                                  <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                                  <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                                  <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                                  <td></td><td></td><td></td><td></td><td></td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                                    <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                                    <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                                    <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                                    <td></td><td></td><td></td><td></td><td></td>
+                                                  </tr>
+                                                  <tr>
+                                                      <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                                      <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                                      <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                                      <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                                      <td></td><td></td><td></td><td></td><td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                                        <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                                        <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                                        <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                                        <td></td><td></td><td></td><td></td><td></td>
+                                                      </tr>
+                                                      <tr>
+                                                          <th scope="row">1</th><td>中航-长安新生车贷一期</td><td>私募</td><td>按月</td>
+                                                          <td scope="row">机构间私募产品报价与服务系统</td><td>否</td><td>4.14</td><td>5.9%</td>
+                                                          <td scope="row">企业资产证券化</td><td>个人消费贷款</td><td>2017/12/29</td><td>2021/12/20</td>
+                                                          <td scope="row">长安新生（深圳）金融投资有限公司</td><td>2.05</td>
+                                                          <td></td><td></td><td></td><td></td><td></td>
+                                                        </tr>
+                </tbody>
+              </table>
+
+        </div>
+
+   </div>
+
+</div>
+
+
+  

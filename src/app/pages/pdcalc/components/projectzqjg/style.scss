@@ -1,0 +1,64 @@
+.cyno-body{
+    & > .card-header{
+        margin-top: 1.2rem;
+        padding: 0.75rem 1.25rem 0.3rem 1.25rem;
+        background: none;
+    }
+
+    &.card {
+        border: none;
+    }
+
+   .project-sbutitle{
+        flex: 1 1 auto;
+    }
+
+    .project-sbutitle-desc{
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        top: -3.5rem;
+
+        & > span{
+            margin-left: .5rem;
+        }
+    }
+
+    & > .card-body {
+        
+        .card {
+            background: none;
+            border: none;
+        }
+        .card-header {
+            background: none;
+            margin-bottom: 0.2rem;
+            padding: 0rem 0rem;
+            
+            .card-title{
+                font-size: 0.8rem;
+            }
+        }
+
+        .card-body{
+            &.card-body-nopadding {
+                padding: 0rem;
+            }
+        }
+       
+        .table-sm th, .table-sm td {
+            padding: 0.3rem;
+            font-size: 0.6rem;
+        }
+        
+        .table-sm th{
+            border-bottom: none;
+            border-top: none;
+            color: #655959;
+        }
+
+        .table-sm td {
+            color: #bac3cc;
+        }
+    }
+}

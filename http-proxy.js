@@ -8,10 +8,7 @@ module.exports = {
             "^/basePath": ""
         }
     },
-    "/basePath/proxyone/test": {
-        target: "http://localhost:3000/prifex",
-        pathRewrite: {
-            "^/basePath/proxyone": "proxy"
-        }
+    "/cyno/cynoweb/pdcalc/initPdCalsResult.do": {
+        target: "http://192.168.20.17:8080"
     }
 }

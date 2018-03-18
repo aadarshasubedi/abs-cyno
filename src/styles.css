@@ -1,2 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 
+.cyno-header:before {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+    left: 0px;
+    top: 100px;
+    background: $navbar-background;
+}
+
+.cyno-header:after {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+    top: 100px;
+    right: 0px;
+    background: $navbar-background;
+}

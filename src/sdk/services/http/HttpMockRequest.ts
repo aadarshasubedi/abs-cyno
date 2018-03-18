@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpRequest, HttpParams} from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import {of } from 'rxjs/observable/of';
+import { HttpEvent, HttpRequest, HttpParams, HttpResponse, HttpErrorResponse} from '@angular/common/http';
+import { Observable} from 'rxjs/Observable';
+import { Observer} from 'rxjs/Observer';
+import { of } from 'rxjs/observable/of';
+import { throttleTime } from 'rxjs/operators/throttleTime';
 
 export class HttpMockRequest<T> {
 
@@ -10,17 +12,25 @@ export class HttpMockRequest<T> {
     constructor(
         private url: string,
         private method: 'POST' | 'GET' | 'PUT' | 'DELETE',
-        private response: (req: HttpRequest<T>) => HttpEvent<T> ) {}
+        private response: (req: HttpRequest<T>) => HttpResponse<T> | HttpErrorResponse ) {}
 
     match(req: HttpRequest<T>) {
         return this.eqUrl(req) && this.eqMethod(req);
     }
 
-    doResponse(req: HttpRequest<T>): Observable<HttpEvent<T>> {
-        return of(this.response(req.clone({params: new HttpParams({
-            fromObject: this.pathParams
-        })})));
-    }
+    doResponse(req: HttpRequest<T>): Observable<HttpResponse<T> | HttpErrorResponse> {
+        const debounceFn: any = throttleTime(20000);
+       return new Observable((observer: Observer<HttpResponse<T> | HttpErrorResponse>) => {
+            const res = this.response(req.clone({params: new HttpParams({ fromObject: this.pathParams})}));
+            setTimeout(() => {
+                if (res instanceof HttpErrorResponse) {
+                    observer.error(res);
+                } else {
+                    observer.next(res);
+                }
+            }, 1000);
+        });
+     }
 
     /**
      * HttpMockRequest.url格式:

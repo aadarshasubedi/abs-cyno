@@ -40,7 +40,10 @@ class JsonMapSubscriber<T> extends Subscriber<T> {
             this.destination.next(JSON.parse(str));
             return;
           }
-          throw new Error('');
+          if (typeof str === 'object') {
+            this.destination.next(str);
+            return;
+          }
         } catch (err) {
           this.destination.error(value);
           return;

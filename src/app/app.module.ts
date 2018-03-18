@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ThemesModule } from '../themes/themes.module';
@@ -12,9 +13,15 @@ import { AppConfig } from './app.config';
 import { AppRoutingModule } from './app.routing.module';
 import { RouterModule } from '@angular/router';
 
+import { LoginModule } from './login/login.module';
+import { IndexComponent } from './pages/index';
+import { NavBarComponent } from './pages/navbar/navbar';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    IndexComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -22,12 +29,14 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     BrowserAnimationsModule,
     AppMockDevModule,
-    //(environment.production ? AppMockModule : AppMockDevModule),
+    (environment.production ? AppMockModule : AppMockDevModule),
     SdkHttpModule,
     MessageModule,
     LoadingModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    LoginModule
   ],
   providers: [AppConfig],
   bootstrap: [AppComponent]

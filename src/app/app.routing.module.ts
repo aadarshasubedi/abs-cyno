@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from '../themes/login.component';
-import { IndexComponent } from '../themes/index.component';
+import { LoginCmp } from './login/login';
 import { Index1Component } from '../themes/index1';
 import { Index2Component } from '../themes/index2';
+import { IndexComponent } from './pages/index';
 
 export const routes: Routes = [
-    { path: '', component: IndexComponent,  loadChildren: './pages/pages.module#PagesModule'},
-    { path: 'login', component: LoginComponent },
-    { path: 'logout', component: LoginComponent },
+    { path: 'index', component: IndexComponent, loadChildren: './pages/pages.module#PagesModule'},
+    { path: 'login', component: LoginCmp },
     { path: 'i', component: Index1Component },
     { path: 'ii', component: Index2Component },
-    { path: '**', redirectTo: '', pathMatch: 'full' },
+    { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 

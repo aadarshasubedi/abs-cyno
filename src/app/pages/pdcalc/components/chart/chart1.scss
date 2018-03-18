@@ -1,0 +1,22 @@
+.pdcalc-chart1{
+
+    .mat-list-item .mat-checkbox .mat-checkbox-inner-container {
+        height: 15px;
+        width: 15px;
+    }
+    .mat-list-item .mat-checkbox .mat-checkbox-label {
+        font-size:  0.7rem;
+    }
+
+    .mat-list-item .mat-radio-button .mat-radio-outer-circle,
+    .mat-list-item .mat-radio-button .mat-radio-container,
+    .mat-list-item .mat-radio-button .mat-radio-inner-circle {
+        height: 15px;
+        width: 15px;
+    }
+
+    .mat-list-item .mat-radio-button{
+        margin-left: 5px;
+    }
+
+}

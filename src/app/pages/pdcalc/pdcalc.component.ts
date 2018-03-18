@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
     selector: 'app-name',
     template: '<router-outlet></router-outlet>'
 })
-export class WorkSpaceComponent implements OnInit {
+export class PdcalcComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }

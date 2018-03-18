@@ -1,0 +1,42 @@
+<div class="card cyno-body pdcalc-main">
+        <div class="card-header">
+          <h5 class="card-title project-title">百度有钱花-天风2017年第二期资产支持专项计划</h5>
+          <h6 class="card-subtitle mb-2 text-muted project-sbutitle">收益率分布测算</h6>
+          <div class="project-sbutitle-desc">
+              <span class="badge badge-primary">静态池</span>
+              <span class="badge badge-primary">企业资产证券化</span>
+              <span class="badge badge-primary">私募</span>
+              <span class="badge badge-primary">个人消费贷</span>
+          </div>
+      </div>
+      <div class="card-body">
+        <!-- 产品证券结构 -->
+        <projecct-zqjg [datas]="projectZjDatas"></projecct-zqjg>
+  
+        <!--测算 -->
+        <div class="card">
+            <div class="card-body card-body-nopadding">
+                <div class="container-fluid">
+                    <div class="row" style="flex-wrap: nowrap;">
+                        <div class="col" style="flex: 1 1 auto">
+                            <mat-tab-group>
+                                <mat-tab label="概率分布测算">
+                                    <chart-1 [datas]="projecctYieldRateData"></chart-1>
+                                </mat-tab>
+                                <mat-tab label="压力情景测试">
+                                        <div class="demo-tab-content"></div>
+                                </mat-tab>
+                            </mat-tab-group>
+                        </div>
+
+
+                        
+
+
+                    </div>
+                </div>
+        </div>
+      </div>
+  </div>
+  
+  

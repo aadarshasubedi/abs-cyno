@@ -13,6 +13,7 @@ import { MatCardModule} from '@angular/material/card';
 import { MatTableModule} from '@angular/material/table';
 import { MatListModule} from '@angular/material/list';
 import { MatDialogModule} from '@angular/material/dialog';
+import { MatTabsModule} from '@angular/material/tabs';
 
 // 定义页头 导航菜单 工作区三个组件
 import { NavComponent } from './nav/nav.component';
@@ -48,7 +49,8 @@ import { Index2Component } from './index2';
     MatTableModule,
     MatListModule,
     MatDialogModule,
-    RouterModule
+    RouterModule,
+    MatTabsModule
   ],
   providers: [],
   exports: [
