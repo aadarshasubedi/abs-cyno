@@ -9,8 +9,37 @@ const covertXs5 = (v) => {
 };
 
 const formatLeftAxisLabel = (v) => {
-    return Number(v * 100).toFixed(0) + '%';
+    return Number(v * 100).toFixed(2) + '%';
 };
+
+const findRangAndStep = (min, max, minStep, maxcount, maxFixed) => {
+    let r, r1, r2;
+    min = (min * 10000) | 0;
+    max = (max * 10000) | 0;
+    minStep = (minStep * 10000) | 0;
+
+    if (maxFixed !== true){
+        min = min < 0 ? min : 0;
+        if (min < 0){
+            r1 = Math.abs(min);
+            r1 = Math.max(min, minStep);
+            r2 = (r1) % (minStep);
+            r1 = r2 === 0 ? r1 : r1 - r2 + minStep;
+            min = -1 * r1;
+        }
+        r = Math.abs(max - min);
+        r2 = (r) % (minStep);
+        r1 = r2 === 0 ? r : r - (r2) + minStep;
+        max = r1 + min;
+    } else {
+        r1 = max - min;
+    }
+	
+	if ((r1 / minStep) < maxcount) {
+		return [min  / 10000, max  / 10000, (minStep / 10000)];
+	}
+	return findRangAndStep(min / 10000, max / 10000, (minStep + 50)  / 10000, maxcount, true);
+}
 
 @Component({
     selector: 'chart-1',
@@ -33,10 +62,15 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
 
     showPerTip: boolean = false;
 
+    private colorList: Array<any> = [
+        'rgba(189,163,38,1)', 'rgba(189,163,38,1)',
+        'rgba(127,127,127,1)', 'rgba(163,73,164,1)',
+        'rgba(185,122,87,1)', 'rgba(63,72,204,1)'];
+
     private zr: any;
 
     chart: {[name: string]: any, datas: {[name: string]: any}, offset: number} = {
-        offset: 50,
+        offset: 100,
         datas: {}
     };
 
@@ -55,11 +89,11 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
     private renderChart() {
         this.buildChartDatas();
         this.buildZr();
-        this.renderBaseCoordinateLines();
         this.renderAxis();
         this.renderAxisLabel();
-        this.renderPeriodChart();
         this.renderProbabilityChart();
+        this.renderBaseCoordinateLines();
+        this.renderPeriodChart();
     }
 
     private buildZr() {
@@ -95,14 +129,22 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         });
 
         //累计收益率概率分布数据
+        let pmin: any = false, pmax: any = false;
         this.chart.datas.probability = this.datas.pdcalcResult.map((item) => {
             rateList.push(item.yldRate);
-            return {
+            const res = {
                 rate: item.yldRate, //绘制横线
-                per:  ((item.accumPr * 100) | 0) * 0.01, //概率分布值
-                value: ((item.pr * 1000) | 0) * 0.001 //绘制概率分布曲线
+                per:  ((item.accumPr * 100) | 0) / 100, //概率分布值
+                value: ((item.pr * 1000) | 0) / 1000 //绘制概率分布曲线
             }
+            pmin = pmin === false ? res.value : Math.min(pmin, res.value);
+            pmax = pmax === false ? res.value : Math.max(pmax, res.value);
+            return res;
         })
+
+        this.chart.datas.probability.pmin = pmin;
+        this.chart.datas.probability.pmax = pmax;
+        this.chart.datas.probability.paxisValueRange = ( ((pmax * 10000) | 0)- ((pmin * 10000) | 0) ) / 10000;
 
         rateList = this.chart.datas.rateList = rateList.sort((a, b) => {
             return a - b > 0 ? 1 : (a - b < 0 ? -1 : 0);
@@ -113,26 +155,16 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         });
 
         //概率分布收益率最小值
-        this.chart.datas.probability.min = rateList[0] < 0 ? ((rateList[0] - 1) | 0) : 0;
-        //概率分布收益率最大值
-        this.chart.datas.probability.max = ((rateList[rateList.length - 1]  + 1) | 0);
-
-        //收益率取值(必须取整)
-        let step, r;
+        const m = findRangAndStep(rateList[0], rateList[rateList.length - 1], 0.005, 10, false);
+        this.chart.datas.probability.min = m[0];
+        this.chart.datas.probability.max = m[1];
+        const step = m[2];
         this.chart.datas.axisDatas = [];
-        r = (this.chart.datas.probability.max - this.chart.datas.probability.min) / 10;
-        step = r <= 1 ? 1 : 1.5;
-        if (step > 1) {
-            r = (this.chart.datas.probability.min * 10) % (15);
-            r = 15 - r;
-            this.chart.datas.probability.min = this.chart.datas.probability.min < 0 ? this.chart.datas.probability.min - (r * 0.1)
-                 : this.chart.datas.probability.min +  (r * 0.1);
+        let r = m[0];
+        while(r <= (m[1] + step)){
+            this.chart.datas.axisDatas.push(r);
+            r = (((r + m[2]) * 10000) | 0) / 10000;
         }
-
-        for (let i = 0; i < 10; i++) {
-            this.chart.datas.axisDatas.push((this.chart.datas.probability.min + i * step));
-        }
-
         this.chart.datas.axisValueRange = this.chart.datas.axisDatas[this.chart.datas.axisDatas.length - 1] - this.chart.datas.axisDatas[0];
     }
 
@@ -147,7 +179,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
     //渲染坐标线
     private renderBaseCoordinateLines() {
         const lineStyle = {
-            stroke: 'rgba(0,0,0,0.2)',
+            stroke: 'rgba(215, 215, 215, 1)',
             lineWidth: 1
         };
         const zeroY = this.calculateZeroY();
@@ -192,7 +224,10 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                 x2: covertXs5(this.chart.offset + this.chart.width / 2),
                 y2: covertXs5(this.chart.offset + this.chart.height)
             },
-            style: lineStyle
+            style: {
+                stroke: 'rgba(153, 153, 153, 1)',
+                lineWidth: 4
+            }
         });
 
         //绘制标题
@@ -241,7 +276,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
 
     private renderAxis() {
         const lineStyle = {
-            stroke: 'rgba(0,0,0,0.2)',
+            stroke: 'rgba(215,215,215, 1)',
             lineWidth: 1
         };
         const leftYaxis = new zrender.Path.extend({
@@ -265,7 +300,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
     }
 
     //渲染刻度label
-    private renderAxisLabel(){
+    private renderAxisLabel() {
         let x, y, r;
         const unit = this.chart.height / this.chart.datas.axisDatas.length;
         this.chart.datas.axisDatas.forEach( (element, index) => {
@@ -274,14 +309,14 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             y = this.chart.height + this.chart.offset - r;
             this.zr.add(new zrender.Text({
                     style: {
-                        text: formatLeftAxisLabel(element * 0.01),
+                        text: formatLeftAxisLabel(element),
                         textAlign: 'center',
                         textVerticalAlign: 'middle',
                         fontSize: 12,
                         fontWeight: 'normal',
-                        textFill: 'rgba(133, 80, 239, 0.5)'
+                        textFill: 'rgba(169, 169, 169, 1)'
                     },
-                    position: [ x - 20, y],
+                    position: [ x - 30, y],
                     silent: true
                 })
             );
@@ -289,19 +324,18 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
 
     }
 
-
     //绘制期数收益率曲线
     private renderPeriodChart(){
         const lineStyle = {
             stroke: 'rgba(0,0,0,0.2)',
-            lineWidth: 1
+            lineWidth: 0.5
         };
         const zeroY = this.calculateZeroY();
         //绘制label
-        const maxPeriod = this.chart.datas.periods[0].data[this.chart.datas.periods[0].data.length - 1].period;
+        const maxPeriod = this.chart.datas.periodKeys[this.chart.datas.periodKeys.length - 1];
         this.zr.add(new zrender.Text({
             style: {
-                text: maxPeriod + 'M',
+                text: maxPeriod + 'Y',
                 textAlign: 'center',
                 textVerticalAlign: 'middle',
                 fontSize: 12,
@@ -321,12 +355,12 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             for (let i = 0; i < d.length; i++) {
                 x = covertXs5(this.chart.offset + this.chart.datas.periodKeys.indexOf(d[i].period) * uinit);
                 //求出 值对应的 刻度比例
-                r = (Math.abs(d[i].value * 100 - this.chart.datas.axisDatas[0]) * this.chart.height) / this.chart.datas.axisValueRange;
+                r = (Math.abs(d[i].value - this.chart.datas.axisDatas[0]) * this.chart.height) / this.chart.datas.axisValueRange;
                 y = covertXs5(this.chart.height + this.chart.offset - r);
                 element.points.push({x: x, y: y});
             }
 
-            lineStyle.stroke = element.showRateDiff === true ? 'rgba(0,0,0, 0.7)' : 'rgba(0,0,0,0.2)';
+            lineStyle.stroke = this.colorList[index % 6];
             this.zr.add(new (new zrender.Path.extend({
                 silent: true,
                 style: lineStyle,
@@ -350,8 +384,9 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                     r: 3
                 },
                 style: {
-                    stroke: 'rgba(0,0,0,0.2)',
-                    lineWidth: 1
+                    fill: element.showRateDiff ? undefined : 'transparent',
+                    stroke: 'rgba(0,0,0,1)',
+                    lineWidth: 0.5
                 }
             }));
         });
@@ -367,43 +402,30 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         };
         const zeroY = this.calculateZeroY();
         const datas: any = this.chart.datas.probability;
-        const axisValueRange = this.chart.datas.probability.max - this.chart.datas.probability.min;
         datas.forEach(element => {
             // 计算横线标线坐标
             x = covertXs5(this.chart.offset);
-            r = (Math.abs(element.rate * 100) * (zeroY - this.chart.offset)) / this.chart.datas.axisValueRange;
-            y = covertXs5(this.chart.offset +  r);
+            r = (Math.abs(element.rate - this.chart.datas.probability.min) * this.chart.height) / this.chart.datas.axisValueRange;
+            y = covertXs5(this.chart.height + this.chart.offset - r);
             element.hxPoint = {x: x, y: y};
             // 计算 概率曲线值坐标
-            r = (Math.abs(element.value * 100 - this.chart.datas.probability.min) * (this.chart.width / 2)) / axisValueRange;
+            r = (Math.abs(element.value - this.chart.datas.probability.pmin) * (this.chart.width / 3)) 
+                / this.chart.datas.probability.paxisValueRange;
             x = covertXs5(this.chart.width + this.chart.offset - r);
             element.glPoint = {x: x, y: y};
         });
 
-        // 绘制概率分布曲线
-        const RightArea = new zrender.Path.extend({
-            type: 'rightArea',
-            silent: true,
-            style: lineStyle,
-            buildPath: (path, shape) => {
-                path.moveTo(_d[0].glPoint.x, _d[0].glPoint.y);
-                for (let i = 1; i < _d.length; i++) {
-                    path.lineTo(_d[i].glPoint.x, _d[i].glPoint.y);
-                    path.stroke();
-                    if (i < _d.length - 1) {
-                        path.moveTo(_d[i].glPoint.x, _d[i].glPoint.y);
-                    }
-                }
-                path.fill();
-            }
-        });
-        this.zr.add(new RightArea());
+
         //绘制水平标线
         const style = { lineWidth: 1, stroke: ''};
-        let hoverL;
-        for (let i = 1; i < _d.length; i++) {
-            style.stroke = (_d[i].per * 100) % 10 === 0 ? 'rgba(0,0,0, 0.2)' : 'rgba(0,0,0,0.5)';
-            hoverL = new zrender.Line({
+        const r3 = _d.length / 4;
+        for (let i = 0; i < _d.length; i++) {
+            style.stroke = 'rgba(256,256,256, 0)';
+            let index = i;
+            if ( (i % r3) === 0 || i === (_d.length - 1)) {
+                style.stroke = 'rgba(236,236,236, 1)';
+            }
+            let hoverL = new zrender.Line({
                 silent: false,
                 shape: {
                     x1: this.chart.offset,
@@ -424,27 +446,56 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                         $(this.showPerTipElRef.nativeElement).find('.tooltip-inner')
                             .html('概率分布' + '<span style="color:red;padding-left: 10px;"><h5 style="display: inline;">' 
                                 + (_d[i].per * 100) + '%</h5></span>');
-                        hoverL.setStyle('stroke', 'rgba(0,0,0,1)');
+                        hoverL.setStyle('stroke', 'rgba(236, 105, 65, 1)');
                         hoverL.setStyle('lineWidth', 2);
                 });
             }).on('mouseout', () => {
                 this.ngZone.runOutsideAngular(() => {
                    $([this.showRateTipElRef.nativeElement, this.showPerTipElRef.nativeElement]).removeClass('show');
-                   hoverL.setStyle('stroke', style.stroke);
+                   hoverL.setStyle('stroke', ((index % r3) === 0 || (index === _d.length - 1)) ? 'rgba(236,236,236,1)' : 'rgba(256,256,256,0)');
                    hoverL.setStyle('lineWidth', 1);
                 });
             })
             this.zr.add(hoverL);
         }
 
+        // 绘制概率分布曲线 _d.length
+        lineStyle.lineWidth = 1;
+        lineStyle.stroke = 'rgba(0,0,0, 1)';
+        const RightArea = new zrender.Path.extend({
+            type: 'rightArea',
+            silent: true,
+            style: {
+                stroke: 'rgba(193,217,236,1)',
+                lineWidth: 2,
+                fill: 'rgba(232, 253, 255, 0.5)'
+            },
+            buildPath: (path, shape) => {
+                path.moveTo(_d[0].glPoint.x, _d[0].glPoint.y);
+                for (let i = 1; i < _d.length; i++) {
+                    path.lineTo(_d[i].glPoint.x, _d[i].glPoint.y);
+                }
+
+                path.lineTo(this.chart.offset + this.chart.width, _d[_d.length - 1].glPoint.y);
+                path.lineTo(_d[0].glPoint.x, _d[0].glPoint.y);
+                path.closePath();
+                path.fill(path._ctx);
+            }
+        });
+        this.zr.add(new RightArea());
+        
+
         //绘制刻度及label
         const RightAxis = new zrender.Path.extend({
             type: 'rightAxis',
             silent: true,
-            style: lineStyle,
+            style: {
+                stroke: 'rgba(215,215,215, 1)',
+                lineWidth: 1
+            },
             buildPath: (path, shape) => {
                 for (let i = 0; i < _d.length; i++) {
-                    if ((_d[i].per * 100) % 10 === 0) {
+                    if ( (i % r3) === 0 || i === (_d.length - 1)) {
                         path.moveTo(this.chart.offset + this.chart.width, _d[i].glPoint.y);
                         path.lineTo(this.chart.offset + this.chart.width + 5 , _d[i].glPoint.y);
                     }
@@ -454,7 +505,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         this.zr.add(new RightAxis());
 
         for (let i = 0; i < _d.length; i++) {
-            if ((_d[i].per * 100) % 10 === 0) {
+            if ((i % r3) === 0 || i === (_d.length - 1)) {
                 this.zr.add(
                     new zrender.Text({
                         style: {

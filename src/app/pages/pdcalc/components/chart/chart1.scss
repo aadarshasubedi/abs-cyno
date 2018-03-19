@@ -1,4 +1,5 @@
 .pdcalc-chart1{
+    overflow: hidden;
 
     .mat-list-item .mat-checkbox .mat-checkbox-inner-container {
         height: 15px;
@@ -17,6 +18,12 @@
 
     .mat-list-item .mat-radio-button{
         margin-left: 5px;
+    }
+
+    .tooltip-inner {
+        font-size: 0.7rem;
+        padding: 0.01rem  0.5rem  0.25rem 0.5rem; 
+        line-height: 1.5rem;
     }
 
 }
