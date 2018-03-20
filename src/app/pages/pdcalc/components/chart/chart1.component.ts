@@ -69,8 +69,9 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
 
     private zr: any;
 
-    chart: {[name: string]: any, datas: {[name: string]: any}, offset: number} = {
-        offset: 100,
+    chart: {[name: string]: any, datas: {[name: string]: any}, voffset: number, hoffset: number} = {
+        voffset: 40,
+        hoffset: 100,
         datas: {}
     };
 
@@ -86,8 +87,19 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
 
     ngAfterViewInit() {}
 
-    private renderChart() {
-        this.buildChartDatas();
+    updateChartFromYieldCurve(selectItem){
+        if (selectItem){
+            this.chart.datas.periods.forEach((item) => {
+                item.showlicha = item === selectItem;
+            })
+        }
+        this.renderChart(true);
+    }
+
+    private renderChart(notRefreshData?: boolean) {
+        if (notRefreshData !== true) {
+            this.buildChartDatas();
+        }
         this.buildZr();
         this.renderAxis();
         this.renderAxisLabel();
@@ -97,9 +109,12 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
     }
 
     private buildZr() {
+        if (this.zr){
+            this.zr.clear();
+        }
         const zr = this.zr ? this.zr : (this.zr = zrender.init(this.sylRateChart.nativeElement));
-        this.chart.width = zr.getWidth() - 2 * this.chart.offset;
-        this.chart.height = zr.getHeight() - 2 * this.chart.offset;
+        this.chart.width = zr.getWidth() - 2 * this.chart.hoffset;
+        this.chart.height = zr.getHeight() - 2 * this.chart.voffset;
         return zr;
     }
 
@@ -114,7 +129,8 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             return {
                 type: item.curveCode,
                 name: item.curveName,
-                showRateDiff: true,
+                showLine: true,
+                showlicha: false,
                 data: (item.yieldCurveDatas || []).map((_item) => {
                     if (periodKeys.indexOf(_item.mtrty) < 0){
                         periodKeys.push(_item.mtrty);
@@ -172,7 +188,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
     private calculateZeroY() {
         const index = this.chart.datas.axisDatas.indexOf(0);
         const uinit = this.chart.height / (this.chart.datas.axisDatas.length - 1);
-        this.chart.datas.zeroY = this.chart.offset + this.chart.height - (uinit * index);
+        this.chart.datas.zeroY = this.chart.voffset + this.chart.height - (uinit * index);
         return this.chart.datas.zeroY;
     }
 
@@ -187,20 +203,20 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         const leftLine = new zrender.Line({
             silent: true,
             shape: {
-                x1: covertXs5(this.chart.offset),
-                y1: covertXs5(this.chart.offset),
-                x2: covertXs5(this.chart.offset),
-                y2: covertXs5(this.chart.offset + this.chart.height)
+                x1: covertXs5(this.chart.hoffset),
+                y1: covertXs5(this.chart.voffset),
+                x2: covertXs5(this.chart.hoffset),
+                y2: covertXs5(this.chart.voffset + this.chart.height)
             },
             style: lineStyle
         });
         const rightLine = new zrender.Line({
             silent: true,
             shape: {
-                x1: covertXs5(this.chart.offset + this.chart.width),
-                y1: covertXs5(this.chart.offset),
-                x2: covertXs5(this.chart.offset + this.chart.width),
-                y2: covertXs5(this.chart.offset + this.chart.height)
+                x1: covertXs5(this.chart.hoffset + this.chart.width),
+                y1: covertXs5(this.chart.voffset),
+                x2: covertXs5(this.chart.hoffset + this.chart.width),
+                y2: covertXs5(this.chart.voffset + this.chart.height)
             },
             style: lineStyle
         });
@@ -208,9 +224,9 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         const bootomLine = new zrender.Line({
             silent: true,
             shape: {
-                x1: covertXs5(this.chart.offset),
+                x1: covertXs5(this.chart.hoffset),
                 y1: covertXs5(zeroY),
-                x2: covertXs5(this.chart.offset + this.chart.width),
+                x2: covertXs5(this.chart.hoffset + this.chart.width),
                 y2: covertXs5(zeroY)
             },
             style: lineStyle
@@ -219,10 +235,10 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         const middleLine = new zrender.Line({
             silent: true,
             shape: {
-                x1: covertXs5(this.chart.offset + this.chart.width / 2),
-                y1: covertXs5(this.chart.offset),
-                x2: covertXs5(this.chart.offset + this.chart.width / 2),
-                y2: covertXs5(this.chart.offset + this.chart.height)
+                x1: covertXs5(this.chart.hoffset + this.chart.width / 2),
+                y1: covertXs5(this.chart.voffset),
+                x2: covertXs5(this.chart.hoffset + this.chart.width / 2),
+                y2: covertXs5(this.chart.voffset + this.chart.height)
             },
             style: {
                 stroke: 'rgba(153, 153, 153, 1)',
@@ -250,7 +266,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                 fontSize: 12,
                 textFill: 'rgba(0, 0, 0, 0.8)'
             },
-            position: [this.chart.offset + this.chart.width * 0.5 + 50, this.chart.offset + this.chart.height + 20],
+            position: [this.chart.hoffset + this.chart.width * 0.5 + 50, this.chart.voffset + this.chart.height + 20],
             silent: true
         }));
 
@@ -261,7 +277,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                 fontSize: 12,
                 textFill: 'rgba(0, 0, 0, 0.8)'
             },
-            position: [this.chart.offset + this.chart.width, 8],
+            position: [this.chart.hoffset + this.chart.width, 8],
             silent: true
         }));
 
@@ -287,9 +303,9 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                 let x, y, r;
                 const unit = this.chart.height / this.chart.datas.axisDatas.length;
                 this.chart.datas.axisDatas.forEach( (element, index) => {
-                    x = this.chart.offset;
+                    x = this.chart.hoffset;
                     r = (Math.abs(element - this.chart.datas.axisDatas[0]) * this.chart.height) / this.chart.datas.axisValueRange;
-                    y = this.chart.height + this.chart.offset - r;
+                    y = this.chart.height + this.chart.voffset - r;
                     path.moveTo(x, y);
                     path.lineTo(x - 5, y);
                     path.stroke();
@@ -304,9 +320,9 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         let x, y, r;
         const unit = this.chart.height / this.chart.datas.axisDatas.length;
         this.chart.datas.axisDatas.forEach( (element, index) => {
-            x = this.chart.offset;
+            x = this.chart.hoffset;
             r = (Math.abs(element - this.chart.datas.axisDatas[0]) * this.chart.height) / this.chart.datas.axisValueRange;
-            y = this.chart.height + this.chart.offset - r;
+            y = this.chart.height + this.chart.voffset - r;
             this.zr.add(new zrender.Text({
                     style: {
                         text: formatLeftAxisLabel(element),
@@ -342,28 +358,34 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                 fontWeight: 'normal',
                 textFill: 'rgba(133, 80, 239, 0.5)'
             },
-            position: [ covertXs5(this.chart.offset + 15 + this.chart.width / 2) , covertXs5(zeroY + 10)],
+            position: [ covertXs5(this.chart.hoffset + 15 + this.chart.width / 2) , covertXs5(zeroY + 10)],
             silent: true
         }));
 
         //绘制线
         this.chart.datas.periods.forEach((element, index) => {
+            if (element.showLine !== true){
+                return;
+            }
             const d = element.data;
             element.points = [];
             const uinit = this.chart.width / (2 * (this.chart.datas.periodKeys.length - 1));
             let x, y, r;
             for (let i = 0; i < d.length; i++) {
-                x = covertXs5(this.chart.offset + this.chart.datas.periodKeys.indexOf(d[i].period) * uinit);
+                x = covertXs5(this.chart.hoffset + this.chart.datas.periodKeys.indexOf(d[i].period) * uinit);
                 //求出 值对应的 刻度比例
                 r = (Math.abs(d[i].value - this.chart.datas.axisDatas[0]) * this.chart.height) / this.chart.datas.axisValueRange;
-                y = covertXs5(this.chart.height + this.chart.offset - r);
+                y = covertXs5(this.chart.height + this.chart.voffset - r);
                 element.points.push({x: x, y: y});
             }
 
             lineStyle.stroke = this.colorList[index % 6];
             this.zr.add(new (new zrender.Path.extend({
                 silent: true,
-                style: lineStyle,
+                style: {
+                    stroke: this.colorList[index % 6],
+                    lineWidth: element.showlicha ? 2 : 0.5
+                },
                 buildPath: (path, shape) => {
                     path.moveTo(element.points[0].x, element.points[0].y);
                     for (let j = 1; j < element.points.length; j++) {
@@ -384,7 +406,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                     r: 3
                 },
                 style: {
-                    fill: element.showRateDiff ? undefined : 'transparent',
+                    fill: element.showlicha ? 'rgba(0,0,0, 1)' : 'transparent',
                     stroke: 'rgba(0,0,0,1)',
                     lineWidth: 0.5
                 }
@@ -404,14 +426,14 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         const datas: any = this.chart.datas.probability;
         datas.forEach(element => {
             // 计算横线标线坐标
-            x = covertXs5(this.chart.offset);
+            x = covertXs5(this.chart.hoffset);
             r = (Math.abs(element.rate - this.chart.datas.probability.min) * this.chart.height) / this.chart.datas.axisValueRange;
-            y = covertXs5(this.chart.height + this.chart.offset - r);
+            y = covertXs5(this.chart.height + this.chart.voffset - r);
             element.hxPoint = {x: x, y: y};
             // 计算 概率曲线值坐标
-            r = (Math.abs(element.value - this.chart.datas.probability.pmin) * (this.chart.width / 3)) 
+             r = (Math.abs(element.value - this.chart.datas.probability.pmin) * ((this.chart.width * 4)/10 )) 
                 / this.chart.datas.probability.paxisValueRange;
-            x = covertXs5(this.chart.width + this.chart.offset - r);
+            x = covertXs5(this.chart.width + this.chart.hoffset - r);
             element.glPoint = {x: x, y: y};
         });
 
@@ -428,35 +450,79 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             let hoverL = new zrender.Line({
                 silent: false,
                 shape: {
-                    x1: this.chart.offset,
+                    x1: this.chart.hoffset,
                     y1: _d[i].glPoint.y,
-                    x2: this.chart.offset + this.chart.width,
+                    x2: this.chart.hoffset + this.chart.width,
                     y2: _d[i].glPoint.y
                 },
                 style: style
             });
-            hoverL.on('mouseover', (e, b) => {
-                this.ngZone.runOutsideAngular(() => {
+
+            //定义利差线
+            const lcLine = new zrender.Group();
+            this.ngZone.runOutsideAngular(() => {
+                hoverL.on('mouseover', (e, b) => {
                     $([this.showRateTipElRef.nativeElement, this.showPerTipElRef.nativeElement])
                         .removeClass('show')
                         .addClass('show').css('top', (_d[i].glPoint.y - 45) + 'px');
                         $(this.showRateTipElRef.nativeElement).find('.tooltip-inner')
                             .html('收益率' + '<span style="color:red;padding-left: 10px;"><h5 style="display: inline;">'
-                             + ( (_d[i].rate * 100) | 0 ) + '%</h5></span>');
+                                + ( (_d[i].rate * 100) | 0 ) + '%</h5></span>');
                         $(this.showPerTipElRef.nativeElement).find('.tooltip-inner')
                             .html('概率分布' + '<span style="color:red;padding-left: 10px;"><h5 style="display: inline;">' 
                                 + (_d[i].per * 100) + '%</h5></span>');
                         hoverL.setStyle('stroke', 'rgba(236, 105, 65, 1)');
                         hoverL.setStyle('lineWidth', 2);
+
+                        //添加利差提示信息
+                        this.chart.datas.periods.forEach((element) => {
+                            if (element.showlicha === true && element.showLine === true){
+                                const endPoint = element.points[element.points.length - 1];
+                                lcLine.add(new (new zrender.Path.extend({
+                                    silent: false,
+                                    style:{
+                                        stroke: 'rgba(236, 105, 65, 1)',
+                                        lineWidth: 1,
+                                        lineDash: [4, 4]
+                                    },
+                                    buildPath: (path, shape) => {
+                                        const _x = this.chart.hoffset + this.chart.width / 2;
+                                        path.moveTo(_x + 35, endPoint.y);
+                                        path.lineTo(_x + 45, endPoint.y);
+                                        path.stroke();
+                                        path.moveTo(_x + 40, endPoint.y);
+                                        path.lineTo(_x + 40, _d[i].glPoint.y);
+                                        path.stroke();
+                                    }
+                                })));
+
+                                const lvp = _d[i].rate - element.data[element.data.length - 1].value;
+                                lcLine.add(new zrender.Text({
+                                    style:{
+                                        text: '利差 ' + formatLeftAxisLabel(lvp),
+                                        textAlign: 'left',
+                                        fontSize: 12,
+                                        fontWeight: 'bold',
+                                        textFill: 'rgba(236, 105, 65, 1)'
+                                    },
+                                    position: [this.chart.hoffset + (this.chart.width / 2) + 50,
+                                        endPoint.y - (endPoint.y - _d[i].glPoint.y) / 2]
+                                }))
+                            }
+                        });
+
+                }).on('mouseout', () => {
+                    $([this.showRateTipElRef.nativeElement, this.showPerTipElRef.nativeElement]).removeClass('show');
+                    hoverL.setStyle('stroke', ((index % r3) === 0 || (index === _d.length - 1)) ?
+                     'rgba(236,236,236,1)' : 'rgba(256,256,256,0)');
+                    hoverL.setStyle('lineWidth', 1);
+
+                    lcLine.removeAll();
                 });
-            }).on('mouseout', () => {
-                this.ngZone.runOutsideAngular(() => {
-                   $([this.showRateTipElRef.nativeElement, this.showPerTipElRef.nativeElement]).removeClass('show');
-                   hoverL.setStyle('stroke', ((index % r3) === 0 || (index === _d.length - 1)) ? 'rgba(236,236,236,1)' : 'rgba(256,256,256,0)');
-                   hoverL.setStyle('lineWidth', 1);
-                });
-            })
+
+            });
             this.zr.add(hoverL);
+            this.zr.add(lcLine);
         }
 
         // 绘制概率分布曲线 _d.length
@@ -467,7 +533,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             silent: true,
             style: {
                 stroke: 'rgba(193,217,236,1)',
-                lineWidth: 2,
+                lineWidth: 1.2,
                 fill: 'rgba(232, 253, 255, 0.5)'
             },
             buildPath: (path, shape) => {
@@ -476,8 +542,8 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                     path.lineTo(_d[i].glPoint.x, _d[i].glPoint.y);
                 }
 
-                path.lineTo(this.chart.offset + this.chart.width, _d[_d.length - 1].glPoint.y);
-                path.lineTo(_d[0].glPoint.x, _d[0].glPoint.y);
+                path.lineTo(this.chart.hoffset + this.chart.width, _d[_d.length - 1].glPoint.y);
+                path.lineTo(this.chart.hoffset + this.chart.width, _d[0].glPoint.y);
                 path.closePath();
                 path.fill(path._ctx);
             }
@@ -496,8 +562,8 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             buildPath: (path, shape) => {
                 for (let i = 0; i < _d.length; i++) {
                     if ( (i % r3) === 0 || i === (_d.length - 1)) {
-                        path.moveTo(this.chart.offset + this.chart.width, _d[i].glPoint.y);
-                        path.lineTo(this.chart.offset + this.chart.width + 5 , _d[i].glPoint.y);
+                        path.moveTo(this.chart.hoffset + this.chart.width, _d[i].glPoint.y);
+                        path.lineTo(this.chart.hoffset + this.chart.width + 5 , _d[i].glPoint.y);
                     }
                 }
              }
@@ -516,7 +582,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                             fontWeight: 'normal',
                             textFill: 'rgba(133, 80, 239, 0.5)'
                         },
-                        position: [ this.chart.offset + this.chart.width + 25, _d[i].glPoint.y],
+                        position: [ this.chart.hoffset + this.chart.width + 35, _d[i].glPoint.y],
                         silent: true
                     })
                 )

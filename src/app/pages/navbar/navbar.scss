@@ -2,10 +2,20 @@
 @import "../../../themes/mixin.scss";
 
 .cyno-header {
+    transition: height .5s ease-out;
     background: $navbar-background;
     font-size: $navbar-fontsize;
-    color: #a0a4ad;
-    
+    color: rgba(254, 254, 254, 1);
+    height: 110px;
+    //滚动，隐藏line banner breadcrumb-banner
+    &.scrolled {
+        height: 35px;
+        overflow: hidden;
+        &::before, &::after {
+            height: 0px;
+        }
+    }
+
     & > div:not(.line){
         margin: $page-margin;
     }
@@ -25,7 +35,6 @@
                 font-size: inherit;
                 color: inherit;
                 padding: 0.5rem 0.3rem;
-                font-weight: 600;
             }
 
         }
@@ -54,14 +63,14 @@
                 font-size: inherit;
                 line-height: 1.1em;
                 border-radius: 0rem;
-     }
-
-                font-weight: 600;
-                margin-left: 5px;
             }
+
+            font-weight: 600;
+            margin-left: 5px;
         }
+    }
      .breadcrumb-banner{
-         height: 23px;
+        height: 23px;
         .breadcrumb{
             background: none;
             color: inherit;
@@ -89,23 +98,25 @@
      }
 
      &::before {
+        transition: all .2s ease-out;
         position: absolute;
         display: inline-block;
         width: 50px;
-        height: 100px;
+        height: 200px;
         left: 0px;
-        top: 105px;
+        top: 0px;
         background: #0808ad;
         content: '';
     }
     
     &::after {
+        transition: all .2s ease-out;
         position: absolute;
         display: inline-block;
         width: 50px;
-        height: 100px;
+        height: 200px;
         right: 0px;
-        top: 105px;
+        top: 0px;
         background: #0808ad;
         content: '';
     }

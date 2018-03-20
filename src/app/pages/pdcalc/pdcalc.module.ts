@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { MatIconModule} from '@angular/material/icon';
 import { MatMenuModule} from '@angular/material/menu';
 import { MatInputModule} from '@angular/material/input';
@@ -34,6 +34,7 @@ import { PdcalsService } from './service/pdcalc.service';
         MatTabsModule,
         MatRadioModule,
         MatCheckboxModule,
+        FormsModule,
         PdcalcRoutingModule],
     exports: [],
     providers: [PdcalsService],

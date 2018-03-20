@@ -30,8 +30,8 @@
                                 <div class="dropdown-menu" (click)="$event.stopPropagation()">
                                         <mat-list>
                                             <mat-list-item *ngFor="let item of chart.datas.periods" style="height: 30px;"> 
-                                                    <mat-checkbox style="flex: 1 1 auto;">{{item.name}}</mat-checkbox>
-                                                    <mat-radio-button></mat-radio-button>
+                                                <mat-checkbox style="flex: 1 1 auto;"  [(ngModel)]="item.showLine" (ngModelChange)="updateChartFromYieldCurve()">{{item.name}}</mat-checkbox>
+                                                <mat-radio-button [value]="item.showlicha" (change)="updateChartFromYieldCurve(item);"></mat-radio-button>
                                             </mat-list-item>
                                         </mat-list>
                                 </div>
@@ -41,8 +41,8 @@
                   </ul>
               </div>
               <div class="card-body" style="padding: 0rem;position: relative; overflow: visible;">
-                    <div #showRateTipDom class="tooltip fade bs-tooltip-top" style="will-change: transform; position: absolute; top: 40px; left: 0px;" x-placement="top"><div class="arrow" style="left: 51px;"></div><div class="tooltip-inner"></div></div>
-                    <div #showPerTipDom class="tooltip fade bs-tooltip-top" style="will-change: transform; position: absolute; top: 70px; right: 0px;" x-placement="top"><div class="arrow" style="left: 51px;"></div><div class="tooltip-inner"></div></div>
+                    <div #showRateTipDom class="tooltip fade bs-tooltip-top" style="will-change: transform; position: absolute; left: 40px;z-index: 1;" x-placement="top"><div class="arrow" style="left: 51px;"></div><div class="tooltip-inner"></div></div>
+                    <div #showPerTipDom class="tooltip fade bs-tooltip-top" style="will-change: transform; position: absolute; right: 40px;z-index: 1;" x-placement="top"><div class="arrow" style="left: 51px;"></div><div class="tooltip-inner"></div></div>
                     <div #sylRateChart style="height: 360px;"></div>
               </div>
           </div>

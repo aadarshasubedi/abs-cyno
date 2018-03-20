@@ -1,9 +1,30 @@
 .main-content{
-    height: 100%;
-    padding: 100px 50px;
-    background: #fff;
-}
+    height: auto;
+    min-height: 100%;
+    padding: 100px 50px 40px 50px;
+    background: rgba(248, 248,248, 1);
 
+    .function-body {
+        box-shadow: 0 2px 5px 1px rgba(61, 68, 67, 0.45);
+    }
+    
+    .page-rooter {
+        position: relative;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+        >span {
+            text-align: center;
+            color: rgba(167,167,167,1);
+            font-size: 0.9rem;
+        }
+    }
+
+    &.scrolled {
+        transition: height 1s ease-out;
+        padding: 50px 50px 40px 50px;
+    }
+}
 .cyno-body{
    & > .card-header{
         margin-top: 1.2rem;
@@ -66,8 +87,6 @@
         .table-sm td {
             color: #bac3cc;
         }
-
-
     }
 
 }
