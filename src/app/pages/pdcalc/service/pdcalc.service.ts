@@ -10,19 +10,26 @@ export class PdcalsService {
     constructor(private http: HttpClient) {}
 
     /**
-     * 获取产品证券结构
-     * @param projectId 产品Id
+     * 获取产品证信息
+     * @param securitiesId 产品Id
      */
-    getProjiectZqjg(projectId: any): Observable<any>{
-        return this.http.get(Options.getProjiectZqjg.url, {params: {projectId: projectId}}).pipe(jsonMap());
+    getSecsInfoById(securitiesId: any): Observable<any> {
+        return this.http.get(Options.getSecsInfoById.url, {params: {securitiesId: securitiesId}}).pipe(jsonMap());
+    }
+
+    /**
+     * 获取产品证券结构信息
+     * @param proposalId
+     */
+    getSecscommList(proposalId: string){
+        return this.http.get(Options.secscommList.url, {params: {proposalId: proposalId}}).pipe(jsonMap());
     }
 
     /**
      * 获取收益率分布统计数据
      * @param projectId 项目Id
      */
-    getProjecctYieldRate(projectId: any) {
-        return this.http.get(Options.getProjecctYieldRate.url, {params: {}}).pipe(jsonMap());
+    initPdCalsResult(projectId: any) {
+        return this.http.get(Options.initPdCalsResult.url, {params: {}}).pipe(jsonMap());
     }
-
 }

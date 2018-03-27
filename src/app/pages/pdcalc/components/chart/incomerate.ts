@@ -18,9 +18,9 @@ const findRangAndStep = (min, max, minStep, maxcount, maxFixed) => {
     max = (max * 10000) | 0;
     minStep = (minStep * 10000) | 0;
 
-    if (maxFixed !== true){
+    if (maxFixed !== true) {
         min = min < 0 ? min : 0;
-        if (min < 0){
+        if (min < 0) {
             r1 = Math.abs(min);
             r1 = Math.max(min, minStep);
             r2 = (r1) % (minStep);
@@ -42,25 +42,41 @@ const findRangAndStep = (min, max, minStep, maxcount, maxFixed) => {
 }
 
 @Component({
-    selector: 'chart-1',
-    templateUrl: './chart1.component.html',
+    selector: 'chart-incomerate',
+    templateUrl: './incomerate.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./chart1.scss']
+    styleUrls: ['./incomerate.scss']
 })
-export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
+export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewInit {
 
     @Input() datas: any;
+
+    @Input() proData: any = {};
 
     @ViewChild('sylRateChart') sylRateChart: ElementRef;
 
     @ViewChild('showRateTipDom') showRateTipElRef: ElementRef;
+
+    @Input() graphicDescElRef: any;
 
     showRateTip: boolean = false;
 
     @ViewChild('showPerTipDom') showPerTipElRef: ElementRef;
 
     showPerTip: boolean = false;
+
+    //测算参数modal
+    calculateParams: any = {
+        //模拟次数
+        frequency: null,
+        //累计违约率
+        cumulativeDefaultRate: {type: '1', average: null, variance: null},
+        //违约时间分布
+        defaultTimeDistribution: {type: '2', type1: '1', type2: '1'},
+        //提前还款率
+        conPrepaymentRate: {type: '1', value: null}
+    };
 
     private colorList: Array<any> = [
         'rgba(189,163,38,1)', 'rgba(189,163,38,1)',
@@ -69,9 +85,10 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
 
     private zr: any;
 
-    chart: {[name: string]: any, datas: {[name: string]: any}, voffset: number, hoffset: number} = {
-        voffset: 40,
+    chart: {[name: string]: any, datas: {[name: string]: any}, voffset: number, hoffset: number, middlePos: number} = {
+        voffset: 22,
         hoffset: 100,
+        middlePos: 0.3,
         datas: {}
     };
 
@@ -88,10 +105,10 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
     ngAfterViewInit() {}
 
     updateChartFromYieldCurve(selectItem){
-        if (selectItem){
+        if (selectItem) {
             this.chart.datas.periods.forEach((item) => {
                 item.showlicha = item === selectItem;
-            })
+            });
         }
         this.renderChart(true);
     }
@@ -124,6 +141,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         let periodKeys: any = this.chart.datas.periodKeys = [];
         const yieldCurveList: any = this.chart.datas.yieldCurveList = [];
         let rateList: any = this.chart.datas.rateList = [];
+        let rightRateList: any =  this.chart.datas.rightRateList = [];
         this.chart.datas.periods = this.datas.yieldCurve.map((item) => {
             yieldCurveList.push({type: item.curveCode, name: item.curveName});
             return {
@@ -148,10 +166,11 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         let pmin: any = false, pmax: any = false;
         this.chart.datas.probability = this.datas.pdcalcResult.map((item) => {
             rateList.push(item.yldRate);
+            rightRateList.push(item.yldRate);
             const res = {
                 rate: item.yldRate, //绘制横线
-                per:  ((item.accumPr * 100) | 0) / 100, //概率分布值
-                value: ((item.pr * 1000) | 0) / 1000 //绘制概率分布曲线
+                per:  ((item.accumPr * 10000) | 0) / 10000, //概率分布值
+                value: ((item.pr * 10000) | 0) / 10000 //绘制概率分布曲线
             }
             pmin = pmin === false ? res.value : Math.min(pmin, res.value);
             pmax = pmax === false ? res.value : Math.max(pmax, res.value);
@@ -167,6 +186,10 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         });
 
         periodKeys = this.chart.datas.periodKeys = periodKeys.sort((a, b) => {
+            return a - b > 0 ? 1 : (a - b < 0 ? -1 : 0);
+        });
+
+        rightRateList = this.chart.datas.rightRateList = rightRateList.sort((a, b) => {
             return a - b > 0 ? 1 : (a - b < 0 ? -1 : 0);
         });
 
@@ -186,14 +209,19 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
 
     //计算0坐标的位置
     private calculateZeroY() {
-        const index = this.chart.datas.axisDatas.indexOf(0);
-        const uinit = this.chart.height / (this.chart.datas.axisDatas.length - 1);
-        this.chart.datas.zeroY = this.chart.voffset + this.chart.height - (uinit * index);
+        const r = 0 - this.chart.datas.axisDatas[0];
+        const axisDatas = this.chart.datas.axisDatas;
+        if (r === 0){
+            this.chart.datas.zeroY = this.chart.voffset + this.chart.height;
+        } else {
+            this.chart.datas.zeroY = ((r * (this.chart.height / (axisDatas[axisDatas.length - 1] - axisDatas[0]))) | 0 );
+        }
         return this.chart.datas.zeroY;
     }
 
     //渲染坐标线
     private renderBaseCoordinateLines() {
+        const rightRateList = this.chart.datas.rightRateList;
         const lineStyle = {
             stroke: 'rgba(215, 215, 215, 1)',
             lineWidth: 1
@@ -231,20 +259,39 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             },
             style: lineStyle
         });
-
+        //计算中线坐标
+        let r = rightRateList[0] -  this.chart.datas.probability.min;
+        r = r * (this.chart.height / this.chart.datas.axisValueRange);
+        r = r | 0;
         const middleLine = new zrender.Line({
             silent: true,
             shape: {
-                x1: covertXs5(this.chart.hoffset + this.chart.width / 2),
+                x1: covertXs5(this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0)),
                 y1: covertXs5(this.chart.voffset),
-                x2: covertXs5(this.chart.hoffset + this.chart.width / 2),
-                y2: covertXs5(this.chart.voffset + this.chart.height)
+                x2: covertXs5(this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0)),
+                y2: covertXs5(this.chart.voffset + this.chart.height - r)
             },
             style: {
                 stroke: 'rgba(153, 153, 153, 1)',
                 lineWidth: 4
             }
         });
+        if (r > 0) {
+            this.zr.add(new zrender.Line({
+                silent: true,
+                shape: {
+                    x1: covertXs5(this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0)),
+                    y1: covertXs5(this.chart.voffset + this.chart.height - r),
+                    x2: covertXs5(this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0)),
+                    y2: covertXs5(this.chart.voffset + this.chart.height)
+                },
+                style: {
+                    stroke: 'rgba(153, 153, 153, 1)',
+                    lineWidth: 4,
+                    lineDash: [4, 4]
+                }
+            }));
+        }
 
         //绘制标题
         const rateTitle = new zrender.Group();
@@ -255,7 +302,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                 fontSize: 12,
                 textFill: 'rgba(0, 0, 0, 0.8)'
             },
-            position: [ 10, 8],
+            position: [ 10, 2],
             silent: true
         }));
 
@@ -266,7 +313,8 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                 fontSize: 12,
                 textFill: 'rgba(0, 0, 0, 0.8)'
             },
-            position: [this.chart.hoffset + this.chart.width * 0.5 + 50, this.chart.voffset + this.chart.height + 20],
+            position: [this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0) + 30,
+                this.chart.voffset + this.chart.height + 8],
             silent: true
         }));
 
@@ -277,7 +325,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                 fontSize: 12,
                 textFill: 'rgba(0, 0, 0, 0.8)'
             },
-            position: [this.chart.hoffset + this.chart.width, 8],
+            position: [this.chart.hoffset + this.chart.width + 20, 2],
             silent: true
         }));
 
@@ -358,7 +406,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                 fontWeight: 'normal',
                 textFill: 'rgba(133, 80, 239, 0.5)'
             },
-            position: [ covertXs5(this.chart.hoffset + 15 + this.chart.width / 2) , covertXs5(zeroY + 10)],
+            position: [ covertXs5(this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0)) , covertXs5(zeroY + 13)],
             silent: true
         }));
 
@@ -369,40 +417,33 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             }
             const d = element.data;
             element.points = [];
-            const uinit = this.chart.width / (2 * (this.chart.datas.periodKeys.length - 1));
+            const uinit = ((this.chart.width * this.chart.middlePos) | 0) / (this.chart.datas.periodKeys.length - 1);
             let x, y, r;
             for (let i = 0; i < d.length; i++) {
                 x = covertXs5(this.chart.hoffset + this.chart.datas.periodKeys.indexOf(d[i].period) * uinit);
                 //求出 值对应的 刻度比例
                 r = (Math.abs(d[i].value - this.chart.datas.axisDatas[0]) * this.chart.height) / this.chart.datas.axisValueRange;
                 y = covertXs5(this.chart.height + this.chart.voffset - r);
-                element.points.push({x: x, y: y});
+                element.points.push([x, y]);
             }
 
-            lineStyle.stroke = this.colorList[index % 6];
-            this.zr.add(new (new zrender.Path.extend({
-                silent: true,
+            this.zr.add(new zrender.Polyline({
                 style: {
                     stroke: this.colorList[index % 6],
                     lineWidth: element.showlicha ? 2 : 0.5
                 },
-                buildPath: (path, shape) => {
-                    path.moveTo(element.points[0].x, element.points[0].y);
-                    for (let j = 1; j < element.points.length; j++) {
-                        path.lineTo(element.points[j].x, element.points[j].y);
-                        path.stroke();
-                        if (j < element.points.length - 1) {
-                            path.moveTo(element.points[j].x, element.points[j].y);
-                        }
-                    }
+                shape: {
+                    points: element.points,
+                    smooth: 'spline'
                 }
-            }))());
+            }))
+
             //添加圆点
             this.zr.add(new zrender.Circle({
                 silent: true,
                 shape: {
-                    cx: element.points[element.points.length - 1].x,
-                    cy:  element.points[element.points.length - 1].y,
+                    cx: element.points[element.points.length - 1][0],
+                    cy:  element.points[element.points.length - 1][1],
                     r: 3
                 },
                 style: {
@@ -431,7 +472,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             y = covertXs5(this.chart.height + this.chart.voffset - r);
             element.hxPoint = {x: x, y: y};
             // 计算 概率曲线值坐标
-             r = (Math.abs(element.value - this.chart.datas.probability.pmin) * ((this.chart.width * 4)/10 )) 
+             r = (Math.abs(element.value - this.chart.datas.probability.pmin) * ((this.chart.width * (0.7 - this.chart.middlePos))))
                 / this.chart.datas.probability.paxisValueRange;
             x = covertXs5(this.chart.width + this.chart.hoffset - r);
             element.glPoint = {x: x, y: y};
@@ -462,51 +503,57 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
             const lcLine = new zrender.Group();
             this.ngZone.runOutsideAngular(() => {
                 hoverL.on('mouseover', (e, b) => {
+                    const rateDesc = (((_d[i].rate * 10000) | 0) / 100) + '%';
+                    const perDesc = (((_d[i].per * 10000) | 0) / 100) + '%';
+
                     $([this.showRateTipElRef.nativeElement, this.showPerTipElRef.nativeElement])
                         .removeClass('show')
                         .addClass('show').css('top', (_d[i].glPoint.y - 45) + 'px');
                         $(this.showRateTipElRef.nativeElement).find('.tooltip-inner')
                             .html('收益率' + '<span style="color:red;padding-left: 10px;"><h5 style="display: inline;">'
-                                + ( (_d[i].rate * 100) | 0 ) + '%</h5></span>');
+                                + rateDesc + '</h5></span>');
                         $(this.showPerTipElRef.nativeElement).find('.tooltip-inner')
                             .html('概率分布' + '<span style="color:red;padding-left: 10px;"><h5 style="display: inline;">' 
-                                + (_d[i].per * 100) + '%</h5></span>');
+                                + perDesc + '</h5></span>');
                         hoverL.setStyle('stroke', 'rgba(236, 105, 65, 1)');
                         hoverL.setStyle('lineWidth', 2);
 
+                        //更新备注说明
+                        this.graphicDescElRef.innerText = '图形说明: 有'+ rateDesc +'概率次级收益率大于' + perDesc;
+
                         //添加利差提示信息
                         this.chart.datas.periods.forEach((element) => {
-                            if (element.showlicha === true && element.showLine === true){
+                            if (element.showlicha === true && element.showLine === true) {
+                                const lvp = _d[i].rate - element.data[element.data.length - 1].value;
                                 const endPoint = element.points[element.points.length - 1];
                                 lcLine.add(new (new zrender.Path.extend({
                                     silent: false,
                                     style:{
-                                        stroke: 'rgba(236, 105, 65, 1)',
+                                        stroke: lvp >= 0 ? 'rgba(0, 0, 0, 1)' : 'rgba(236, 105, 65, 1)',
                                         lineWidth: 1,
-                                        lineDash: [4, 4]
+                                        lineDash: [2, 2]
                                     },
                                     buildPath: (path, shape) => {
-                                        const _x = this.chart.hoffset + this.chart.width / 2;
-                                        path.moveTo(_x + 35, endPoint.y);
-                                        path.lineTo(_x + 45, endPoint.y);
+                                        const _x = this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0);
+                                        path.moveTo(_x + 25, endPoint[1]);
+                                        path.lineTo(_x + 45, endPoint[1]);
                                         path.stroke();
-                                        path.moveTo(_x + 40, endPoint.y);
+                                        path.moveTo(_x + 40, endPoint[1]);
                                         path.lineTo(_x + 40, _d[i].glPoint.y);
                                         path.stroke();
                                     }
                                 })));
 
-                                const lvp = _d[i].rate - element.data[element.data.length - 1].value;
                                 lcLine.add(new zrender.Text({
                                     style:{
                                         text: '利差 ' + formatLeftAxisLabel(lvp),
                                         textAlign: 'left',
                                         fontSize: 12,
                                         fontWeight: 'bold',
-                                        textFill: 'rgba(236, 105, 65, 1)'
+                                        textFill: lvp >= 0 ? 'rgba(0, 0, 0, 1)' : 'rgba(236, 105, 65, 1)'
                                     },
-                                    position: [this.chart.hoffset + (this.chart.width / 2) + 50,
-                                        endPoint.y - (endPoint.y - _d[i].glPoint.y) / 2]
+                                    position: [this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0) + 50,
+                                        endPoint[1] - (endPoint[1] - _d[i].glPoint.y) / 2]
                                 }))
                             }
                         });
@@ -516,7 +563,7 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
                     hoverL.setStyle('stroke', ((index % r3) === 0 || (index === _d.length - 1)) ?
                      'rgba(236,236,236,1)' : 'rgba(256,256,256,0)');
                     hoverL.setStyle('lineWidth', 1);
-
+                    this.graphicDescElRef.innerText = ' ';
                     lcLine.removeAll();
                 });
 
@@ -526,30 +573,21 @@ export class Chart1Component implements OnInit, OnChanges, AfterViewInit {
         }
 
         // 绘制概率分布曲线 _d.length
-        lineStyle.lineWidth = 1;
-        lineStyle.stroke = 'rgba(0,0,0, 1)';
-        const RightArea = new zrender.Path.extend({
-            type: 'rightArea',
-            silent: true,
-            style: {
+        const _points = _d.map((e) => {
+            return [e.glPoint.x, e.glPoint.y];
+        });
+        _points.push([this.chart.hoffset + this.chart.width, _points[_points.length - 1][1]]);
+        this.zr.add(new zrender.Polyline({
+            shape:{
+                smooth: 'spline',
+                points: _points
+            },
+            style:{
                 stroke: 'rgba(193,217,236,1)',
                 lineWidth: 1.2,
                 fill: 'rgba(232, 253, 255, 0.5)'
-            },
-            buildPath: (path, shape) => {
-                path.moveTo(_d[0].glPoint.x, _d[0].glPoint.y);
-                for (let i = 1; i < _d.length; i++) {
-                    path.lineTo(_d[i].glPoint.x, _d[i].glPoint.y);
-                }
-
-                path.lineTo(this.chart.hoffset + this.chart.width, _d[_d.length - 1].glPoint.y);
-                path.lineTo(this.chart.hoffset + this.chart.width, _d[0].glPoint.y);
-                path.closePath();
-                path.fill(path._ctx);
             }
-        });
-        this.zr.add(new RightArea());
-        
+        }));
 
         //绘制刻度及label
         const RightAxis = new zrender.Path.extend({

@@ -26,4 +26,18 @@
         line-height: 1.5rem;
     }
 
+    .cesuan-param {
+        .huiguirate-form {
+            td{
+                position: relative;
+                padding: 0px;
+                .mat-input-container{
+                    position: absolute;
+                    top: -8px;
+                    left: 0px;
+                }
+            }
+            
+        }
+    }
 }

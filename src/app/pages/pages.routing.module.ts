@@ -6,6 +6,10 @@ const routes: Routes = [
     {
         path: 'pdcalc',
         loadChildren: './pdcalc/pdcalc.module#PdcalcModule'
+    },
+    {
+        path: 'projects',
+        loadChildren: './projects/projects.module#ProjectsModule'
     }
 ];
 

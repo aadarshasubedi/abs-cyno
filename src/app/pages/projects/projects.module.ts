@@ -6,24 +6,22 @@ import { MatMenuModule} from '@angular/material/menu';
 import { MatInputModule} from '@angular/material/input';
 import { MatSelectModule} from '@angular/material/select';
 import { MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule} from '@angular/material/divider';
 import { MatCardModule} from '@angular/material/card';
-import { MatTableModule} from '@angular/material/table';
 import { MatListModule} from '@angular/material/list';
 import { MatDialogModule} from '@angular/material/dialog';
 import { MatGridListModule} from '@angular/material/grid-list';
 import { MatTabsModule} from '@angular/material/tabs';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatRadioModule} from '@angular/material/radio';
-import { PdcalcComponent } from './pdcalc.component';
 import { MainComponent } from './components/main.component';
-import { ChartIncomeRateComponent } from './components/chart/incomerate';
-import { SecuStructureComponent } from './components/secustructure/secustructure.compoment';
-import { PdcalcRoutingModule } from './pdcalc.routing.module';
-import { PdcalsService } from './service/pdcalc.service';
+import { ProjectsComponent } from './projects.component';
+import { ProjectsRoutingModule } from './projects.routing.module';
+
+import { TableModule} from '../../../sdk/compoments/table/module';
 
 @NgModule({
-    declarations: [PdcalcComponent, MainComponent, SecuStructureComponent, ChartIncomeRateComponent],
+    declarations: [ProjectsComponent, MainComponent],
     imports: [
         CommonModule,
         MatIconModule,
@@ -34,15 +32,15 @@ import { PdcalsService } from './service/pdcalc.service';
         MatButtonToggleModule,
         MatDividerModule,
         MatCardModule,
-        MatTableModule,
+        TableModule,
         MatListModule,
         MatDialogModule,
         MatTabsModule,
         MatRadioModule,
         MatCheckboxModule,
         FormsModule,
-        PdcalcRoutingModule],
+        ProjectsRoutingModule ],
     exports: [],
-    providers: [PdcalsService],
+    providers: [],
 })
-export class PdcalcModule {}
+export class ProjectsModule {}

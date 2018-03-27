@@ -30,7 +30,7 @@ export class LoginCmp implements OnInit {
         this.loadingService.showFull('登录中....');
         this.loginService.doLogin(this.user.userName, this.user.password).subscribe((data: any) => {
             this.loadingService.close();
-            this.router.navigate(['index', 'pdcalc', 'pdcalc'])
+            this.router.navigate(['index', 'projects', 'projects']);
         }, (error: any) => {
             this.message.account = error.error;
             this.loadingService.close();

@@ -9,6 +9,6 @@ import { MockService } from './mock/mock.service';
 })
 export class PdcalcMockModule {
     constructor(mockService: MockService){
-        mockService.buildMock();
+        //mockService.buildMock();
     }
 }

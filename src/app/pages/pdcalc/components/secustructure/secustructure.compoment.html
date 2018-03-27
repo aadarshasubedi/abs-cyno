@@ -1,4 +1,3 @@
-
 <div class="card cyno-body">
         <div class="card-header card-header-sm">
             <h5 class="card-title project-title">产品证券结构</h5>
@@ -23,15 +22,15 @@
             <td colspan="9" style="text-align: center; padding: 20px">无数据</td>
         </tr>
         <tr *ngFor="let item of datas">
-            <td>{{item.field1}}</td>
-            <td>{{item.field2}}</td>
-            <td>{{item.field3}}</td>
-            <td>{{item.field4}}</td>
-            <td>{{item.field5}}</td>
-            <td>{{item.field6}}</td>
-            <td>{{item.field7}}</td>
-            <td>{{item.field8}}</td>
-            <td>{{item.field9}}</td>
+            <td>{{item.securitiesCode}}</td>
+            <td>{{item.securitiesName}}</td>
+            <td>{{(item.securitiesSize / 100000000) | currency:'':true:'0.2-2'}}</td>
+            <td>{{item.securitiesCycle | percent:'0.2-2'}}</td>
+            <td>{{item.paybackType}}</td>
+            <td>{{item.valueDate | date: "yyyy-MM-dd"}}</td>
+            <td>{{item.maturityDate | date: "yyyy-MM-dd"}}</td>
+            <td>{{item.rateFormula}}</td>
+            <td>{{item.rate}}</td>
         </tr>
     </tbody>
 </table>

@@ -1,0 +1,350 @@
+<div class="container-fluid pdcalc-chart1" style="padding-right: 15px;padding-left: 15px;">
+    <div class="row" style="flex-wrap: nowrap;padding-bottom: 15px;">
+      <div class="col" style="padding-right: 0rem;padding-left: 0rem;flex: 1 1 auto;">
+          <div class="card" style="border: 1px solid rgba(0, 0, 0, 0.125)">
+              <div class="card-header">
+                  <ul class="nav">
+                      <li class="nav-item">
+                          <div class="btn-group">
+                                <a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#" style="padding: 0.5rem 0.5rem; color: #a0a4ad;font-size: 0.8rem;"><i class="fa fa-cog"></i></a>
+                                <div class="dropdown-menu cesuan-param" style="height: 380px; width: 600px;padding: 10px;" (click)="$event.stopPropagation()">
+                                    <div class="card text-center">
+                                        <div class="card-header" style="text-align: left">
+                                            评级报告参数
+                                        </div>
+                                        <div class="card-body" style="padding: .5rem; 0rem">
+                                            <div class="container-fluid">
+                                                <!-- 参数调整 -->
+                                                <div class="row" style="padding: 0px 0px 5px 0px;">
+                                                    <div class="col-4" style="padding: 0rem;color: #8f9396">
+                                                        <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                                                                <span style="
+                                                                border-left: 2px solid #af9c9c;
+                                                                height: 0.8rem;
+                                                                width: 0.2rem;
+                                                                display: inline-block;
+                                                                position: relative;
+                                                                top: 2px;
+                                                                left: -3px;
+                                                                ">
+                                                                </span>参数调整</div>
+                                                        <div style="text-align: left;font-size: 0.7rem;">
+                                                            <mat-form-field style="width: 100%;">
+                                                                <span matPrefix>模拟次数:</span>
+                                                                <input matInput #frequency="ngModel" value="10000" name="frequency" [(ngModel)]="calculateParams.frequency" pattern="^[0-9]*$">
+                                                                <mat-error *ngIf="frequency.invalid">非空且必须为数字</mat-error>
+                                                                <span matSuffix style="color: #839008;">次</span>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- 累计违约率 -->
+                                                <div class="row" style="padding: 0px 0px 5px 0px;">
+                                                    <div class="col-4" style="padding: 0rem;color: #8f9396">
+                                                        <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                                                            <span style="
+                                                            border-left: 2px solid #af9c9c;
+                                                            height: 0.8rem;
+                                                            width: 0.2rem;
+                                                            display: inline-block;
+                                                            position: relative;
+                                                            top: 2px;
+                                                            left: -3px;
+                                                            ">
+                                                            </span>累计违约率</div>
+                                                        <div style="text-align: left;font-size: 0.7rem;">
+                                                            <mat-form-field style="width: 100%;">
+                                                                <span matPrefix>选择分布: </span>
+                                                                <mat-select [(ngModel)]="calculateParams.cumulativeDefaultRate.type">
+                                                                    <mat-option value="1">对数正态分布</mat-option>
+                                                                    <mat-option value="2">离散分布</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-4" style="padding: 0rem;color: #8f9396">
+                                                        <div style="text-align: left;font-size: 0.7rem;">
+                                                            <mat-form-field style="width: 100%;">
+                                                                <span matPrefix>分布均值: </span>
+                                                                <input matInput [(ngModel)]="calculateParams.cumulativeDefaultRate.average" >
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-4" style="padding: 0rem;color: #8f9396">
+                                                        <div style="text-align: left;font-size: 0.7rem;">
+                                                            <mat-form-field style="width: 100%;">
+                                                                <span matPrefix>分布方差: </span>
+                                                                <input matInput [(ngModel)]="calculateParams.cumulativeDefaultRate.variance">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- 违约时间分布 -->
+                                                <div class="row" style="padding: 0px 0px 5px 0px;" >
+                                                    <div class="col-4" style="padding: 0rem;color: #8f9396">
+                                                        <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                                                            <span style="
+                                                            border-left: 2px solid #af9c9c;
+                                                            height: 0.8rem;
+                                                            width: 0.2rem;
+                                                            display: inline-block;
+                                                            position: relative;
+                                                            top: 2px;
+                                                            left: -3px;
+                                                            ">
+                                                            </span>违约时间分布</div>
+                                                        <div style="text-align: left;font-size: 0.7rem;">
+                                                            <mat-form-field style="width: 100%;">
+                                                                <span matPrefix>选择分布: </span>
+                                                                <mat-select [(ngModel)]="calculateParams.defaultTimeDistribution.type">
+                                                                    <mat-option value="1">对数正态分布</mat-option>
+                                                                    <mat-option value="2">离散分布</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-4" style="padding: 0rem;color: #8f9396">
+                                                        <div style="text-align: left;font-size: 0.7rem;">
+                                                            <mat-form-field style="width: 100%;">
+                                                                <mat-select [(ngModel)]="calculateParams.defaultTimeDistribution.type1">
+                                                                    <mat-option value="1">第N年</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-4" style="padding: 0rem;color: #8f9396">
+                                                        <div style="text-align: left;font-size: 0.7rem;">
+                                                            <mat-form-field style="width: 100%;">
+                                                                <mat-select [(ngModel)]="calculateParams.defaultTimeDistribution.type2">
+                                                                    <mat-option value="1">默认</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- 提前还款率 -->
+                                                <div class="row" style="padding: 0px 0px 5px 0px;">
+                                                        <div class="col-4" style="padding: 0rem;color: #8f9396">
+                                                            <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                                                                <span style="
+                                                                border-left: 2px solid #af9c9c;
+                                                                height: 0.8rem;
+                                                                width: 0.2rem;
+                                                                display: inline-block;
+                                                                position: relative;
+                                                                top: 2px;
+                                                                left: -3px;
+                                                                ">
+                                                                </span>提前还款率</div>
+                                                            <div style="text-align: left;font-size: 0.7rem;">
+                                                                <mat-form-field style="width: 100%;">
+                                                                    <span matPrefix>选择分布:</span>
+                                                                    <mat-select [(ngModel)]="calculateParams.conPrepaymentRate.type">
+                                                                        <mat-option value="1">对数正态分布</mat-option>
+                                                                        <mat-option value="2">离散分布</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="col-4" style="padding: 0rem;color: #8f9396">
+                                                            <div style="text-align: left;font-size: 0.7rem;">
+                                                                <mat-form-field style="width: 100%;">
+                                                                    <span matPrefix>值:</span>
+                                                                    <input matInput [(ngModel)]="calculateParams.conPrepaymentRate.value">
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- 回收率曲线 -->
+                                                    <div class="row">
+                                                        <div class="col" style="padding: 0rem;color: #8f9396">
+                                                            <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                                                                <span style="
+                                                                border-left: 2px solid #af9c9c;
+                                                                height: 0.8rem;
+                                                                width: 0.2rem;
+                                                                display: inline-block;
+                                                                position: relative;
+                                                                top: 2px;
+                                                                left: -3px;
+                                                                ">
+                                                                </span>回收率曲线</div>
+                                                        <table class="table table-sm" style="position: relative;top: 10px;">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="col" style="text-align:left;width: 65px;">回归周期</th>
+                                                                    <td>&nbsp;1</td><td>&nbsp;2</td><td>&nbsp;3</td><td>&nbsp;4</td>
+                                                                    <td>&nbsp;5</td><td>&nbsp;6</td><td>&nbsp;7</td><td>&nbsp;8</td>
+                                                                    <td>&nbsp;9</td><td>10</td><td>11</td><td>12</td>
+                                                                </tr>
+                                                                <tr class="huiguirate-form">
+                                                                    <th style="text-align: left;">回归率</th>
+                                                                    <td>
+                                                                        <mat-form-field style="width: 30px;">
+                                                                            <input matInput>
+                                                                            <span matSuffix style="color: #839008;">%</span>
+                                                                        </mat-form-field>
+                                                                    </td>
+                                                                    <td>
+                                                                        <mat-form-field  style="width: 30px;">
+                                                                            <input matInput>
+                                                                            <span matSuffix style="color: #839008;">%</span>
+                                                                        </mat-form-field>
+                                                                    </td>
+                                                                    <td>
+                                                                        <mat-form-field  style="width: 30px;">
+                                                                            <input matInput>
+                                                                            <span matSuffix style="color: #839008;">%</span>
+                                                                        </mat-form-field>
+                                                                    </td>
+                                                                    <td>
+                                                                        <mat-form-field  style="width: 30px;">
+                                                                            <input matInput>
+                                                                            <span matSuffix style="color: #839008;">%</span>
+                                                                        </mat-form-field>
+                                                                    </td>
+                                                                    <td>
+                                                                    <mat-form-field  style="width: 30px;">
+                                                                        <input matInput>
+                                                                        <span matSuffix style="color: #839008;">%</span>
+                                                                    </mat-form-field>
+                                                                </td>
+                                                                <td>
+                                                                    <mat-form-field  style="width: 30px;">
+                                                                        <input matInput>
+                                                                        <span matSuffix style="color: #839008;">%</span>
+                                                                    </mat-form-field>
+                                                                </td>
+                                                                <td>
+                                                                    <mat-form-field  style="width: 30px;">
+                                                                        <input matInput>
+                                                                        <span matSuffix style="color: #839008;">%</span>
+                                                                    </mat-form-field>
+                                                                </td>
+                                                                <td>
+                                                                    <mat-form-field  style="width: 30px;">
+                                                                        <input matInput>
+                                                                        <span matSuffix style="color: #839008;">%</span>
+                                                                    </mat-form-field>
+                                                                </td>
+                                                                <td>
+                                                                        <mat-form-field  style="width: 30px;">
+                                                                            <input matInput>
+                                                                            <span matSuffix style="color: #839008;">%</span>
+                                                                        </mat-form-field>
+                                                                    </td>
+                                                                    <td>
+                                                                        <mat-form-field  style="width: 30px;">
+                                                                            <input matInput>
+                                                                            <span matSuffix style="color: #839008;">%</span>
+                                                                        </mat-form-field>
+                                                                    </td>
+                                                                    <td>
+                                                                            <mat-form-field  style="width: 30px;">
+                                                                                <input matInput>
+                                                                                <span matSuffix style="color: #839008;">%</span>
+                                                                            </mat-form-field>
+                                                                        </td>
+                                                                        <td>
+                                                                            <mat-form-field  style="width: 30px;">
+                                                                                <input matInput>
+                                                                                <span matSuffix style="color: #839008;">%</span>
+                                                                            </mat-form-field>
+                                                                        </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-muted" style="text-align: left;padding: 0.2rem 0rem 0rem 0rem;background: #fff;">
+                                            <button class="btn btn-primary btn-sm" type="button" style="border-radius: 0rem;padding: 0.1rem 0.5rem;">重新测算</button>
+                                            <button class="btn btn-default  btn-sm" type="button" style="border-radius: 0rem;padding: 0.1rem 0.5rem;">取 消</button>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                        </li>
+                      <li class="nav-item">
+                          <a class="nav-link active" href="#" style="padding: 0.5rem 0.5rem;color: #a0a4ad; font-size: 0.8rem;"><i class="fa fa-address-card"></i></a>
+                      </li>
+                      <li>
+                          <a class="nav-link active" href="#" style="padding: 0.5rem 0.5rem;color: #a0a4ad; font-size: 0.8rem;"><i class="fa fa-cog"></i></a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link active" href="#" style="padding: 0.5rem 0.5rem;color: #a0a4ad; font-size: 0.8rem;"><i class="fa fa-calendar"></i></a>
+                      </li>
+                      <li class="nav-item" style="flex: 1 1 auto;"></li>
+                      <li class="nav-item">
+                            <div class="btn-group">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" style="padding: 0.5rem 0.5rem;color: #a0a4ad; font-size: 0.8rem;">
+                                    <i class="fa fa-filter"></i>参考曲线
+                                </a>
+                                <div class="dropdown-menu" (click)="$event.stopPropagation()">
+                                        <mat-list>
+                                            <mat-list-item *ngFor="let item of chart.datas.periods" style="height: 30px;"> 
+                                                <mat-checkbox style="flex: 1 1 auto;"  [(ngModel)]="item.showLine" (ngModelChange)="updateChartFromYieldCurve()">{{item.name}}</mat-checkbox>
+                                                <mat-radio-button [value]="item.showlicha" (change)="updateChartFromYieldCurve(item);"></mat-radio-button>
+                                            </mat-list-item>
+                                        </mat-list>
+                                </div>
+                            </div>
+                         
+                      </li>
+                  </ul>
+              </div>
+              <div class="card-body" style="padding: 0rem;position: relative; overflow: visible;">
+                    <div #showRateTipDom class="tooltip fade bs-tooltip-top" style="will-change: transform; position: absolute; left: 40px;z-index: 1;" x-placement="top"><div class="arrow" style="left: 51px;"></div><div class="tooltip-inner"></div></div>
+                    <div #showPerTipDom class="tooltip fade bs-tooltip-top" style="will-change: transform; position: absolute; right: 40px;z-index: 1;" x-placement="top"><div class="arrow" style="left: 51px;"></div><div class="tooltip-inner"></div></div>
+                    <div #sylRateChart style="height: 340px;"></div>
+              </div>
+          </div>
+     </div>
+      
+      <div class="col" style="flex: 0 0 350px;overflow: hidden; padding-top: 2.5rem; border: 1px solid rgba(0, 0, 0, 0.125)">
+            <!-- right --> 
+            <div class="card fendang-detail">
+                <div class="card-header" style="border-bottom: none;">
+                        <h5 class="card-title">{{proData.projInfo && proData.projInfo.proposalName}}</h5>
+                    </div>
+                    <div class="card-body" style="padding: .25rem">
+                        <mat-tab-group>
+                            <mat-tab [label]="item.securitiesShortName" *ngFor="let item of proData.list">
+                                <div class="card">
+                                    <div class="card-body" style="padding: 3.3rem 0 0rem 0rem;">
+                                        <h6 class="card-subtitle" style="color: #bac3cc;font-size: 0.5rem;margin-bottom: 0.2rem">分档规模(万元)</h6>
+                                        <h5 class="card-title" style="font-size: 2rem;color: #62686f;">
+                                                {{(item.securitiesSize / 10000) | currency:'':true:'0.2-2'}}
+                                            </h5>
+                                        <div class="container-fluid" style="margin-top: 3rem;">
+                                            <div class="row">
+                                                <div class="col-sm" style="padding-left: 0rem;padding-right:0rem;text-algin:left;">
+                                                    <div style="font-size: 0.5rem;color: #bac3cc;">还本方式</div>
+                                                    <div style="font-size: 0.5rem;color: #62686f;"> {{item.paybackType}}</div>
+                                                </div>
+                                                <div class="col-sm" style="padding-left: 0rem; padding-right: 0rem;text-align:left;">
+                                                    <div style="font-size: 0.5rem;color: #bac3cc;">到期日</div>
+                                                    <div style="font-size: 0.5rem;color: #62686f;">{{item.maturityDate | date: "yyyy-MM-dd"}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

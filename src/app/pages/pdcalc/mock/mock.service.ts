@@ -13,7 +13,7 @@ export class MockService{
 
     // 产品证券结构
     private createGetProjiectZqjgMock() {
-        this.httpMockServer.createGet(Options.getProjiectZqjg.url, (req: HttpRequest<any>) => {
+        this.httpMockServer.createGet(Options.getSecsInfoById.url, (req: HttpRequest<any>) => {
             const status: number = 200;
             const statusText: string = 'OK';
             const headers: HttpHeaders = new HttpHeaders();

@@ -1,11 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
-    selector: 'projecct-zqjg',
-    templateUrl: './projectzqjg.compoment.html',
+    selector: 'secustructure-table',
+    templateUrl: './secustructure.compoment.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProjectZqjgComponent implements OnInit {
+export class SecuStructureComponent implements OnInit {
 
     @Input() datas: Array<any>;
 

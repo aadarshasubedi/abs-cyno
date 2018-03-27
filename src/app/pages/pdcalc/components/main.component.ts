@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PdcalsService } from '../service/pdcalc.service';
 import { Router } from '@angular/router';
+import { MessageService } from '../../../../sdk/services';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
     templateUrl: './main.component.html',
@@ -8,28 +10,26 @@ import { Router } from '@angular/router';
     styleUrls: ['./main.scss']
 })
 export class MainComponent implements OnInit {
+    //产品信息
+    projectInfo: any = {};
 
-    projectZjDatas: Array<any>;
-
-    projecctYieldRateData: any;
+    projectYieldRateData: any;
 
     constructor(
         private pdcalsService: PdcalsService,
-        private router: Router
+        private router: Router,
+        private messageService: MessageService
     ) { }
 
     ngOnInit() {
-        //初始化产品证券结构数据
-        this.pdcalsService.getProjiectZqjg(null).subscribe((resp: any) => {
-            this.projectZjDatas = resp.datas;
-        });
-
-        //初始化产品证券结构数据
-        this.pdcalsService.getProjecctYieldRate(null).subscribe((resp: any) => {
-            this.projecctYieldRateData = resp;
+        forkJoin(
+            this.pdcalsService.getSecscommList('20180319329516'),
+            this.pdcalsService.initPdCalsResult(null)
+        ).subscribe((resps) => {
+            this.projectInfo = resps[0];
+            this.projectYieldRateData = resps[1];
         }, (error) => {
-            
-        });
-
+            this.messageService.alertError('加载数据错误');
+        })
     }
 }

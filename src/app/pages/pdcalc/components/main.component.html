@@ -1,6 +1,8 @@
 <div class="card cyno-body pdcalc-main function-body">
         <div class="card-header">
-          <h5 class="card-title project-title">百度有钱花-天风2017年第二期资产支持专项计划</h5>
+          <h5 class="card-title project-title">
+            {{projectInfo.projectName && projectInfo.projInfo.projectName }} -  
+            {{projectInfo.projInfo && projectInfo.projInfo.proposalName }}</h5>
           <h6 class="card-subtitle mb-2 text-muted project-sbutitle">收益率分布测算</h6>
           <div class="project-sbutitle-desc">
               <span class="badge badge-primary">静态池</span>
@@ -11,27 +13,48 @@
       </div>
       <div class="card-body">
         <!-- 产品证券结构 -->
-        <projecct-zqjg [datas]="projectZjDatas"></projecct-zqjg>
-  
+        <secustructure-table [datas]="projectInfo.list"></secustructure-table>
         <!--测算 -->
         <div class="card">
-            <div class="card-body card-body-nopadding">
+            <div class="card-body card-body-nopadding" style="padding: 1.25rem 1.25rem 3rem 1.25rem;">
                 <div class="container-fluid">
                     <div class="row" style="flex-wrap: nowrap;">
-                        <div class="col" style="flex: 1 1 auto">
+                        <div class="col" style="flex: 1 1 auto;position:  relative;padding-left:  0px;padding-right: 0px;">
+                            <button type="button" class="btn btn-primary btn-sm" style="
+                                position:  absolute;
+                                right: 0px;
+                                top: 10px;
+                                border-radius: 0rem;
+                                z-index: 5;
+                            ">查看报告</button>
                             <mat-tab-group>
                                 <mat-tab label="概率分布测算">
-                                    <chart-1 [datas]="projecctYieldRateData"></chart-1>
+                                    <chart-incomerate [datas]="projectYieldRateData" [graphicDescElRef]="graphicDescDom" [proData]="projectInfo" ></chart-incomerate>
                                 </mat-tab>
                                 <mat-tab label="压力情景测试">
                                         <div class="demo-tab-content"></div>
                                 </mat-tab>
                             </mat-tab-group>
+                            <div #graphicDescDom style="
+                                border-radius: 0rem;
+                                background:  #fff;
+                                font-size: 0.8rem;
+                                padding: 0.25rem 0rem;
+                                height: 1.5rem;
+                                position:  absolute;
+                                left:0px;
+                                bottom:-20px;
+                                border: none;
+                                ">
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
         </div>
       </div>
   </div>
+
+ 
   
   

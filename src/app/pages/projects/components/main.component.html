@@ -1,0 +1,58 @@
+<div class="card cyno-body function-body projects-main" style="padding-top: 20px;">
+    <mat-tab-group>
+        <mat-tab label="我的关注"></mat-tab>
+        <mat-tab label="银行间"></mat-tab>
+        <mat-tab label="上交所"></mat-tab>
+        <mat-tab label="深交所"></mat-tab>
+        <mat-tab label="银登中心"></mat-tab>
+        <mat-tab label="机构间报价"></mat-tab>
+        <mat-tab label="其他"></mat-tab>
+</mat-tab-group>
+<div class="body-table">
+    <mat-ext-table>
+
+
+        <ng-container cdkColumnDef="position">
+            <cdk-header-cell *cdkHeaderCellDef> 编号 </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let element"> {{element.position}} </cdk-cell>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container cdkColumnDef="name">
+            <cdk-header-cell *cdkHeaderCellDef> 名称 </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let element"> {{element.name}} </cdk-cell>
+          </ng-container>
+      
+          <!-- Weight Column -->
+          <ng-container cdkColumnDef="weight">
+            <cdk-header-cell *cdkHeaderCellDef> 宽度 </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let element"> {{element.weight}} </cdk-cell>
+          </ng-container>
+      
+          <!-- Symbol Column -->
+          <ng-container cdkColumnDef="symbol">
+            <cdk-header-cell *cdkHeaderCellDef> 特证 </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let element"> {{element.symbol}} </cdk-cell>
+          </ng-container>
+
+          <ng-container cdkColumnDef="xxxxxxxxxx">
+              <cdk-header-cell *cdkHeaderCellDef> 特证11 </cdk-header-cell>
+              <cdk-cell *cdkCellDef="let element"> {{element.xxxxxxxxxx}} </cdk-cell>
+          </ng-container>
+
+          
+
+           
+            <ng-container cdkColumnDef="colgroup">
+                <header-group-cell *cdkHeaderCellDef title="中国">
+                  <header-group-cell title="天津"></header-group-cell>
+                  <header-group-cell title="上海"></header-group-cell>
+                  <header-group-cell title="美国"></header-group-cell>
+                </header-group-cell>
+                <cdk-cell *cdkCellDef="let element"> {{element.symbol}} </cdk-cell>
+              </ng-container>
+          <cdk-header-row *cdkHeaderRowDef="['position', 'name', 'weight', 'symbol', 'colgroup','xxxxxxxxxx']"></cdk-header-row>
+
+    </mat-ext-table>
+</div>
+</div>

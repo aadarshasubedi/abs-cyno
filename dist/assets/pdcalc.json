@@ -79,8 +79,13 @@
             "curveCode": "2331",
             "curveName": "中债资产支持证券收益率曲线(A+)",
             "curveType": null,
-            "isShow": "Y",
+            "isShow": null,
             "yieldCurveDatas": [
+                {
+                    "mtrty": 0,
+                    "yld": 0,
+                    "isSelect": null
+                },
                 {
                     "mtrty": 0.25,
                     "yld": 0.051001,
@@ -98,8 +103,13 @@
             "curveCode": "2311",
             "curveName": "中债资产支持证券收益率曲线(AA)",
             "curveType": null,
-            "isShow": "Y",
+            "isShow": null,
             "yieldCurveDatas": [
+                {
+                    "mtrty": 0,
+                    "yld": 0,
+                    "isSelect": null
+                },
                 {
                     "mtrty": 0.17,
                     "yld": 0.047829,
@@ -125,6 +135,11 @@
             "isShow": "Y",
             "yieldCurveDatas": [
                 {
+                    "mtrty": 0,
+                    "yld": 0,
+                    "isSelect": null
+                },
+                {
                     "mtrty": 0.08,
                     "yld": 0.042724,
                     "isSelect": null
@@ -143,6 +158,11 @@
             "curveType": null,
             "isShow": null,
             "yieldCurveDatas": [
+                {
+                    "mtrty": 0,
+                    "yld": 0,
+                    "isSelect": null
+                },
                 {
                     "mtrty": 0.08,
                     "yld": 0.044424,
@@ -170,8 +190,13 @@
             "curveCode": "1331",
             "curveName": "中债资产支持证券收益率曲线(AAA)",
             "curveType": null,
-            "isShow": null,
+            "isShow": "Y",
             "yieldCurveDatas": [
+                {
+                    "mtrty": 0,
+                    "yld": 0,
+                    "isSelect": null
+                },
                 {
                     "mtrty": 0.08,
                     "yld": 0.041324,
@@ -194,8 +219,13 @@
             "curveCode": "2301",
             "curveName": "中债资产支持证券收益率曲线(AAA-)",
             "curveType": null,
-            "isShow": null,
+            "isShow": "Y",
             "yieldCurveDatas": [
+                {
+                    "mtrty": 0,
+                    "yld": 0,
+                    "isSelect": null
+                },
                 {
                     "mtrty": 0.08,
                     "yld": 0.042024,

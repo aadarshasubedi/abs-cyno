@@ -2,7 +2,7 @@
 @import "../../../themes/mixin.scss";
 
 .cyno-header {
-    transition: height .5s ease-out;
+    transition: all .5s ease-out;
     background: $navbar-background;
     font-size: $navbar-fontsize;
     color: rgba(254, 254, 254, 1);
@@ -11,6 +11,7 @@
     &.scrolled {
         height: 35px;
         overflow: hidden;
+        opacity: 0.6;
         &::before, &::after {
             height: 0px;
         }

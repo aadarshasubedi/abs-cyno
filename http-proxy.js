@@ -8,7 +8,8 @@ module.exports = {
             "^/basePath": ""
         }
     },
-    "/cyno/cynoweb/pdcalc/initPdCalsResult.do": {
-        target: "http://192.168.20.17:8080"
+    "/cyno/cynoweb": {
+        //target: "http://192.168.20.17:8080"
+        target: "http://192.168.70.39:8001"
     }
 }
