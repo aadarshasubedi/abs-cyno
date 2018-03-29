@@ -31,74 +31,180 @@ const ELEMENT_DATA: any[] = [
 })
 export class MainComponent implements OnInit {
 
-    //displayedColumns1 = ['position', 'name', 'weight', 'symbol'];
-    dataSource = new MatTableDataSource([]);
-    displayedColumns = ['position', 'name', 'symbol'];
-    displayedHColumns = ['position', 'name', 'symbol', 'weight'];
-    // dataSource11: MatTableDataSource<any> = new MatTableDataSource<any>([
-    //     {
-    //     col1: 1,
-    //     col2: '交元2017年第一期',
-    //     col3: '信用卡分期',
-    //     col4: '平安国际融资租赁有限公司',
-    //     col5: '2018/03/11',
-    //     },
-    //     {
-    //         col1: 2,
-    //         col2: '交元2017年第一期',
-    //         col3: '信用卡分期',
-    //         col4: '平安国际融资租赁有限公司',
-    //         col5: '2018/03/11',
-    //         }, {
-    //             col1: 3,
-    //             col2: '交元2017年第一期',
-    //             col3: '信用卡分期',
-    //             col4: '平安国际融资租赁有限公司',
-    //             col5: '2018/03/11',
-    //             }
-
-    // ]);
-
-    // mockData: {[name: string]: any} = {
-    //     col2: '交元2017年第一期',
-    //     col3: '信用卡分期',
-    //     col4: '平安国际融资租赁有限公司',
-    //     col5: '2018/03/11',
-    //     list: [
-    //         {
-    //             col7: '1789284', col8: '优先A', col9: '20,000',col10: 0.4, col11: 0.4, col12: 'AAA',
-    //             col13: 0.4,col14: 0.4,col15: 0.4,col16: 0.4,col17: 0.4
-    //         },
-    //         {
-    //             col7: '1789284', col8: '优先A', col9: '20,000',col10: 0.4, col11: 0.4, col12: 'AAA',
-    //             col13: 0.4,col14: 0.4,col15: 0.4,col16: 0.4,col17: 0.4
-    //         },
-    //         {
-    //             col7: '1789284', col8: '优先A', col9: '20,000',col10: 0.4, col11: 0.4, col12: 'AAA',
-    //             col13: 0.4,col14: 0.4,col15: 0.4,col16: 0.4,col17: 0.4
-    //         },
-    //         {
-    //             col7: '1789284', col8: '优先A', col9: '20,000',col10: 0.4, col11: 0.4, col12: 'AAA',
-    //             col13: 0.4,col14: 0.4,col15: 0.4,col16: 0.4,col17: 0.4
-    //         }
-    //     ]
-    // };
-
-
-    // displayedColumns = [
-    //     'col1', 'col2', 'col3'
-    // ];
+    dataSource: MatTableDataSource<any>;
 
     constructor() { }
 
     ngOnInit() { 
-        // const datas = [];
-        // let row: any;
-        // //初始化数据
-        // for(let i = 0; i < 30; i++) {
-        //     row = Object.assign(this.mockData);
-        // }
+        this.dataSource = new MatTableDataSource([
+            {
+                num: 1, projectName: '交元2017年第一期', 
+                projectType: '信用卡分期',
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            },
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期',
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            },
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期',
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            },
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+            ,
+            {
+                num: 1, projectName: '交元2017年第一期',
+                projectType: '信用卡分期', 
+                oldSyr: '平安国际融资租赁有限公司',
+                qxr: '2018/03/11',
+                project: '项目1', d1: 200, d2: 300,
+                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
+            }
+        ]);
 
-        //this.dataSource = new MatTableDataSource(row);
     }
 }

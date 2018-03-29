@@ -23,6 +23,7 @@
         "../node_modules/normalize.css/normalize.css",
         "../node_modules/pace-js/themes/yellow/pace-theme-flat-top.css",
         "../node_modules/animate.css/animate.css",
+        "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
         "styles.scss",
         "styles.css"
       ],

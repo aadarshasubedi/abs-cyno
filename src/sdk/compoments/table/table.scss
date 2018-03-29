@@ -1,10 +1,12 @@
-$mat-header-row-height: 23px;
-$mat-row-height: 16px;
-$mat-row-horizontal-padding: 10px;
+$mat-header-row-height: 30px;
+$mat-row-height: 26px;
+$mat-row-horizontal-padding: 0px;
 
 .mat-ext-table .cdk-header-row {
   min-height: $mat-header-row-height;
   border-bottom-color:rgba(0,0,0,.12);
+  border-top: 1px solid rgba(0,0,0,.12);
+  align-items: center;
     .cdk-header-cell {
         color: rgba(0,0,0,.54);
     }
@@ -36,9 +38,38 @@ $mat-row-horizontal-padding: 10px;
   word-wrap: break-word;
   text-align: left;
   font-size: 0.7rem;
+}
+
+.mat-ext-table .cdk-cell{
   text-align: center;
 }
 
-.mat-ext-table .header-group-cell .cdk-header-row:last-child{
+.mat-ext-table .cdk-header-cell {
+  text-align: center;
+}
+
+.mat-ext-table .header-group-cell .cdk-header-row{
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  border-left: 1px solid rgba(0,0,0,.12);
+  border-right: 1px solid rgba(0,0,0,.12);
+  border-top: none;
+}
+
+.mat-ext-table .header-group-cell .cdk-header-row:last-child,
+.mat-ext-table .cdk-row.jycdk-group-row .cdk-row,
+.mat-ext-table .cdk-cell.group-row-cell .cdk-row.jycdk-group-row:last-child{
     border-bottom: none;
+}
+
+.mat-ext-table jycdk-header-row > .header-group-cell:first-child > .cdk-header-row {
+  border-left: none;
+}
+
+.mat-ext-table jycdk-header-row > .header-group-cell:last-child > .cdk-header-row{
+  border-right: none;
+}
+
+.mat-ext-table .group-row-cell .jycdk-group-row {
+  border-left: 1px solid rgba(0,0,0,.12);
+  border-right: 1px solid rgba(0,0,0,.12);
 }

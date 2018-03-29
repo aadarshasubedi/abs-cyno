@@ -27,7 +27,7 @@ import {
     CdkHeaderRow,
     CdkCellDef,
     CdkHeaderCell} from '@angular/cdk/table';
-    import { JyCdkHeaderRow } from './row';
+import { JyCdkHeaderRow } from './row';
 
 @Directive({
     selector: '[headerGroupCellOutlet]',
@@ -40,12 +40,12 @@ export class HeaderGroupCellOutlet {
 @Component({
     selector: 'header-group-cell',
     template: `
-        <ng-template #hasGroupTitle><cdk-header-cell style="text-align: center;">{{title}}</cdk-header-cell></ng-template>
+        <ng-template #hasGroupTitle><cdk-header-cell style="text-align: center;color:inherit;font-weight:inherit;">{{title}}</cdk-header-cell></ng-template>
         <ng-template #noGroupTitle>{{title}}</ng-template>
         <ng-template #chiledGroup><ng-content></ng-content></ng-template>
         <ng-container #titleGroupCellOutlet="HeaderGroupCellOutlet" headerGroupCellOutlet></ng-container>
         <jycdk-header-row #titleRow style="display: none;"></jycdk-header-row>
-        <jycdk-header-row #groupRow  style="display: none;"></jycdk-header-row>
+        <jycdk-header-row #groupRow style="display: none;"></jycdk-header-row>
     `,
     host: {
         'class': 'cdk-header-cell header-group-cell'
@@ -97,7 +97,7 @@ export class HeaderGroupCell extends CdkHeaderCell  implements OnInit, AfterCont
         this.groupRow.outlet._viewContainer.clear();
 
         this.renderTitle();
-        this.updateFlexBsic();
+        //this.updateFlexBsic();
         this._changed = false;
     }
 
@@ -116,9 +116,9 @@ export class HeaderGroupCell extends CdkHeaderCell  implements OnInit, AfterCont
         }
     }
 
-    private updateFlexBsic(){
-        const count = (this.childGroups || []).length;
-        this.elementRef.nativeElement.style.flex = '' + (count > 1 ? (count - 1) : 1);
-    }
+    // private updateFlexBsic(){
+    //     const count = (this.childGroups || []).length;
+    //     this.elementRef.nativeElement.style.flex = '' + (count > 1 ? (count - 1) : 1);
+    // }
 
 }

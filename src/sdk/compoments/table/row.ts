@@ -21,7 +21,10 @@ import {
 
 @Directive({selector: '[jyCdkHeaderCellOutlet]'})
 export class JyCdkHeaderCellOutlet {
-    constructor(public _viewContainer: ViewContainerRef) {}
+    static currentCellOutlet: JyCdkHeaderCellOutlet;
+    constructor(public _viewContainer: ViewContainerRef) {
+        JyCdkHeaderCellOutlet.currentCellOutlet = this;
+    }
 }
 
 //重写cdk-header-row
@@ -41,5 +44,40 @@ export class JyCdkHeaderRow {
     constructor(public el: ElementRef){}
 
     @ViewChild(JyCdkHeaderCellOutlet) outlet: JyCdkHeaderCellOutlet;
+
+}
+
+//重写cdk-row
+@Component({
+    moduleId: module.id,
+    selector: 'jycdk-row',
+    template: '<ng-container jyCdkHeaderCellOutlet></ng-container>',
+    host: {
+      'class': 'cdk-row',
+      'role': 'row'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+  })
+export class JyCdkRow { 
+    constructor(public el: ElementRef){}
+    @ViewChild(JyCdkHeaderCellOutlet) outlet: JyCdkHeaderCellOutlet;
+
+}
+
+
+@Component({
+    moduleId: module.id,
+    selector: 'jycdk-group-row',
+    template: '<ng-content></ng-content>',
+    host: {
+      'class': 'cdk-row jycdk-group-row',
+      'role': 'row'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+  })
+export class JyCdkGroupRow { 
+    constructor(public el: ElementRef){}
 
 }
