@@ -29,7 +29,7 @@ import { NavBarComponent } from './pages/navbar/navbar';
     CommonModule,
     BrowserAnimationsModule,
     AppMockDevModule,
-    (environment.production ? AppMockModule : AppMockDevModule),
+    //(environment.production ? AppMockModule : AppMockDevModule),
     SdkHttpModule,
     MessageModule,
     LoadingModule,

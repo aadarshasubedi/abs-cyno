@@ -8,7 +8,7 @@ const routes: Routes = [{
     path: '',
     component: PdcalcComponent,
     children: [
-        {path: 'pdcalc', component: MainComponent}
+        {path: 'pdcalc/:proposalId/:type', component: MainComponent}
     ]
 }];
 

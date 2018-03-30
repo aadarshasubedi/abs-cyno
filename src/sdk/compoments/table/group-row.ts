@@ -74,7 +74,8 @@ export class GroupRowCell implements OnInit, AfterContentChecked, OnDestroy {
     private _render() {
         const datas = this._contentGroupCellRowDef.rows || [];
         datas.forEach((d) => {
-            this.groupCellRowCellOutlet._viewContainer.createEmbeddedView(this._contentGroupCellRowDef.template, {d});
+            const context: any = {$implicit: d};
+            this.groupCellRowCellOutlet._viewContainer.createEmbeddedView(this._contentGroupCellRowDef.template, context);
         });
     }
 

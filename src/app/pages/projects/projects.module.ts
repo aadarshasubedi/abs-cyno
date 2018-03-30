@@ -9,7 +9,9 @@ import { MatSelectModule} from '@angular/material/select';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import { MatButtonToggleModule} from '@angular/material/button-toggle';
 import { MatDividerModule} from '@angular/material/divider';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatTooltipModule} from '@angular/material/tooltip';
 import { MatCardModule} from '@angular/material/card';
 import { MatListModule} from '@angular/material/list';
 import { MatDialogModule} from '@angular/material/dialog';
@@ -23,7 +25,7 @@ import { ProjectsRoutingModule } from './projects.routing.module';
 
 import { TableModule} from '../../../sdk/compoments/table/module';
 import { MAT_PAGINATOR_INTL_PROVIDER } from '../../../sdk/compoments/paginator/matPaginatorIntl';
-
+import { ProjectsService } from './service/projects.service';
 @NgModule({
     declarations: [ProjectsComponent, MainComponent],
     imports: [
@@ -34,6 +36,7 @@ import { MAT_PAGINATOR_INTL_PROVIDER } from '../../../sdk/compoments/paginator/m
         MatGridListModule,
         MatSelectModule,
         MatButtonToggleModule,
+        MatTooltipModule,
         MatProgressBarModule,
         MatDividerModule,
         MatCardModule,
@@ -41,6 +44,7 @@ import { MAT_PAGINATOR_INTL_PROVIDER } from '../../../sdk/compoments/paginator/m
         TableModule,
         MatListModule,
         MatPaginatorModule,
+        MatProgressSpinnerModule,
         MatDialogModule,
         MatTabsModule,
         MatRadioModule,
@@ -48,6 +52,6 @@ import { MAT_PAGINATOR_INTL_PROVIDER } from '../../../sdk/compoments/paginator/m
         FormsModule,
         ProjectsRoutingModule ],
     exports: [],
-    providers: [MAT_PAGINATOR_INTL_PROVIDER],
+    providers: [MAT_PAGINATOR_INTL_PROVIDER, ProjectsService],
 })
 export class ProjectsModule {}

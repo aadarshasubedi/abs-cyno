@@ -13,8 +13,8 @@ export class PdcalsService {
      * 获取产品证信息
      * @param securitiesId 产品Id
      */
-    getSecsInfoById(securitiesId: any): Observable<any> {
-        return this.http.get(Options.getSecsInfoById.url, {params: {securitiesId: securitiesId}}).pipe(jsonMap());
+    getSecsInfoById(securitiesId: any, proposalId: any): Observable<any> {
+        return this.http.get(Options.getSecsInfoById.url, {params: {securitiesId: securitiesId, proposalId: proposalId}}).pipe(jsonMap());
     }
 
     /**
@@ -29,7 +29,7 @@ export class PdcalsService {
      * 获取收益率分布统计数据
      * @param projectId 项目Id
      */
-    initPdCalsResult(projectId: any) {
-        return this.http.get(Options.initPdCalsResult.url, {params: {}}).pipe(jsonMap());
+    initPdCalsResult(securitiesId: any, proposalId: any) {
+        return this.http.get(Options.initPdCalsResult.url, {params: {securitiesId: securitiesId, proposalId: proposalId}}).pipe(jsonMap());
     }
 }

@@ -1,5 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatTableDataSource, MatPaginator, MatSort, MatTabGroup} from '@angular/material';
+import { ProjectsService } from '../service/projects.service';
+import { merge} from 'rxjs/observable/merge';
+import { startWith } from 'rxjs/operators/startWith';
+import { switchMap } from 'rxjs/operators/switchMap';
+import { map } from 'rxjs/operators/map';
+import {of as observableOf} from 'rxjs/observable/of';
+import {catchError} from 'rxjs/operators/catchError';
 
 const ELEMENT_DATA: any[] = [
     {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
@@ -31,180 +39,69 @@ const ELEMENT_DATA: any[] = [
 })
 export class MainComponent implements OnInit {
 
-    dataSource: MatTableDataSource<any>;
+    isLoadingResults = false;
 
-    constructor() { }
+    pageSize = 10;
 
-    ngOnInit() { 
-        this.dataSource = new MatTableDataSource([
-            {
-                num: 1, projectName: '交元2017年第一期', 
-                projectType: '信用卡分期',
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            },
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期',
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            },
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期',
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            },
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-            ,
-            {
-                num: 1, projectName: '交元2017年第一期',
-                projectType: '信用卡分期', 
-                oldSyr: '平安国际融资租赁有限公司',
-                qxr: '2018/03/11',
-                project: '项目1', d1: 200, d2: 300,
-                list: [{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'},{ d1:  'd1',d2:  'd2'}]
-            }
-        ]);
+    selectType = 0;
 
+    resultsLength = 0;
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
+
+    dataSource: MatTableDataSource<any> = new MatTableDataSource();
+
+    params: Map<string, any>;
+
+    constructor(private projectsService: ProjectsService, private router: Router) { }
+
+    ngOnInit() {
+
+        this.tabGroup.selectedIndexChange.subscribe((index) => {
+            this.params.clear();
+            this.paginator.pageIndex = 0;
+            this.selectType = index;
+        })
+
+        merge(this.tabGroup.selectedIndexChange, this.paginator.page)
+        .pipe(
+            startWith({total: 0, pageSize: 10, datas: []}),
+            switchMap(() => {
+                this.isLoadingResults = true;
+                this._mergeParam();
+                return this.projectsService.getProjects(this.params);
+            }),
+            map(data => {
+                this.isLoadingResults = false;
+                this.resultsLength = data.total;
+                return data.list;
+            }),
+            catchError(() => {
+                this.isLoadingResults = false;
+                return observableOf([]);
+            })
+        ).subscribe(data => this.dataSource.data = data);
+    }
+
+    /**
+     * 打开测算界面
+     * @param type 0： 概率， 1：情景
+     * @param project 项目
+     */
+    goToCs(type, project){
+        this.router.navigate(['index', 'pdcalc', 'pdcalc', project.proposalId, type]);
+    }
+
+    private _mergeParam(){
+        const params = this.params || (this.params = new Map<string, any>());
+        params.set('pageIndex', this.paginator.pageIndex);
+        params.set('pageSize', this.paginator.pageSize);
+        params.set('selectType', this.selectType);
+    }
+
+    private _resetParams() {
+        this.params = new Map<string, string>();
     }
 }

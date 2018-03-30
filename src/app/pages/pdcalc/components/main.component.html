@@ -27,7 +27,7 @@
                                 border-radius: 0rem;
                                 z-index: 5;
                             ">查看报告</button>
-                            <mat-tab-group>
+                            <mat-tab-group [selectedIndex]="activeTabIndex">
                                 <mat-tab label="概率分布测算">
                                     <chart-incomerate [datas]="projectYieldRateData" [graphicDescElRef]="graphicDescDom" [proData]="projectInfo" ></chart-incomerate>
                                 </mat-tab>

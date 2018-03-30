@@ -40,7 +40,8 @@ export class HeaderGroupCellOutlet {
 @Component({
     selector: 'header-group-cell',
     template: `
-        <ng-template #hasGroupTitle><cdk-header-cell style="text-align: center;color:inherit;font-weight:inherit;">{{title}}</cdk-header-cell></ng-template>
+        <ng-template #hasGroupTitle><cdk-header-cell style="text-align: center;color:inherit;font-weight:inherit;">
+        {{title}}</cdk-header-cell></ng-template>
         <ng-template #noGroupTitle>{{title}}</ng-template>
         <ng-template #chiledGroup><ng-content></ng-content></ng-template>
         <ng-container #titleGroupCellOutlet="HeaderGroupCellOutlet" headerGroupCellOutlet></ng-container>

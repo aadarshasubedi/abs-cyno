@@ -9,43 +9,45 @@
         <mat-tab label="其他"></mat-tab>
     </mat-tab-group>
 <div class="body-table">
+    <mat-spinner *ngIf="isLoadingResults" style="position: fixed;top: calc(50vh - 50px);left: calc(50vw - 50px);"></mat-spinner>
     <mat-ext-table [dataSource]="dataSource">
         <!-- 定义列 -->
         <ng-container cdkColumnDef="num">
             <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 30px;height: 40px;color: #000;font-weight: 700;"> 序号 </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element=$implicit;let row=$row;" style="flex: 0 0 30px;height: 35px;text-align: left;"> {{row.num}} </cdk-cell>
         </ng-container>
-        <ng-container cdkColumnDef="project1">
+        <ng-container cdkColumnDef="columncesuan">
             <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 60px;height: 40px;color: #000;font-weight: 700;"> 测算 </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element" style="flex: 0 0 60px;height: 35px;text-align: left;"> 
-                <button mat-icon-button style="width: 20px;height: 20px;line-height: 20px;">
+                <button mat-icon-button style="width: 20px;height: 20px;line-height: 20px;" matTooltip="概率分布测算" (click)="goToCs(0, element)">
                     <mat-icon fontSet="fa" fontIcon="fa-sitemap"  style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
                 </button>
-                <button mat-icon-button style="width: 20px;height: 20px;line-height: 20px;">
+                <button mat-icon-button style="width: 20px;height: 20px;line-height: 20px;" matTooltip="情景分析测算" (click)="goToCs(1, element)">
                     <mat-icon fontSet="fa" fontIcon="fa-sitemap" style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
                 </button>
             </cdk-cell>
         </ng-container>
-        <ng-container cdkColumnDef="project2">
+        <ng-container cdkColumnDef="projectShortName">
             <cdk-header-cell *cdkHeaderCellDef style="height: 40px;color: #000;font-weight: 700;text-align: left;"> 项目简称 </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="height: 35px;text-align: left;"> {{element.projectName}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let element" style="height: 35px;text-align: left;"> {{element.projectShortName}} </cdk-cell>
         </ng-container>
-        <ng-container cdkColumnDef="project21">
+        <ng-container cdkColumnDef="projectType">
             <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 70px;height: 40px;color: #000;font-weight: 700;text-align: left;"> 项目分类 </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element" style="flex: 0 0 70px;height: 35px;text-align: left;"> {{element.projectType}} </cdk-cell>
         </ng-container>
-        <ng-container cdkColumnDef="project3">
-            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 100px;height: 40px;color: #000;font-weight: 700;"> 原始权益人/发起结构 </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="flex: 0 0 100px;height: 35px;text-align: left;"> {{element.oldSyr}} </cdk-cell>
+        <ng-container cdkColumnDef="sponsorOrg">
+            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 100px;height: 40px;color: #000;font-weight: 700;"> 原始权益人/发起机构 </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let element" style="flex: 0 0 100px;height: 35px;text-align: left;"> {{element.sponsorOrg}} </cdk-cell>
         </ng-container>
-        <ng-container cdkColumnDef="project4">
+        <ng-container cdkColumnDef="valueDate">
             <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 60px;height: 40px;color: #000;font-weight: 700;text-align: left;"> 起息日 </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="flex: 0 0 60px;height: 35px;text-align: left;"> {{element.qxr}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let element" style="flex: 0 0 60px;height: 35px;text-align: left;"> {{element.valueDate}} </cdk-cell>
         </ng-container>
-        <ng-container cdkColumnDef="project5">
+        <ng-container cdkColumnDef="securitiesInfo">
             <header-group-cell *cdkHeaderCellDef title="证券结构" style="color: #000;font-weight: 700;flex: 0 0 780px;">
                 <header-group-cell title="证券代码" style="flex:0 0 60px; height: 40px;color: #000;font-weight: 700;"></header-group-cell>
-                <header-group-cell title="证券类型" style="flex:0 0 80px;  height: 40px;color: #000;font-weight: 700;"></header-group-cell>
+                <header-group-cell title="证券类型" style="flex:0 0 80px;  height: 40px;color: #000;font-weight: 700;">
+                 </header-group-cell>
                 <header-group-cell title="发行金额(万元)" style="flex:0 0 70px;height: 40px;color: #000;font-weight: 700;"></header-group-cell>
                 <header-group-cell title="期限/剩余期限(年)" style="flex:0 0 90px; height: 40px;color: #000;font-weight: 700;"></header-group-cell>
                 <header-group-cell title="当前利率(%)" style="flex:0 0 60px;height: 40px;color: #000;font-weight: 700;text-align:left;"></header-group-cell>
@@ -59,40 +61,40 @@
             </header-group-cell>
             <!-- cell grow row -->
             <group-row-cell *cdkCellDef="let element" style="flex: 0 0 780px;">
-                <jycdk-group-row *groupCellRowDef="let data; rows: element.list">
+                <jycdk-group-row *groupCellRowDef="let data; rows: element.list;">
                     <group-cell>
-                        <group-cell style="flex:0 0 60px;" >1789284</group-cell>
-                        <group-cell style="flex:0 0 80px;">优先A</group-cell> 
-                        <group-cell style="flex:0 0 70px;">20,000</group-cell>  
-                        <group-cell style="flex:0 0 90px; position: relative;height: 20px;">
-                            <span style="position: absolute;top: 0px;z-index: 2;font-weight: 700;color:#000">4/2.5</span>
-                            <mat-progress-bar mode="determinate" value="40" style="margin-top: 8px;"></mat-progress-bar>
+                        <group-cell style="flex:0 0 60px;" >{{data.securitiesCode}}</group-cell>
+                        <group-cell style="flex:0 0 80px;">{{data.securitiesType}}</group-cell> 
+                        <group-cell style="flex:0 0 70px;">{{(data.securitiesSize / 10000) | currency:'':true:'0.2-2'}}</group-cell>  
+                        <group-cell style="flex:0 0 90px; position: relative;height: 30px;">
+                            <span style="position: absolute;top: -3px;z-index: 2;left: 0px;"> {{data.expectedYears | number: '0.0-2'}}/{{(data.remainYears <= 0 ? 0 : data.remainYears)| number: '0.0-2'}}</span>
+                            <mat-progress-bar mode="determinate" [value]="(1 - (data.remainYears > 0 ? data.remainYears : 0)) * 100" style="margin-top: 15px;"></mat-progress-bar>
                         </group-cell>
-                        <group-cell style="flex:0 0 60px;">4%</group-cell> 
-                        <group-cell style="flex:0 0 60px;">AAA</group-cell>
+                        <group-cell style="flex:0 0 60px;">{{data.rate | percent:'0.2-2'}}</group-cell> 
+                        <group-cell style="flex:0 0 60px;">{{data.grade}}</group-cell>
                         <group-cell  style="flex:0 0 80px;">
                             <div style="position: relative;height: 25px;width: 68px;background: #d4ece8;margin: 0 auto;box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);">
-                                <div style="height: 10px;position: absolute;width: 100%;bottom: 0px;left: 0px;background: #74b574;z-index:  2;"></div>
-                                <span style="position: absolute; left: 15px; top: 0px;">4%</span>
+                                <div style="height: 10px;position: absolute;width: 100%;bottom: 0px;left: 0px;background: rgba(116, 181, 116, 0.5);z-index:  2;" [ngStyle]="{'height': (((data.rateAvg)*25)) + 'px'}"></div>
+                                <span style="position: absolute; left: 15px; top: 0px;">{{data.rateAvg | percent:'0.2-2'}}</span>
                             </div>
                         </group-cell>
                         <group-cell style="flex:0 0 270px;"> 
                             <group-cell>
                                 <div style="position: relative;height: 25px;width: 68px;background: #d4ece8;margin: 0 auto;box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);">
-                                    <div style="height: 10px;position: absolute;width: 100%;bottom: 0px;left: 0px;background: #74b574;z-index:  2;"></div>
-                                    <span style="position: absolute; left: 15px; top: 0px;">4%</span>
+                                    <div style="height: 10px;position: absolute;width: 100%;bottom: 0px;left: 0px;background: rgba(116, 181, 116, 0.5);z-index:2;" [ngStyle]="{'height': (((data.rateQ1)*25)) + 'px'}"></div>
+                                    <span style="position: absolute; left: 15px; top: 0px;">{{data.rateQ1 | percent:'0.2-2'}}</span>
                                 </div>
                             </group-cell>
                             <group-cell>
                                 <div style="position: relative;height: 25px;width: 68px;background: #d4ece8;margin: 0 auto;box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);">
-                                    <div style="height: 10px;position: absolute;width: 100%;bottom: 0px;left: 0px;background: #74b574;z-index:  2;"></div>
-                                    <span style="position: absolute; left: 15px; top: 0px;">4%</span>
+                                    <div style="position: absolute;width: 100%;bottom: 0px;left: 0px;background: rgba(116, 181, 116, 0.5); ;z-index:2;" [ngStyle]="{'height': (((data.rateQ2)*25)) + 'px'}"></div>
+                                    <span style="position: absolute; left: 15px; top: 0px;">{{data.rateQ2 | percent:'0.2-2'}}</span>
                                 </div>
                             </group-cell>
                             <group-cell>
                                 <div style="position: relative;height: 25px;width: 68px;background: #d4ece8;margin: 0 auto;box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);">
-                                    <div style="height: 10px;position: absolute;width: 100%;bottom: 0px;left: 0px;background: #74b574;z-index:  2;"></div>
-                                    <span style="position: absolute; left: 15px; top: 0px;">4%</span>
+                                    <div style="height: 10px;position: absolute;width: 100%;bottom: 0px;left: 0px;background: rgba(116, 181, 116, 0.5);z-index:2;" [ngStyle]="{'height': (((data.rateQ3)*25)) + 'px'}"></div>
+                                    <span style="position: absolute; left: 15px; top: 0px;">{{data.rateQ3 | percent:'0.2-2'}}</span>
                                 </div>
                             </group-cell>
                         </group-cell>
@@ -101,19 +103,20 @@
             </group-row-cell>
         </ng-container>
 
-        <ng-container cdkColumnDef="project6">
+        <ng-container cdkColumnDef="isFavorites">
             <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 40px;height: 40px;color: #000;font-weight: 700;"> 关注 </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element;" style="flex: 0 0 40px;">
-                <button mat-icon-button style="width: 20px;height: 20px;line-height: 20px;">
-                    <mat-icon fontSet="fa" fontIcon="fa-star"  style="height:18px;width:18px;line-height: 18px;color:red;"></mat-icon>
+                <button mat-icon-button style="width: 20px;height: 20px;line-height: 20px;"> 
+                    <mat-icon fontSet="fa" fontIcon="fa-star"  style="height:18px;width:18px;line-height: 18px;"
+                    [ngStyle]="{'color': element.isFavorites ? 'red' : '#dacfcf'}"></mat-icon>
                 </button>
             </cdk-cell>
         </ng-container>
 
-        <cdk-header-row *cdkHeaderRowDef="['num', 'project1', 'project2', 'project21', 'project3', 'project4', 'project5', 'project6']"></cdk-header-row>
-        <cdk-row *cdkRowDef="let row; columns: ['num', 'project1', 'project2', 'project21', 'project3', 'project4', 'project5', 'project6']"></cdk-row>
+        <cdk-header-row *cdkHeaderRowDef="['num', 'columncesuan','projectShortName','projectType','sponsorOrg','valueDate','securitiesInfo','isFavorites']"></cdk-header-row>
+        <cdk-row *cdkRowDef="let row; columns: ['num', 'columncesuan','projectShortName','projectType','sponsorOrg','valueDate','securitiesInfo','isFavorites']"></cdk-row>
     </mat-ext-table>
     <!-- 分页条 -->
-    <mat-paginator itemsPerPageLabel="每页" nextPageLabel="下一页" previousPageLabel="上一页" [pageSizeOptions]="[5, 10, 15]" [length]="100" [pageSize]="10"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15]" [length]="resultsLength" [pageSize]="pageSize"></mat-paginator>
 </div>
 </div>
