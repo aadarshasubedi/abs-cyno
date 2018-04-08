@@ -2,8 +2,19 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild,
         AfterViewInit, ElementRef, ChangeDetectionStrategy, ViewEncapsulation, 
         NgZone, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 
-import { MatTableDataSource, MatPaginator, MatSort, MatTabGroup} from '@angular/material';
-
+import {
+    MatTableDataSource,
+    MatPaginator,
+    MatSort,
+    MatTabGroup,
+    MatDialog,
+    MatDialogRef,
+    MAT_DIALOG_DATA
+} from '@angular/material';
+import {
+    Overlay
+} from '@angular/cdk/overlay';
+import { CesuanParam } from './cesuan-param';
 declare let zrender: any;
 
 const covertXs5 = (v) => {
@@ -54,6 +65,8 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
     @Input() datas: any;
 
+    @Input() proposalId: string;
+
     @Input() proData: any = {};
 
     @ViewChild('sylRateChart') sylRateChart: ElementRef;
@@ -100,7 +113,12 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
     @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
 
-    constructor(private ngZone: NgZone, private checkRef: ChangeDetectorRef) { }
+    constructor(
+        private ngZone: NgZone,
+        private checkRef: ChangeDetectorRef,
+        public dialog: MatDialog,
+        private overlay: Overlay
+    ) { }
 
     ngOnInit() {
         this.tabGroup.selectedIndexChange.subscribe((index) => {
@@ -639,5 +657,18 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
             }
         }
 
+    }
+
+    openDialog(){
+        const dialogRef = this.dialog.open(CesuanParam, {
+            width: '800px',
+            scrollStrategy: this.overlay.scrollStrategies.reposition(),
+            disableClose: true,
+            data: {proposalId: this.proposalId}
+          });
+
+          dialogRef.afterClosed().subscribe( (data: any) => {
+                console.log(JSON.stringify(data));
+            })
     }
 }

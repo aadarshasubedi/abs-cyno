@@ -32,4 +32,12 @@ export class PdcalsService {
     initPdCalsResult(securitiesId: any, proposalId: any) {
         return this.http.get(Options.initPdCalsResult.url, {params: {securitiesId: securitiesId, proposalId: proposalId}}).pipe(jsonMap());
     }
+
+    /**
+     * 获取系统测算参数
+     * @param proposalId 产品ID
+     */
+    initPdCalcPara(proposalId: string){
+        return this.http.get(Options.initPdCalcPara.url, {params: {proposalId: proposalId, initType: 'S'}}).pipe(jsonMap());
+    }
 }

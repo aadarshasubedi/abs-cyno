@@ -1,0 +1,292 @@
+<h1 mat-dialog-title >评级报告参数</h1>
+<div mat-dialog-content  class="cesuan-param" style="overflow: visible;">
+    <div class="container-fluid">
+        <!-- 参数调整 -->
+        <div class="row" style="padding: 0px 0px 5px 0px;">
+            <div class="col-4" style="padding: 0rem;color: #8f9396">
+                <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                        <span style="
+                        border-left: 2px solid #af9c9c;
+                        height: 0.8rem;
+                        width: 0.2rem;
+                        display: inline-block;
+                        position: relative;
+                        top: 2px;
+                        left: -3px;
+                        ">
+                        </span>参数调整</div>
+                <div style="text-align: left;font-size: 0.7rem;">
+                    <mat-form-field style="width: 100%;">
+                        <span matPrefix>模拟次数:</span>
+                        <input matInput #analogTimes="ngModel" value="10000" name="analogTimes" [(ngModel)]="calculateParams.analogTimes" pattern="^[0-9]*$">
+                        <mat-error *ngIf="analogTimes.invalid">非空且必须为数字</mat-error>
+                        <span matSuffix style="color: #839008;">次</span>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <!-- 累计违约率 -->
+        <div class="row" style="padding: 0px 0px 5px 0px;">
+            <div class="col-4" style="padding: 0rem;color: #8f9396">
+                <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                    <span style="
+                    border-left: 2px solid #af9c9c;
+                    height: 0.8rem;
+                    width: 0.2rem;
+                    display: inline-block;
+                    position: relative;
+                    top: 2px;
+                    left: -3px;
+                    ">
+                    </span>累计违约率</div>
+                <div style="text-align: left;font-size: 0.7rem;">
+                    <mat-form-field style="width: 100%;">
+                        <span matPrefix>选择分布: </span>
+                        <mat-select [(ngModel)]="cdDistribType" [disabled]="true" name="cdDistribType2" >
+                            <mat-option value="ND">对数正态分布</mat-option>
+                            <mat-option value="DD">离散分布</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-4" style="padding: 0rem;color: #8f9396">
+                <div style="text-align: left;font-size: 0.7rem;">
+                    <mat-form-field style="width: 100%;">
+                        <span matPrefix>分布均值: </span>
+                        <input matInput [(ngModel)]="calculateParams.exValue" name="exValue" #exValue="ngModel" pattern="^[0-9]*$">
+                        <mat-error *ngIf="exValue.invalid">非空且必须为数字</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-4" style="padding: 0rem;color: #8f9396">
+                <div style="text-align: left;font-size: 0.7rem;">
+                    <mat-form-field style="width: 100%;">
+                        <span matPrefix>分布方差: </span>
+                        <input matInput [(ngModel)]="calculateParams.dxValue"  name="dxValue" #dxValue="ngModel" pattern="^[0-9]*$">
+                        <mat-error *ngIf="dxValue.invalid">非空且必须为数字</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <!-- 违约时间分布 -->
+        <div class="row" style="padding: 0px 0px 5px 0px;" >
+            <div class="col-3" style="padding: 0rem;color: #8f9396">
+                <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                    <span style="
+                    border-left: 2px solid #af9c9c;
+                    height: 0.8rem;
+                    width: 0.2rem;
+                    display: inline-block;
+                    position: relative;
+                    top: 2px;
+                    left: -3px;
+                    ">
+                    </span>违约时间分布</div>
+                <div style="text-align: left;font-size: 0.7rem;">
+                    <mat-form-field style="width: 100%;">
+                        <span matPrefix>选择分布: </span>
+                        <mat-select [(ngModel)]="cdDistribType" [disabled]="true" name="cdDistribType3">
+                            <mat-option value="ND">对数正态分布</mat-option>
+                            <mat-option value="DD">离散分布</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-2" style="padding: 0rem;color: #8f9396">
+                    <div style="text-align: left;font-size: 0.7rem;">
+                        <mat-form-field style="width: 100%;">
+                            <span matPrefix>第1年: </span>
+                            <input matInput [(ngModel)]="calculateParams.branchP1" name="branchP1" #branchP1="ngModel" pattern="^[0-9]*$">
+                            <mat-error *ngIf="branchP1.invalid">非空且必须为数字</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-2" style="padding: 0rem;color: #8f9396">
+                    <div style="text-align: left;font-size: 0.7rem;">
+                        <mat-form-field style="width: 100%;">
+                            <span matPrefix>第2年: </span>
+                            <input matInput [(ngModel)]="calculateParams.branchP2" name="branchP2" #branchP2="ngModel" pattern="^[0-9]*$">
+                            <mat-error *ngIf="branchP2.invalid">非空且必须为数字</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-2" style="padding: 0rem;color: #8f9396">
+                    <div style="text-align: left;font-size: 0.7rem;">
+                        <mat-form-field style="width: 100%;">
+                            <span matPrefix>第3年: </span>
+                            <input matInput [(ngModel)]="calculateParams.branchP3" name="branchP3" #branchP3="ngModel"  pattern="^[0-9]*$">
+                            <mat-error *ngIf="branchP3.invalid">非空且必须为数字</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-2" style="padding: 0rem;color: #8f9396">
+                        <div style="text-align: left;font-size: 0.7rem;">
+                            <mat-form-field style="width: 100%;">
+                                <span matPrefix>第4年: </span>
+                                <input matInput [(ngModel)]="calculateParams.branchP4" name="branchP4" #branchP4="ngModel" pattern="^[0-9]*$">
+                                <mat-error *ngIf="branchP4.invalid">非空且必须为数字</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+        </div>
+        <!-- 提前还款率 -->
+        <div class="row" style="padding: 0px 0px 5px 0px;">
+                <div class="col-4" style="padding: 0rem;color: #8f9396">
+                    <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                        <span style="
+                        border-left: 2px solid #af9c9c;
+                        height: 0.8rem;
+                        width: 0.2rem;
+                        display: inline-block;
+                        position: relative;
+                        top: 2px;
+                        left: -3px;
+                        ">
+                        </span>提前还款率</div>
+                    <div style="text-align: left;font-size: 0.7rem;">
+                        <mat-form-field style="width: 100%;">
+                            <span matPrefix>选择分布:</span>
+                            <mat-select [(ngModel)]="cdDistribType" [disabled]="true" name="cdDistribType1">
+                                <mat-option value="ND">对数正态分布</mat-option>
+                                <mat-option value="DD">离散分布</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-4" style="padding: 0rem;color: #8f9396">
+                    <div style="text-align: left;font-size: 0.7rem;">
+                        <mat-form-field style="width: 100%;">
+                            <span matPrefix>值:</span>
+                            <input matInput [(ngModel)]="calculateParams.earlyRate" name="earlyRate" #earlyRate="ngModel" pattern="^[0-9]*$">
+                            <mat-error *ngIf="earlyRate.invalid">非空且必须为数字</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 回收率曲线 -->
+            <div class="row">
+                <div class="col" style="padding: 0rem;color: #8f9396">
+                    <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
+                        <span style="
+                        border-left: 2px solid #af9c9c;
+                        height: 0.8rem;
+                        width: 0.2rem;
+                        display: inline-block;
+                        position: relative;
+                        top: 2px;
+                        left: -3px;">
+                        </span>回收率曲线</div>
+                <table class="table table-sm" style="position: relative;top: 10px;font-size: 0.7rem;">
+                    <tbody>
+                        <tr>
+                            <th scope="col" style="text-align:left;width: 65px;">回归周期</th>
+                            <td>&nbsp;1</td><td>&nbsp;2</td><td>&nbsp;3</td><td>&nbsp;4</td>
+                            <td>&nbsp;5</td><td>&nbsp;6</td><td>&nbsp;7</td><td>&nbsp;8</td>
+                            <td>&nbsp;9</td><td>10</td><td>11</td><td>12</td>
+                        </tr>
+                        <tr class="huiguirate-form">
+                            <th style="text-align: left;">回归率</th>
+                            <td>
+                                <mat-form-field style="width: 30px;">
+                                    <input matInput>
+                                    <span matSuffix style="color: #839008;">%</span>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field  style="width: 30px;">
+                                    <input matInput>
+                                    <span matSuffix style="color: #839008;">%</span>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field  style="width: 30px;">
+                                    <input matInput>
+                                    <span matSuffix style="color: #839008;">%</span>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field  style="width: 30px;">
+                                    <input matInput>
+                                    <span matSuffix style="color: #839008;">%</span>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                            <mat-form-field  style="width: 30px;">
+                                <input matInput>
+                                <span matSuffix style="color: #839008;">%</span>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field  style="width: 30px;">
+                                <input matInput>
+                                <span matSuffix style="color: #839008;">%</span>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field  style="width: 30px;">
+                                <input matInput>
+                                <span matSuffix style="color: #839008;">%</span>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field  style="width: 30px;">
+                                <input matInput>
+                                <span matSuffix style="color: #839008;">%</span>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                                <mat-form-field  style="width: 30px;">
+                                    <input matInput>
+                                    <span matSuffix style="color: #839008;">%</span>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field  style="width: 30px;">
+                                    <input matInput>
+                                    <span matSuffix style="color: #839008;">%</span>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                    <mat-form-field  style="width: 30px;">
+                                        <input matInput>
+                                        <span matSuffix style="color: #839008;">%</span>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field  style="width: 30px;">
+                                        <input matInput>
+                                        <span matSuffix style="color: #839008;">%</span>
+                                    </mat-form-field>
+                                </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+
+</div>
+<div mat-dialog-actions style="justify-content: flex-end;">
+    <button type="button" 
+        class="btn btn-primary btn-sm"
+        [mat-dialog-close]="calculateParams" 
+        style="
+            border-radius: 0rem;
+            z-index: 5;
+        ">重新测算</button>
+    <button type="button" 
+        class="btn btn-default btn-sm"
+        [mat-dialog-close]="false" 
+        style="
+            margin-left: 5px;
+            border-radius: 0rem;
+            z-index: 5;
+        ">取 消</button>
+</div>
