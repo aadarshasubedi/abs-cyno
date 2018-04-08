@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild,
         AfterViewInit, ElementRef, ChangeDetectionStrategy, ViewEncapsulation, 
-        NgZone, ChangeDetectorRef } from '@angular/core';
+        NgZone, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+
+import { MatTableDataSource, MatPaginator, MatSort, MatTabGroup} from '@angular/material';
 
 declare let zrender: any;
 
@@ -22,7 +24,7 @@ const findRangAndStep = (min, max, minStep, maxcount, maxFixed) => {
         min = min < 0 ? min : 0;
         if (min < 0) {
             r1 = Math.abs(min);
-            r1 = Math.max(min, minStep);
+            r1 = Math.max(r1, minStep);
             r2 = (r1) % (minStep);
             r1 = r2 === 0 ? r1 : r1 - r2 + minStep;
             min = -1 * r1;
@@ -64,7 +66,11 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
     @ViewChild('showPerTipDom') showPerTipElRef: ElementRef;
 
+    @Output() selectProposaChange: EventEmitter<any> = new EventEmitter<any>();
+
     showPerTip: boolean = false;
+
+    @Input() selectedIndex: number = 0;
 
     //测算参数modal
     calculateParams: any = {
@@ -92,9 +98,15 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
         datas: {}
     };
 
+    @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
+
     constructor(private ngZone: NgZone, private checkRef: ChangeDetectorRef) { }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.tabGroup.selectedIndexChange.subscribe((index) => {
+            this.selectProposaChange.emit(index);
+        })
+    }
 
     ngOnChanges(changes: SimpleChanges) {
         if ('datas' in changes && this.datas) {
@@ -142,7 +154,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
         const yieldCurveList: any = this.chart.datas.yieldCurveList = [];
         let rateList: any = this.chart.datas.rateList = [];
         let rightRateList: any =  this.chart.datas.rightRateList = [];
-        this.chart.datas.periods = this.datas.yieldCurve.map((item) => {
+        this.chart.datas.periods = (this.datas.yieldCurve || []).map((item) => {
             yieldCurveList.push({type: item.curveCode, name: item.curveName});
             return {
                 type: item.curveCode,
@@ -164,7 +176,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
         //累计收益率概率分布数据
         let pmin: any = false, pmax: any = false;
-        this.chart.datas.probability = this.datas.pdcalcResult.map((item) => {
+        this.chart.datas.probability = (this.datas.pdcalcResult || []).map((item) => {
             rateList.push(item.yldRate);
             rightRateList.push(item.yldRate);
             const res = {

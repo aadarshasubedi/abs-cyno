@@ -1,12 +1,7 @@
 <div class="card cyno-body function-body projects-main" style="padding-top: 20px;">
     <mat-tab-group>
         <mat-tab label="我的关注"></mat-tab>
-        <mat-tab label="银行间"></mat-tab>
-        <mat-tab label="上交所"></mat-tab>
-        <mat-tab label="深交所"></mat-tab>
-        <mat-tab label="银登中心"></mat-tab>
-        <mat-tab label="机构间报价"></mat-tab>
-        <mat-tab label="其他"></mat-tab>
+        <mat-tab [label]="item.paramName" *ngFor="let item of marketsLists"></mat-tab>
     </mat-tab-group>
 <div class="body-table">
     <mat-spinner *ngIf="isLoadingResults" style="position: fixed;top: calc(50vh - 50px);left: calc(50vw - 50px);"></mat-spinner>
@@ -32,11 +27,29 @@
             <cdk-cell *cdkCellDef="let element" style="height: 35px;text-align: left;"> {{element.projectShortName}} </cdk-cell>
         </ng-container>
         <ng-container cdkColumnDef="projectType">
-            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 70px;height: 40px;color: #000;font-weight: 700;text-align: left;"> 项目分类 </cdk-header-cell>
+            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 70px;height: 40px;color: #000;font-weight: 700;text-align: left;"> 
+                项目分类
+                <button [matJyDropDownTriggerFor]="proTypeFilterPanel" mat-icon-button style="width: 20px;height: 20px;line-height: 20px;position: relative;left: 47px;top: -20px;">
+                    <mat-icon fontSet="fa" fontIcon="fa-filter"  style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
+                </button>
+                <!-- dropdown -->
+                <mat-jydropdown #proTypeFilterPanel [multiple]="true" (onSelectChange)="onFilterForProTypeChange($event)">
+                    <mat-option  [value]="item.paramCode" *ngFor="let item of _assertDatas">{{item.paramName}}</mat-option>
+                </mat-jydropdown>
+
+             </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element" style="flex: 0 0 70px;height: 35px;text-align: left;"> {{element.projectType}} </cdk-cell>
         </ng-container>
         <ng-container cdkColumnDef="sponsorOrg">
-            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 100px;height: 40px;color: #000;font-weight: 700;"> 原始权益人/发起机构 </cdk-header-cell>
+            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 100px;height: 40px;color: #000;font-weight: 700;">
+                 原始权益人/发起机构 
+                 <button [matJyDropDownTriggerFor]="sponsorOrgFilterPanel" mat-icon-button style="width: 20px;height: 20px;line-height: 20px;position: relative;left: 0px;top: 0px;">
+                    <mat-icon fontSet="fa" fontIcon="fa-filter"  style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
+                </button>
+                <mat-jydropdown #sponsorOrgFilterPanel [multiple]="true" (onSelectChange)="onFilterForSponsorOrgChange($event)">
+                    <mat-option  [value]="item.institutionCode" *ngFor="let item of _sponsorOrgsDatas">{{item.institutionName}}</mat-option>
+                </mat-jydropdown>  
+            </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element" style="flex: 0 0 100px;height: 35px;text-align: left;"> {{element.sponsorOrg}} </cdk-cell>
         </ng-container>
         <ng-container cdkColumnDef="valueDate">
@@ -106,9 +119,10 @@
         <ng-container cdkColumnDef="isFavorites">
             <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 40px;height: 40px;color: #000;font-weight: 700;"> 关注 </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element;" style="flex: 0 0 40px;">
-                <button mat-icon-button style="width: 20px;height: 20px;line-height: 20px;"> 
+                <button (click)="addToFavorites(element)" matTooltip="点击关注" (click)="element" mat-icon-button 
+                    style="width: 20px;height: 20px;line-height: 20px;"> 
                     <mat-icon fontSet="fa" fontIcon="fa-star"  style="height:18px;width:18px;line-height: 18px;"
-                    [ngStyle]="{'color': element.isFavorites ? 'red' : '#dacfcf'}"></mat-icon>
+                    [ngStyle]="{'color': element.isFavorites === 'N' ? '#dacfcf' : 'red'}"></mat-icon>
                 </button>
             </cdk-cell>
         </ng-container>

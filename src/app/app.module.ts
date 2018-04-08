@@ -17,6 +17,9 @@ import { LoginModule } from './login/login.module';
 import { IndexComponent } from './pages/index';
 import { NavBarComponent } from './pages/navbar/navbar';
 
+//扩展services
+import { BASE_PROVODERS } from './services/public-api';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +41,7 @@ import { NavBarComponent } from './pages/navbar/navbar';
     FormsModule,
     LoginModule
   ],
-  providers: [AppConfig],
+  providers: [AppConfig, BASE_PROVODERS],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

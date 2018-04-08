@@ -1,4 +1,4 @@
-import { NgModule, Injectable, Injector } from '@angular/core';
+import { NgModule, Injectable, Injector, InjectionToken } from '@angular/core';
 import {
     HttpClient,
     HttpClientXsrfModule,
@@ -14,6 +14,8 @@ import {
 import {HttpMockServer} from './HttpMockServer';
 import {HttpMockXhrbackend} from './HttpMockXhrBackend';
 import {Observable} from 'rxjs/Observable';
+
+export { HTTP_JYEXCEPTION_ANALYSIS, HTTP_JYEXCEPTION_DESC, HttpExceptionAnalysis, HttpExceptionFindDecision } from './interface';
 
 @Injectable()
 export class HttpInterceptingHandler implements HttpHandler {

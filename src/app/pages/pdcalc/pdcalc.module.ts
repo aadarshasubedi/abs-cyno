@@ -17,13 +17,14 @@ import { MatCheckboxModule} from '@angular/material/checkbox';
 import { MatRadioModule} from '@angular/material/radio';
 import { PdcalcComponent } from './pdcalc.component';
 import { MainComponent } from './components/main.component';
+import { CesuanParam } from './components/chart/cesuan-param';
 import { ChartIncomeRateComponent } from './components/chart/incomerate';
 import { SecuStructureComponent } from './components/secustructure/secustructure.compoment';
 import { PdcalcRoutingModule } from './pdcalc.routing.module';
 import { PdcalsService } from './service/pdcalc.service';
 
 @NgModule({
-    declarations: [PdcalcComponent, MainComponent, SecuStructureComponent, ChartIncomeRateComponent],
+    declarations: [CesuanParam, PdcalcComponent, MainComponent, SecuStructureComponent, ChartIncomeRateComponent],
     imports: [
         CommonModule,
         MatIconModule,
@@ -42,7 +43,7 @@ import { PdcalsService } from './service/pdcalc.service';
         MatCheckboxModule,
         FormsModule,
         PdcalcRoutingModule],
-    exports: [],
+    exports: [CesuanParam],
     providers: [PdcalsService],
 })
 export class PdcalcModule {}

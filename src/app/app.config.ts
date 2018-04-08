@@ -13,7 +13,16 @@ export class AppConfig {
     showDevMenusWhenDev: boolean = environment.production;
 
     /** 异常解析处理 */
-    exceptionHandler: () => void;
+    exceptionDecision(respBody): any {
+        if (!respBody || !respBody.body){
+            return null;
+        }
+        respBody = respBody.body;
+        if (respBody.isException === true) {
+            return respBody;
+        }
+        return null;
+    };
 
     /** 菜单数据源 */
     menuDataS = {

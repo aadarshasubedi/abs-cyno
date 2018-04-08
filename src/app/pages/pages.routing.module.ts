@@ -5,11 +5,13 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
     {
         path: 'pdcalc',
-        loadChildren: './pdcalc/pdcalc.module#PdcalcModule'
+        loadChildren: './pdcalc/pdcalc.module#PdcalcModule',
+        data: {title: '收益率分配测算'}
     },
     {
         path: 'projects',
-        loadChildren: './projects/projects.module#ProjectsModule'
+        loadChildren: './projects/projects.module#ProjectsModule',
+        data: {title: '项目总览'}
     }
 ];
 

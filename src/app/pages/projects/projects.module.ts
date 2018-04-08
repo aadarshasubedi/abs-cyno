@@ -22,14 +22,17 @@ import { MatRadioModule} from '@angular/material/radio';
 import { MainComponent } from './components/main.component';
 import { ProjectsComponent } from './projects.component';
 import { ProjectsRoutingModule } from './projects.routing.module';
-
+import { MatJyDropDownModule } from '../../../sdk/compoments/dropdwon';
 import { TableModule} from '../../../sdk/compoments/table/module';
 import { MAT_PAGINATOR_INTL_PROVIDER } from '../../../sdk/compoments/paginator/matPaginatorIntl';
 import { ProjectsService } from './service/projects.service';
+
+
 @NgModule({
     declarations: [ProjectsComponent, MainComponent],
     imports: [
         CommonModule,
+        MatJyDropDownModule,
         MatIconModule,
         MatMenuModule,
         MatInputModule,

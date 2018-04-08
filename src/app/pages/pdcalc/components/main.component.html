@@ -1,14 +1,11 @@
 <div class="card cyno-body pdcalc-main function-body">
         <div class="card-header">
           <h5 class="card-title project-title">
-            {{projectInfo.projectName && projectInfo.projInfo.projectName }} -  
+            {{projectInfo.projInfo && projectInfo.projInfo.projectName }} -  
             {{projectInfo.projInfo && projectInfo.projInfo.proposalName }}</h5>
           <h6 class="card-subtitle mb-2 text-muted project-sbutitle">收益率分布测算</h6>
           <div class="project-sbutitle-desc">
-              <span class="badge badge-primary">静态池</span>
-              <span class="badge badge-primary">企业资产证券化</span>
-              <span class="badge badge-primary">私募</span>
-              <span class="badge badge-primary">个人消费贷</span>
+              <span class="badge badge-primary" *ngFor="let item of projInfoAttrs">{{item}}</span>
           </div>
       </div>
       <div class="card-body">
@@ -29,7 +26,7 @@
                             ">查看报告</button>
                             <mat-tab-group [selectedIndex]="activeTabIndex">
                                 <mat-tab label="概率分布测算">
-                                    <chart-incomerate [datas]="projectYieldRateData" [graphicDescElRef]="graphicDescDom" [proData]="projectInfo" ></chart-incomerate>
+                                    <chart-incomerate [selectedIndex]="_selectProposaIndex" [datas]="projectYieldRateData" [graphicDescElRef]="graphicDescDom" [proData]="projectInfo" ></chart-incomerate>
                                 </mat-tab>
                                 <mat-tab label="压力情景测试">
                                         <div class="demo-tab-content"></div>

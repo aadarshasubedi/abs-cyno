@@ -317,7 +317,7 @@
                         <h5 class="card-title">{{proData.projInfo && proData.projInfo.proposalName}}</h5>
                     </div>
                     <div class="card-body" style="padding: .25rem">
-                        <mat-tab-group>
+                        <mat-tab-group [selectedIndex]="selectedIndex">
                             <mat-tab [label]="item.securitiesShortName" *ngFor="let item of proData.list">
                                 <div class="card">
                                     <div class="card-body" style="padding: 3.3rem 0 0rem 0rem;">

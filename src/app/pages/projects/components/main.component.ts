@@ -6,31 +6,12 @@ import { merge} from 'rxjs/observable/merge';
 import { startWith } from 'rxjs/operators/startWith';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { map } from 'rxjs/operators/map';
+import { Subject } from 'rxjs/Subject';
 import {of as observableOf} from 'rxjs/observable/of';
 import {catchError} from 'rxjs/operators/catchError';
-
-const ELEMENT_DATA: any[] = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-    {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-    {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-    {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-    {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-    {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-    {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-    {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-    {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-    {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-    {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-    {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-    {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-    {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-    {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-    {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'}
-  ];
+import {throttleTime} from 'rxjs/operators/throttleTime';
+import { HttpParams} from '@angular/common/http';
+import { MessageService } from '../../../../sdk/services';
 
 @Component({
     templateUrl: './main.component.html',
@@ -53,20 +34,53 @@ export class MainComponent implements OnInit {
 
     dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
-    params: Map<string, any>;
+    params: HttpParams;
 
-    constructor(private projectsService: ProjectsService, private router: Router) { }
+    marketsLists: Array<any>;
+
+    private _onProTypeFilter: Subject<any> = new Subject<any>();
+
+    private __onForSponsorOrgFilter: Subject<any> = new Subject<any>();
+
+    private _selectProTypes: any;
+
+    _assertDatas: Array<any>;
+
+    _sponsorOrgsDatas: Array<any>;
+
+    private _selectSponsorOrgs: any;
+
+    constructor(
+        private projectsService: ProjectsService,
+        private router: Router,
+        private messageService: MessageService
+    ) {  }
 
     ngOnInit() {
 
+        this._loadMarkets();
+        this._loadAssertTypes();
+        this._loadSponsorOrgList();
+
         this.tabGroup.selectedIndexChange.subscribe((index) => {
-            this.params.clear();
+            this._resetParams();
             this.paginator.pageIndex = 0;
             this.selectType = index;
+            this._selectProTypes = [];
+            this._selectSponsorOrgs = [];
         })
 
-        merge(this.tabGroup.selectedIndexChange, this.paginator.page)
+        this._onProTypeFilter.subscribe((dt) => {
+            this._selectProTypes = dt;
+        })
+
+        this.__onForSponsorOrgFilter.subscribe((dt) => {
+            this._selectSponsorOrgs = dt;
+        })
+
+        merge(this.tabGroup.selectedIndexChange, this.paginator.page, this._onProTypeFilter, this.__onForSponsorOrgFilter)
         .pipe(
+            throttleTime(1000),
             startWith({total: 0, pageSize: 10, datas: []}),
             switchMap(() => {
                 this.isLoadingResults = true;
@@ -75,11 +89,12 @@ export class MainComponent implements OnInit {
             }),
             map(data => {
                 this.isLoadingResults = false;
-                this.resultsLength = data.total;
+                this.resultsLength = data.count;
                 return data.list;
             }),
-            catchError(() => {
+            catchError((error) => {
                 this.isLoadingResults = false;
+                this.messageService.alertError((error && error.expInfo) || '加载产品数据失败');
                 return observableOf([]);
             })
         ).subscribe(data => this.dataSource.data = data);
@@ -90,18 +105,69 @@ export class MainComponent implements OnInit {
      * @param type 0： 概率， 1：情景
      * @param project 项目
      */
-    goToCs(type, project){
+    goToCs(type, project) {
         this.router.navigate(['index', 'pdcalc', 'pdcalc', project.proposalId, type]);
     }
 
     private _mergeParam(){
-        const params = this.params || (this.params = new Map<string, any>());
-        params.set('pageIndex', this.paginator.pageIndex);
-        params.set('pageSize', this.paginator.pageSize);
-        params.set('selectType', this.selectType);
+        this.params = new HttpParams({
+            fromObject: {
+                pageNo: (this.paginator.pageIndex + 1) + '',
+                pageSize: (this.paginator.pageSize || this.pageSize) + '',
+                issueMarket: this.selectType ? this.marketsLists[this.selectType - 1].paramCode : '',
+                projectTypeList: (this._selectProTypes || []).join(','),
+                sponsorOrgList: (this._selectSponsorOrgs || []).join(',')
+            }
+        })
     }
 
     private _resetParams() {
-        this.params = new Map<string, string>();
+        //this.params = new HttpParams();
+    }
+
+    private _loadMarkets() {
+        this.projectsService.getMarkets().subscribe(
+            (data: any) => {
+                this.marketsLists = data.markets;
+            }, (error: any) => {
+                this.messageService.alertError((error && error.expInfo) || '初始化发布市场分类数据失败');
+            } 
+        )
+    }
+
+    private _loadAssertTypes() {
+        this.projectsService.getAssetTypes().subscribe((data: any) => {
+            this._assertDatas = data.assetTypes;
+        }, (error: any) => {
+            this.messageService.alertError((error && error.expInfo) || '初始化数据失败');
+        } )
+    }
+
+    private _loadSponsorOrgList() {
+        this.projectsService.getSponsorOrg().subscribe((data: any) => {
+            this._sponsorOrgsDatas = data.sponsorOrgs;
+        }, (error: any) => {
+            this.messageService.alertError((error && error.expInfo) || '初始化数据失败');
+        } )
+    }
+
+    addToFavorites(item) {
+        this.isLoadingResults = true;
+        this.projectsService.addToFavorites(item.proposalId).pipe(catchError((error) => {
+            this.isLoadingResults = false;
+            this.messageService.alertError((error && error.expInfo) || '添加关注失败');
+            return observableOf([]);
+        } )).subscribe((data) => {
+            this.isLoadingResults = false;
+            item.isFavorites = 'Y';
+        });
+    }
+
+    onFilterForProTypeChange(list){
+        this._onProTypeFilter.next(list);
+    }
+
+    onFilterForSponsorOrgChange(list){
+        this.__onForSponsorOrgFilter.next(list);
     }
 }
