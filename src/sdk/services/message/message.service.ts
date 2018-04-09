@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarHorizontalPosition} from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MessageDialogComponent } from './dialog.compoment';
+import { Overlay } from '@angular/cdk/overlay';
 
 @Injectable()
 export class MessageService {
@@ -10,7 +11,10 @@ export class MessageService {
 
     private currentMatDialogRef: MatDialogRef<any>;
 
-    constructor(private snackBar: MatSnackBar, private dialog: MatDialog){}
+    constructor(
+        private snackBar: MatSnackBar,
+        private overlay: Overlay,
+        private dialog: MatDialog){}
 
     snackInfo(message: string) {
         this.snack(message, 'info');
@@ -42,7 +46,7 @@ export class MessageService {
 
     private snack(message: string, extraClasses?: string) {
         this.snackBar.open(message, '关闭', {
-            duration: 100000,
+            duration: 10000,
             horizontalPosition: 'right',
             verticalPosition: 'top',
             extraClasses: extraClasses
@@ -54,6 +58,7 @@ export class MessageService {
             closeOnNavigation: false,
             minWidth: '350px',
             minHeight: '100px',
+            scrollStrategy: this.overlay.scrollStrategies.reposition(),
             disableClose: true,
             data: {
                 title: title || this.formateTitle(msgType),

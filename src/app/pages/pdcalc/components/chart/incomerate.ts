@@ -14,7 +14,11 @@ import {
 import {
     Overlay
 } from '@angular/cdk/overlay';
+import {of} from 'rxjs/observable/of';
+import { catchError} from 'rxjs/operators/catchError';
 import { CesuanParam } from './cesuan-param';
+import { PdcalsService } from '../../service/pdcalc.service';
+import { MessageService, LoadingService } from '../../../../../sdk/services';
 declare let zrender: any;
 
 const covertXs5 = (v) => {
@@ -85,6 +89,8 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
     @Input() selectedIndex: number = 0;
 
+    private _hasCustomerCesuan = false;
+
     //测算参数modal
     calculateParams: any = {
         //模拟次数
@@ -117,12 +123,15 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
         private ngZone: NgZone,
         private checkRef: ChangeDetectorRef,
         public dialog: MatDialog,
-        private overlay: Overlay
+        private overlay: Overlay,
+        private pdcalsService: PdcalsService,
+        private messageService: MessageService,
+        private loadingService: LoadingService
     ) { }
 
     ngOnInit() {
         this.tabGroup.selectedIndexChange.subscribe((index) => {
-            this.selectProposaChange.emit(index);
+            this.selectProposaChange.emit({index: index, hasCustomerCesuan: this._hasCustomerCesuan});
         })
     }
 
@@ -606,7 +615,12 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
         const _points = _d.map((e) => {
             return [e.glPoint.x, e.glPoint.y];
         });
-        _points.push([this.chart.hoffset + this.chart.width, _points[_points.length - 1][1]]);
+        if (_points[0][0] < (this.chart.hoffset + this.chart.width)){
+            _points.unshift([this.chart.hoffset + this.chart.width, _points[0][1] - 2]);
+        }
+        if (_points[_points.length - 1][0] < (this.chart.hoffset + this.chart.width)){
+            _points.push([this.chart.hoffset + this.chart.width, _points[_points.length - 1][1] + 2]);
+        }
         this.zr.add(new zrender.Polyline({
             shape:{
                 smooth: 'spline',
@@ -659,16 +673,33 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
     }
 
-    openDialog(){
+    openCesuaSettingDialog(){
         const dialogRef = this.dialog.open(CesuanParam, {
             width: '800px',
             scrollStrategy: this.overlay.scrollStrategies.reposition(),
             disableClose: true,
             data: {proposalId: this.proposalId}
-          });
-
-          dialogRef.afterClosed().subscribe( (data: any) => {
-                console.log(JSON.stringify(data));
-            })
+        });
+        dialogRef.afterClosed().subscribe( (data: any) => {
+            if (!data) {
+                return;
+            }
+            this.loadingService.showFull('测算中....');
+            const r = Object.assign(data);
+            r.proposalId = this.proposalId;
+            r.securitiesId = this.proData.list[this.selectedIndex].securitiesId;
+            this.pdcalsService.doPdCalc(r).pipe(catchError(() => {
+                this.messageService.alertError('测算失败: 服务端发生异常!');
+                return of({$error: true});
+            })).subscribe((resp: any) => {
+                this.loadingService.close();
+                if (data.$error === true) {
+                    return;
+                }
+                this.datas = resp;
+                this.renderChart(false);
+                this._hasCustomerCesuan = true;
+            });
+        })
     }
 }

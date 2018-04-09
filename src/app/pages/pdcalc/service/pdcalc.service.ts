@@ -28,9 +28,12 @@ export class PdcalsService {
     /**
      * 获取收益率分布统计数据
      * @param projectId 项目Id
+     *  @param proposalId 证券Id
+     * @param hasCustomerCesuan 是否自定义测算
      */
-    initPdCalsResult(securitiesId: any, proposalId: any) {
-        return this.http.get(Options.initPdCalsResult.url, {params: {securitiesId: securitiesId, proposalId: proposalId}}).pipe(jsonMap());
+    initPdCalsResult(securitiesId: any, proposalId: any, hasCustomerCesuan?: boolean) {
+        const _url = hasCustomerCesuan === true ?  Options.initPdCalsResult.url1 : Options.initPdCalsResult.url;
+        return this.http.get(_url, {params: {securitiesId: securitiesId, proposalId: proposalId}}).pipe(jsonMap());
     }
 
     /**
@@ -39,5 +42,25 @@ export class PdcalsService {
      */
     initPdCalcPara(proposalId: string){
         return this.http.get(Options.initPdCalcPara.url, {params: {proposalId: proposalId, initType: 'S'}}).pipe(jsonMap());
+    }
+
+    /**
+     * 收益率测算
+     * @param param
+     */
+    doPdCalc(param) {
+        const proposalId = param.proposalId;
+        const securitiesId = param.securitiesId;
+        delete param.proposalId;
+        delete param.securitiesId;
+        return this.http.post(Options.doPdCalc.url + '?proposalId=' + proposalId +
+            '&securitiesId=' + securitiesId, param).pipe(jsonMap());
+    }
+
+    /**
+     * 保存测算结果
+     */
+    savePdCalc(proposalId: string) {
+        return this.http.get(Options.savePdCalc.url, {params: {proposalId: proposalId}}).pipe(jsonMap());
     }
 }

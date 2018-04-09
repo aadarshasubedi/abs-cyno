@@ -45,9 +45,12 @@ export class LoadingService {
             this.componentRef.instance.data.message = msg;
             return;
         }
-        this.createOverlayRef();
-        this.componentRef = this._overlayRef.attach(new ComponentPortal(JyLoadingComponent)) ;
-        this.componentRef.instance.data.message = msg ;
+        setTimeout(() => {
+            this.createOverlayRef();
+            this.componentRef = this._overlayRef.attach(new ComponentPortal(JyLoadingComponent)) ;
+            this.componentRef.instance.data.message = msg ;
+        }, 0);
+        
     }
 
     private createOverlayRef(): OverlayRef{

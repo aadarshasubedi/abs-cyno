@@ -23,6 +23,7 @@ import { ChartIncomeRateComponent } from './components/chart/incomerate';
 import { SecuStructureComponent } from './components/secustructure/secustructure.compoment';
 import { PdcalcRoutingModule } from './pdcalc.routing.module';
 import { PdcalsService } from './service/pdcalc.service';
+import { jyFormsModule } from '../../../sdk/services';
 
 @NgModule({
     declarations: [CesuanParam, PdcalcComponent, MainComponent, SecuStructureComponent, ChartIncomeRateComponent],
@@ -43,6 +44,7 @@ import { PdcalsService } from './service/pdcalc.service';
         MatTabsModule,
         MatRadioModule,
         MatCheckboxModule,
+        jyFormsModule,
         FormsModule,
         PdcalcRoutingModule],
     exports: [CesuanParam],

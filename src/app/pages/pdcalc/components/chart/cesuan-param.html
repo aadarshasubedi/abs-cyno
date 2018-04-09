@@ -1,25 +1,26 @@
 <h1 mat-dialog-title >评级报告参数</h1>
 <div mat-dialog-content  class="cesuan-param" style="overflow: visible;">
+    <form #cesuanParam="ngForm">
     <div class="container-fluid">
         <!-- 参数调整 -->
         <div class="row" style="padding: 0px 0px 5px 0px;">
             <div class="col-4" style="padding: 0rem;color: #8f9396">
                 <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
-                        <span style="
-                        border-left: 2px solid #af9c9c;
-                        height: 0.8rem;
-                        width: 0.2rem;
-                        display: inline-block;
-                        position: relative;
-                        top: 2px;
-                        left: -3px;
-                        ">
-                        </span>参数调整</div>
+                    <span style="
+                    border-left: 2px solid #af9c9c;
+                    height: 0.8rem;
+                    width: 0.2rem;
+                    display: inline-block;
+                    position: relative;
+                    top: 2px;
+                    left: -3px;
+                    ">
+                    </span>参数调整</div>
                 <div style="text-align: left;font-size: 0.7rem;">
                     <mat-form-field style="width: 100%;">
-                        <span matPrefix>模拟次数:</span>
-                        <input matInput #analogTimes="ngModel" value="10000" name="analogTimes" [(ngModel)]="calculateParams.analogTimes" pattern="^[0-9]*$">
-                        <mat-error *ngIf="analogTimes.invalid">非空且必须为数字</mat-error>
+                        <span matPrefix>模拟次数<span style="color: red;font-size: 1rem;position: relative;top: 4px;"> * </span>:</span>
+                        <input matInput #analogTimes="ngModel" value="10000" name="analogTimes" [(ngModel)]="calculateParams.analogTimes" jyNumber required>
+                        <mat-error *ngIf="analogTimes.invalid">请输入大于0的整数</mat-error>
                         <span matSuffix style="color: #839008;">次</span>
                     </mat-form-field>
                 </div>
@@ -54,9 +55,10 @@
             <div class="col-4" style="padding: 0rem;color: #8f9396">
                 <div style="text-align: left;font-size: 0.7rem;">
                     <mat-form-field style="width: 100%;">
-                        <span matPrefix>分布均值: </span>
-                        <input matInput [(ngModel)]="calculateParams.exValue" name="exValue" #exValue="ngModel" pattern="^[0-9]*$">
-                        <mat-error *ngIf="exValue.invalid">非空且必须为数字</mat-error>
+                        <span matPrefix>分布均值<span style="color: red;font-size: 1rem;position: relative;top: 4px;"> * </span>: </span>
+                        <input matInput [(ngModel)]="calculateParams.exValue" name="exValue" #exValue="ngModel" jyFloat required>
+                        <mat-error *ngIf="exValue.invalid">非空且为数字</mat-error>
+                        <mat-hint align="end" *ngIf="exValue.valid && (calculateParams.exValue < 0 || calculateParams.exValue > 1)" style="color: green;">建议输入0~1范围的数字</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -64,9 +66,10 @@
             <div class="col-4" style="padding: 0rem;color: #8f9396">
                 <div style="text-align: left;font-size: 0.7rem;">
                     <mat-form-field style="width: 100%;">
-                        <span matPrefix>分布方差: </span>
-                        <input matInput [(ngModel)]="calculateParams.dxValue"  name="dxValue" #dxValue="ngModel" pattern="^[0-9]*$">
-                        <mat-error *ngIf="dxValue.invalid">非空且必须为数字</mat-error>
+                        <span matPrefix>分布方差<span style="color: red;font-size: 1rem;position: relative;top: 4px;"> * </span>: </span>
+                        <input matInput [(ngModel)]="calculateParams.dxValue"  name="dxValue" #dxValue="ngModel" jyFloat required>
+                        <mat-error *ngIf="dxValue.invalid">非空且为数字</mat-error>
+                        <mat-hint align="end" *ngIf="dxValue.valid && (calculateParams.dxValue < 0 || calculateParams.dxValue > 0.2)" style="color: green;">建议输入0~0.2范围的数字</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -74,7 +77,7 @@
 
         <!-- 违约时间分布 -->
         <div class="row" style="padding: 0px 0px 5px 0px;" >
-            <div class="col-3" style="padding: 0rem;color: #8f9396">
+            <div class="col-4" style="padding: 0rem;color: #8f9396">
                 <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
                     <span style="
                     border-left: 2px solid #af9c9c;
@@ -101,8 +104,10 @@
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>第1年: </span>
-                            <input matInput [(ngModel)]="calculateParams.branchP1" name="branchP1" #branchP1="ngModel" pattern="^[0-9]*$">
-                            <mat-error *ngIf="branchP1.invalid">非空且必须为数字</mat-error>
+                            <input matInput [(ngModel)]="calculateParams.branchP1" name="branchP1" #branchP1="ngModel" jyFloat required [jyMax]="maxBranchP1" [jyMin]="0">
+                            <mat-error *ngIf="(branchP1.invalid)">
+                                请输入0~{{maxBranchP1}}数字
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -110,8 +115,10 @@
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>第2年: </span>
-                            <input matInput [(ngModel)]="calculateParams.branchP2" name="branchP2" #branchP2="ngModel" pattern="^[0-9]*$">
-                            <mat-error *ngIf="branchP2.invalid">非空且必须为数字</mat-error>
+                            <input matInput [(ngModel)]="calculateParams.branchP2" name="branchP2" #branchP2="ngModel" jyFloat required  [jyMax]="maxBranchP2" [jyMin]="0">
+                            <mat-error *ngIf="(branchP2.invalid)">
+                                请输入0~{{maxBranchP2}}的数字
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
@@ -120,20 +127,24 @@
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>第3年: </span>
-                            <input matInput [(ngModel)]="calculateParams.branchP3" name="branchP3" #branchP3="ngModel"  pattern="^[0-9]*$">
-                            <mat-error *ngIf="branchP3.invalid">非空且必须为数字</mat-error>
+                            <input matInput [(ngModel)]="calculateParams.branchP3" name="branchP3" #branchP3="ngModel"  jyFloat required  [jyMax]="maxBranchP3" [jyMin]="0">
+                            <mat-error *ngIf="(branchP3.invalid)">
+                                请输入0~{{maxBranchP3}}的数字
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="col-2" style="padding: 0rem;color: #8f9396">
-                        <div style="text-align: left;font-size: 0.7rem;">
-                            <mat-form-field style="width: 100%;">
-                                <span matPrefix>第4年: </span>
-                                <input matInput [(ngModel)]="calculateParams.branchP4" name="branchP4" #branchP4="ngModel" pattern="^[0-9]*$">
-                                <mat-error *ngIf="branchP4.invalid">非空且必须为数字</mat-error>
-                            </mat-form-field>
-                        </div>
+                    <div style="text-align: left;font-size: 0.7rem;">
+                        <mat-form-field style="width: 100%;">
+                            <span matPrefix>第4年: </span>
+                            <input matInput [(ngModel)]="calculateParams.branchP4" name="branchP4" #branchP4="ngModel" jyFloat required  [jyMax]="maxBranchP4" [jyMin]="0">
+                            <mat-error *ngIf="(branchP4.invalid)">
+                                请输入0~{{maxBranchP4}}的数字
+                            </mat-error>
+                        </mat-form-field>
                     </div>
+                </div>
         </div>
         <!-- 提前还款率 -->
         <div class="row" style="padding: 0px 0px 5px 0px;">
@@ -164,16 +175,16 @@
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>值:</span>
-                            <input matInput [(ngModel)]="calculateParams.earlyRate" name="earlyRate" #earlyRate="ngModel" pattern="^[0-9]*$">
-                            <mat-error *ngIf="earlyRate.invalid">非空且必须为数字</mat-error>
+                            <input matInput [(ngModel)]="calculateParams.earlyRate" name="earlyRate" #earlyRate="ngModel" jyFloat required>
+                            <mat-error *ngIf="earlyRate.invalid">非空且为数字</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
-            </div>
+        </div>
 
-            <!-- 回收率曲线 -->
-            <div class="row">
-                <div class="col" style="padding: 0rem;color: #8f9396">
+        <!-- 回收率曲线 -->
+        <div class="row">
+                <div class="col-4" style="padding: 0rem;color: #8f9396">
                     <div style="text-align: left;font-size: 0.7rem;position: absolute;top:-8px;left:-3px;">
                         <span style="
                         border-left: 2px solid #af9c9c;
@@ -184,97 +195,44 @@
                         top: 2px;
                         left: -3px;">
                         </span>回收率曲线</div>
-                <table class="table table-sm" style="position: relative;top: 10px;font-size: 0.7rem;">
-                    <tbody>
-                        <tr>
-                            <th scope="col" style="text-align:left;width: 65px;">回归周期</th>
-                            <td>&nbsp;1</td><td>&nbsp;2</td><td>&nbsp;3</td><td>&nbsp;4</td>
-                            <td>&nbsp;5</td><td>&nbsp;6</td><td>&nbsp;7</td><td>&nbsp;8</td>
-                            <td>&nbsp;9</td><td>10</td><td>11</td><td>12</td>
-                        </tr>
-                        <tr class="huiguirate-form">
-                            <th style="text-align: left;">回归率</th>
-                            <td>
-                                <mat-form-field style="width: 30px;">
-                                    <input matInput>
-                                    <span matSuffix style="color: #839008;">%</span>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field  style="width: 30px;">
-                                    <input matInput>
-                                    <span matSuffix style="color: #839008;">%</span>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field  style="width: 30px;">
-                                    <input matInput>
-                                    <span matSuffix style="color: #839008;">%</span>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field  style="width: 30px;">
-                                    <input matInput>
-                                    <span matSuffix style="color: #839008;">%</span>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                            <mat-form-field  style="width: 30px;">
-                                <input matInput>
-                                <span matSuffix style="color: #839008;">%</span>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field  style="width: 30px;">
-                                <input matInput>
-                                <span matSuffix style="color: #839008;">%</span>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field  style="width: 30px;">
-                                <input matInput>
-                                <span matSuffix style="color: #839008;">%</span>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field  style="width: 30px;">
-                                <input matInput>
-                                <span matSuffix style="color: #839008;">%</span>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                                <mat-form-field  style="width: 30px;">
-                                    <input matInput>
-                                    <span matSuffix style="color: #839008;">%</span>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                <mat-form-field  style="width: 30px;">
-                                    <input matInput>
-                                    <span matSuffix style="color: #839008;">%</span>
-                                </mat-form-field>
-                            </td>
-                            <td>
-                                    <mat-form-field  style="width: 30px;">
-                                        <input matInput>
-                                        <span matSuffix style="color: #839008;">%</span>
-                                    </mat-form-field>
-                                </td>
-                                <td>
-                                    <mat-form-field  style="width: 30px;">
-                                        <input matInput>
-                                        <span matSuffix style="color: #839008;">%</span>
-                                    </mat-form-field>
-                                </td>
-                        </tr>
-                    </tbody>
-                </table>
-                </div>
+                    <div style="text-align: left;font-size: 0.7rem;">
+                        <mat-form-field style="width: 100%;">
+                            <span matPrefix>回归周期:</span>
+                            <mat-select [(ngModel)]="calculateParams.recCycle" name="recCycle" required #recCycle="ngModel">
+                                <mat-option [value]="1">第1期</mat-option>
+                                <mat-option [value]="2">第2期</mat-option>
+                                <mat-option [value]="3">第3期</mat-option>
+                                <mat-option [value]="4">第4期</mat-option>
+                                <mat-option [value]="5">第5期</mat-option>
+                                <mat-option [value]="6">第6期</mat-option>
+                                <mat-option [value]="7">第7期</mat-option>
+                                <mat-option [value]="8">第8期</mat-option>
+                                <mat-option [value]="9">第9期</mat-option>
+                                <mat-option [value]="10">第10期</mat-option>
+                                <mat-option [value]="11">第11期</mat-option>
+                                <mat-option [value]="12">第12期</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="recCycle.invalid">请选择一条</mat-error>
+                        </mat-form-field>
+                    </div>
             </div>
 
+            <div class="col-4" style="padding: 0rem;color: #8f9396">
+                <div style="text-align: left;font-size: 0.7rem;">
+                    <mat-form-field style="width: 100%;">
+                        <span matPrefix>回归率:</span>
+                        <input matInput [(ngModel)]="calculateParams.recRate" name="recRate" #recRate="ngModel" jyFloat required>
+                        <mat-error *ngIf="recRate.invalid">非空且为数字</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
 </div>
 <div mat-dialog-actions style="justify-content: flex-end;">
     <button type="button" 
+        [disabled]="!cesuanParam.form.valid"
         class="btn btn-primary btn-sm"
         [mat-dialog-close]="calculateParams" 
         style="

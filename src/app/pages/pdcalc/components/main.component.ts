@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { PdcalsService } from '../service/pdcalc.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MessageService } from '../../../../sdk/services';
+import { MessageService, LoadingService } from '../../../../sdk/services';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { merge} from 'rxjs/observable/merge';
 import {of as observableOf} from 'rxjs/observable/of';
@@ -31,23 +31,27 @@ export class MainComponent implements OnInit {
 
     _selectProposaIndex = 0;
 
+    hasCustomerCesuan = false;
+
     constructor(
         private pdcalsService: PdcalsService,
         private router: Router,
         private route: ActivatedRoute,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private loadingService: LoadingService
     ) { }
 
     //初始胡
     ngOnInit() {
 
-        this.chartIncomeRateComponent.selectProposaChange.subscribe((i) => {
-            this._selectProposaIndex = i;
+        this.chartIncomeRateComponent.selectProposaChange.subscribe((r) => {
+            this._selectProposaIndex = r.index;
             if (!this.projectInfo){
                 return;
             }
+            this.hasCustomerCesuan = r.hasCustomerCesuan;
             this.pdcalsService.initPdCalsResult(
-                this.projectInfo.list[this._selectProposaIndex].securitiesId, this.proposalId).subscribe((data) => {
+                this.projectInfo.list[this._selectProposaIndex].securitiesId, this.proposalId, r.hasCustomerCesuan).subscribe((data) => {
                 this.projectYieldRateData = data;
             });
         })
@@ -86,5 +90,20 @@ export class MainComponent implements OnInit {
         const k = r.filter(d => d.securitiesType === 'SRL_S');
         return k.length > 0 ? r.indexOf(k[0]) : 0;
     }
-    
+
+    /**
+     * 保存测算结果
+     */
+    savePdCalc(){
+        this.loadingService.showFull('执行中.....');
+        this.pdcalsService.savePdCalc(this.proposalId).pipe(catchError(() => {
+            this.messageService.alertError('操作失败: 服务端执行异常');
+            return observableOf({$error: true});
+        })).subscribe((data: any) => {
+            this.loadingService.close();
+            if (data.$error !== true){
+                this.messageService.alertInfo('操作成功');
+            }
+        })
+    }
 }
