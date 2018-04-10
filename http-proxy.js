@@ -9,7 +9,7 @@ module.exports = {
         }
     },
     "/cyno/cynoweb": {//
-        //target: "http://192.168.70.39:8001"
-        target: "http://192.168.20.17:8080"
+        target: "http://192.168.70.39:8001"
+        //target: "http://192.168.20.17:8080"
     }
 }

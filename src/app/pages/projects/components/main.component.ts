@@ -106,7 +106,13 @@ export class MainComponent implements OnInit {
      * @param project 项目
      */
     goToCs(type, project) {
-        this.router.navigate(['index', 'pdcalc', 'pdcalc', project.proposalId, type]);
+        const queryParams: any = {};
+        if (this.selectType === 0) {
+            queryParams.queryParams = {
+                _t: 'U'
+            };
+        }
+        this.router.navigate(['index', 'pdcalc', 'pdcalc', project.proposalId, type], queryParams);
     }
 
     private _mergeParam(){

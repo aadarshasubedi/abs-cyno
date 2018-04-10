@@ -31,17 +31,19 @@ export class PdcalsService {
      *  @param proposalId 证券Id
      * @param hasCustomerCesuan 是否自定义测算
      */
-    initPdCalsResult(securitiesId: any, proposalId: any, hasCustomerCesuan?: boolean) {
+    initPdCalsResult(securitiesId: any, proposalId: any, hasCustomerCesuan?: boolean, initType?: string) {
         const _url = hasCustomerCesuan === true ?  Options.initPdCalsResult.url1 : Options.initPdCalsResult.url;
-        return this.http.get(_url, {params: {securitiesId: securitiesId, proposalId: proposalId}}).pipe(jsonMap());
+        return this.http.get(_url, 
+            {params: {securitiesId: securitiesId, proposalId: proposalId, initType: initType ? initType : 'S'}}).pipe(jsonMap());
     }
 
     /**
      * 获取系统测算参数
      * @param proposalId 产品ID
      */
-    initPdCalcPara(proposalId: string){
-        return this.http.get(Options.initPdCalcPara.url, {params: {proposalId: proposalId, initType: 'S'}}).pipe(jsonMap());
+    initPdCalcPara(proposalId: string, initType?: string){
+        return this.http.get(Options.initPdCalcPara.url,
+            {params:{proposalId: proposalId, initType: (initType ? initType : 'S')}}).pipe(jsonMap());
     }
 
     /**

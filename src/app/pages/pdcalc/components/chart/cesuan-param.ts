@@ -31,7 +31,7 @@ export class CesuanParam implements OnInit {
 
     ngOnInit(): void {
         this.loadingService.showFull('初始化默认测算参数...');
-        this.pdcalsService.initPdCalcPara(this.data.proposalId)
+        this.pdcalsService.initPdCalcPara(this.data.proposalId, this.data.initType)
             .pipe(catchError((data) => {
                 this.messageService.alertError('初始化参数失败');
                 return of({$error: true});

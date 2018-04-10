@@ -73,6 +73,8 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
     @Input() proData: any = {};
 
+    @Input() initType: string;
+
     @ViewChild('sylRateChart') sylRateChart: ElementRef;
 
     @ViewChild('showRateTipDom') showRateTipElRef: ElementRef;
@@ -253,7 +255,8 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
         if (r === 0){
             this.chart.datas.zeroY = this.chart.voffset + this.chart.height;
         } else {
-            this.chart.datas.zeroY = ((r * (this.chart.height / (axisDatas[axisDatas.length - 1] - axisDatas[0]))) | 0 );
+            this.chart.datas.zeroY = (this.chart.voffset + this.chart.height)
+                - ((r * (this.chart.height / (axisDatas[axisDatas.length - 1] - axisDatas[0]))) | 0 );
         }
         return this.chart.datas.zeroY;
     }
@@ -312,7 +315,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
             },
             style: {
                 stroke: 'rgba(153, 153, 153, 1)',
-                lineWidth: 4
+                lineWidth: 2
             }
         });
         if (r > 0) {
@@ -326,7 +329,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
                 },
                 style: {
                     stroke: 'rgba(153, 153, 153, 1)',
-                    lineWidth: 4,
+                    lineWidth: 2,
                     lineDash: [4, 4]
                 }
             }));
@@ -445,7 +448,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
                 fontWeight: 'normal',
                 textFill: 'rgba(133, 80, 239, 0.5)'
             },
-            position: [ covertXs5(this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0)) , covertXs5(zeroY + 13)],
+            position: [ covertXs5(this.chart.hoffset + ((this.chart.width * this.chart.middlePos) | 0)) + 18, covertXs5(zeroY + 13)],
             silent: true
         }));
 
@@ -678,7 +681,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
             width: '800px',
             scrollStrategy: this.overlay.scrollStrategies.reposition(),
             disableClose: true,
-            data: {proposalId: this.proposalId}
+            data: {proposalId: this.proposalId, initType: this.initType}
         });
         dialogRef.afterClosed().subscribe( (data: any) => {
             if (!data) {

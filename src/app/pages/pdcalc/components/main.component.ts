@@ -31,6 +31,9 @@ export class MainComponent implements OnInit {
 
     _selectProposaIndex = 0;
 
+    //测算类型
+    initType: string = 'S';
+
     hasCustomerCesuan = false;
 
     constructor(
@@ -39,10 +42,17 @@ export class MainComponent implements OnInit {
         private route: ActivatedRoute,
         private messageService: MessageService,
         private loadingService: LoadingService
-    ) { }
+    ) {
+        
+     }
 
     //初始胡
     ngOnInit() {
+        this.route.queryParams.subscribe( urlParam => {
+            if (urlParam && urlParam._t === 'U') {
+                this.initType = 'U';
+            }
+        })
 
         this.chartIncomeRateComponent.selectProposaChange.subscribe((r) => {
             this._selectProposaIndex = r.index;
@@ -51,7 +61,8 @@ export class MainComponent implements OnInit {
             }
             this.hasCustomerCesuan = r.hasCustomerCesuan;
             this.pdcalsService.initPdCalsResult(
-                this.projectInfo.list[this._selectProposaIndex].securitiesId, this.proposalId, r.hasCustomerCesuan).subscribe((data) => {
+                this.projectInfo.list[this._selectProposaIndex].securitiesId, this.proposalId,
+                    r.hasCustomerCesuan, this.initType).subscribe((data) => {
                 this.projectYieldRateData = data;
             });
         })
@@ -70,7 +81,8 @@ export class MainComponent implements OnInit {
             switchMap((data: any) => {
                 this.projectInfo = data;
                 this._selectProposaIndex = this.findCesuanLevelIndex();
-                return this.pdcalsService.initPdCalsResult(data.list[this._selectProposaIndex].securitiesId, this.proposalId);
+                return this.pdcalsService.initPdCalsResult(data.list[this._selectProposaIndex].securitiesId,
+                    this.proposalId, this.hasCustomerCesuan, this.initType);
             }),
             map(data => data),
             catchError(() => {

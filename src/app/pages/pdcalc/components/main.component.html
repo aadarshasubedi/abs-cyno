@@ -33,7 +33,7 @@
                             ">查看报告</button>
                             <mat-tab-group [selectedIndex]="activeTabIndex">
                                 <mat-tab label="概率分布测算">
-                                    <chart-incomerate #incomerate [proposalId]= "proposalId" [selectedIndex]="_selectProposaIndex" [datas]="projectYieldRateData" [graphicDescElRef]="graphicDescDom" [proData]="projectInfo" ></chart-incomerate>
+                                    <chart-incomerate #incomerate [initType]="initType" [proposalId]= "proposalId" [selectedIndex]="_selectProposaIndex" [datas]="projectYieldRateData" [graphicDescElRef]="graphicDescDom" [proData]="projectInfo" ></chart-incomerate>
                                 </mat-tab>
                                 <mat-tab label="压力情景测试">
                                         <div class="demo-tab-content"></div>

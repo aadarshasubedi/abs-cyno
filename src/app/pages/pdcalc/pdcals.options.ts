@@ -4,7 +4,7 @@ export const Options = {
     },
 
     initPdCalsResult: {
-        url: '/cyno/cynoweb/pdcalc/initPdCalcResult.do?initType=S',
+        url: '/cyno/cynoweb/pdcalc/initPdCalcResult.do',
         url1: '/cyno/cynoweb/pdcalc/switchPdCalcResult.do'
     },
 
