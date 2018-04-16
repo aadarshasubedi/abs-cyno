@@ -21,7 +21,7 @@ import { MainComponent } from './components/main.component';
 import { CesuanParam } from './components/chart/cesuan-param';
 import { ChartIncomeRateComponent } from './components/chart/incomerate';
 import { PressureSceMain } from './components/pressuresce/main';
-import { benchParam } from './components/pressuresce/params/bench';
+import { BenchParam } from './components/pressuresce/params/bench';
 import { SceneParam } from './components/pressuresce/params/scene';
 import { RateTypeParam } from './components/pressuresce/params/rate.type';
 import { BenchCurveset } from './components/pressuresce/params/bench.curveset';
@@ -36,7 +36,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     declarations: [
         PressureSceMain,
         BenchCurveset,
-        benchParam,
+        BenchParam,
         SceneParam,
         RateTypeParam,
         CesuanParam,

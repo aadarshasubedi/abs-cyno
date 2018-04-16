@@ -19,3 +19,11 @@
     right: 0px;
     background: $navbar-background;
 }
+
+/* ovewrite pace.css */
+.pace .pace-progress {
+    height: 5px !important;
+}
+.pace.pace-active{
+    z-index: 9999 !important ;
+}

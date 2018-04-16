@@ -85,6 +85,6 @@ export class PdcalsService {
     }
 
     doPrCalcByPara(proposalId: string, params: any) {
-        return this.http.get(Options.doPrCalcByPara.url + '?proposalId=' + proposalId, params).pipe(jsonMap());
+        return this.http.post(Options.doPrCalcByPara.url + '?proposalId=' + proposalId, params).pipe(jsonMap());
     }
 }

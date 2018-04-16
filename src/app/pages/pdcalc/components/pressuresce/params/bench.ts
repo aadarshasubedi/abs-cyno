@@ -16,7 +16,7 @@ import { Overlay } from '@angular/cdk/overlay';
     templateUrl: './bench.html',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class benchParam implements OnInit, OnChanges {
+export class BenchParam implements OnInit, OnChanges {
 
     @Input() inputParams;
 

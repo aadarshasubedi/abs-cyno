@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Pipe } from '@angular/core';
 import { PdcalsService } from '../service/pdcalc.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService, LoadingService } from '../../../../sdk/services';
@@ -132,7 +132,20 @@ export class MainComponent implements OnInit {
 
     //测算
     doPrCalcByPara(){
-        const r = this.pressureSceMain.params;
-        
+        try {
+          const r = this.pressureSceMain.getLastParams();
+          this.pdcalsService.doPrCalcByPara(this.proposalId, r).pipe(catchError(() => {
+            this.messageService.alertError('操作失败: 服务端执行异常');
+            return observableOf({$error: true});
+        })).subscribe((data: any) => {
+            if (data.$error === true){
+                this.messageService.alertError('测算失败!');
+                return;
+            }
+            this.pressureSceMain.setLastData(data);
+        });
+        } catch(e) {
+            this.messageService.alertError('测算失败!');
+        }
     }
 }

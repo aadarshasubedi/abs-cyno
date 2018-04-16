@@ -17,6 +17,13 @@
             color: #655959;
             vertical-align: middle;
         }
+
+        .cesuan-action-column .mat-icon {
+            color: #d8dae5;
+            &:hover {
+                color: #125fd7;
+            }
+        }
     }
 
     .mat-tab-group .mat-tab-labels .mat-tab-label{
@@ -36,5 +43,10 @@
         justify-content:  center;
     }
 
+    .project-search-field .mat-form-field-label-wrapper .mat-form-field-label{
+        top: 2em;
+        left: 20px !important;
+        font-size: 14px;
+    }
     
 }

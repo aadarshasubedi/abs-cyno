@@ -7,6 +7,8 @@ import { PdcalsService } from '../../service/pdcalc.service';
 import { of as observableOf} from 'rxjs/observable/of';
 import { catchError} from 'rxjs/operators/catchError';
 import { MessageService } from '../../../../../sdk/services';
+import { BenchParam } from './params/bench';
+declare const validator: any;
 
 @Component({
     selector: 'pressuresce-main',
@@ -23,6 +25,8 @@ export class PressureSceMain implements OnInit, AfterViewChecked {
     @Input() proData: any;
 
     @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
+
+    @ViewChild(BenchParam) benchParam: BenchParam;
 
     params: any;
 
@@ -123,5 +127,37 @@ export class PressureSceMain implements OnInit, AfterViewChecked {
 
             this.changeDetectorRef.markForCheck();
         });
+    }
+
+    /**
+     * 获取最新的参数
+     */
+    getLastParams() {
+        const r1 = this.params.paraMap.BASE_PARA;
+        const r = this.benchParam.param;
+        r1.PARA_TYPE = r.PARA_TYPE;
+        r1.VALUE_D = r.VALUE_D;
+        r1.VALUE_E = r.VALUE_E;
+        r1.VALUE_R = r.VALUE_R;
+
+        //基准参数
+        const r2 = this.params.paraMap.RATE_PARA.DATA;
+        const r3 = this.benchParam.dataSource.data;
+        Object.keys(r2).forEach((key, index) => {
+            const d  = r2[key];
+            const d1 = r3[index];
+            for (let i = 0; i < d.length; i++){
+                d[i].rateValue = validator.isFloat(d1['column' + i] + '') ? (((d1['column' + i] * 10000) | 0) / 1000000) : d.rateValue;
+            }
+        })
+        return this.params.paraMap;
+    }
+
+    /**
+     * 更新最新测算结果数据
+     */
+    setLastData(newparams: any) {
+        this.params = newparams;
+        this.renderMoreClacResult();
     }
 }

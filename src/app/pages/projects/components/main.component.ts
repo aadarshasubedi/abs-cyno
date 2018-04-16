@@ -20,6 +20,8 @@ import { MessageService } from '../../../../sdk/services';
 })
 export class MainComponent implements OnInit {
 
+    searchText: string;
+
     isLoadingResults = false;
 
     pageSize = 10;
@@ -31,6 +33,8 @@ export class MainComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
+
+    searchSub: Subject<any> = new Subject<any>();
 
     dataSource: MatTableDataSource<any> = new MatTableDataSource();
 
@@ -78,7 +82,12 @@ export class MainComponent implements OnInit {
             this._selectSponsorOrgs = dt;
         })
 
-        merge(this.tabGroup.selectedIndexChange, this.paginator.page, this._onProTypeFilter, this.__onForSponsorOrgFilter)
+        merge(
+            this.searchSub.asObservable(),
+            this.tabGroup.selectedIndexChange,
+            this.paginator.page,
+            this._onProTypeFilter,
+            this.__onForSponsorOrgFilter)
         .pipe(
             throttleTime(1000),
             startWith({total: 0, pageSize: 10, datas: []}),
@@ -115,14 +124,15 @@ export class MainComponent implements OnInit {
         this.router.navigate(['index', 'pdcalc', 'pdcalc', project.proposalId, type], queryParams);
     }
 
-    private _mergeParam(){
+    private _mergeParam() {
         this.params = new HttpParams({
             fromObject: {
                 pageNo: (this.paginator.pageIndex + 1) + '',
                 pageSize: (this.paginator.pageSize || this.pageSize) + '',
                 issueMarket: this.selectType ? this.marketsLists[this.selectType - 1].paramCode : '',
                 projectTypeList: (this._selectProTypes || []).join(','),
-                sponsorOrgList: (this._selectSponsorOrgs || []).join(',')
+                sponsorOrgList: (this._selectSponsorOrgs || []).join(','),
+                searchText: this.searchText
             }
         })
     }
@@ -175,5 +185,9 @@ export class MainComponent implements OnInit {
 
     onFilterForSponsorOrgChange(list){
         this.__onForSponsorOrgFilter.next(list);
+    }
+
+    doSearch(){
+        this.searchSub.next(true);
     }
 }
