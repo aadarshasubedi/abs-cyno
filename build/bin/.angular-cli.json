@@ -29,9 +29,12 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
         "../node_modules/popper.js/dist/umd/popper.min.js",
+        "../node_modules/pace-js/pace.js",
         "../node_modules/wowjs/dist/wow.js",
         "../node_modules/bootstrap/dist/js/bootstrap.js",
-        "../node_modules/zrender/dist/zrender.js"
+        "../node_modules/zrender/dist/zrender.js",
+        "../node_modules/validator/validator.js",
+        "../node_modules/echarts/dist/echarts.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

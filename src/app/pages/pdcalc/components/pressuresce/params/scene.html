@@ -1,0 +1,97 @@
+<div class="card card-region">
+<div class="card-header">
+    情景参数配置
+    <button data-toggle="collapse" data-target="#collapseOne2" type="button" 
+    class="btn btn-light btn-sm"><i class="fa fa-angle-down"></i></button>
+</div>
+<div class="card-body collapse show" id="collapseOne2" style="padding: 0px;">
+    <div class="container-fluid" style="padding: 0px;">
+        <div class="row">
+            <div class="col-4" style="padding-right: 0px;padding-left: 0px;">
+                <mat-ext-table [dataSource]="dataSource1">
+                    <ng-container cdkColumnDef="prSceneCode">
+                        <cdk-header-cell *cdkHeaderCellDef>情景</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">{{element.prSceneCode}}</cdk-cell>
+                    </ng-container>
+                    <ng-container cdkColumnDef="multipleD">
+                        <cdk-header-cell *cdkHeaderCellDef>累计违约率倍数</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">
+                            <mat-form-field style="width: 40px;">
+                                <input matInput [(ngModel)]="element.multipleD" jyFloat required>
+                            </mat-form-field>
+                        </cdk-cell>
+                    </ng-container>
+                    <ng-container cdkColumnDef="multipleE">
+                        <cdk-header-cell *cdkHeaderCellDef>累计早偿率倍数</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">
+                            <mat-form-field style="width: 40px;">
+                                <input matInput [(ngModel)]="element.multipleE" jyFloat required>
+                            </mat-form-field>
+                        </cdk-cell>
+                    </ng-container>
+                    <cdk-header-row *cdkHeaderRowDef="columns"></cdk-header-row>
+                    <cdk-row *cdkRowDef="let row; columns: columns;"></cdk-row>
+                </mat-ext-table>
+            </div>
+            
+            <div class="col-4" style="padding-right: 0px;padding-left: 0px;">
+                <mat-ext-table [dataSource]="dataSource2">
+                    <ng-container cdkColumnDef="prSceneCode">
+                        <cdk-header-cell *cdkHeaderCellDef>情景</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">
+                            <mat-form-field style="width: 40px;">
+                                <input matInput [(ngModel)]="element.prSceneCode" jyFloat required>
+                            </mat-form-field>
+                        </cdk-cell>
+                    </ng-container>
+                    <ng-container cdkColumnDef="multipleD">
+                        <cdk-header-cell *cdkHeaderCellDef>累计违约率倍数</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">
+                            <mat-form-field style="width: 40px;">
+                                <input matInput [(ngModel)]="element.multipleD" jyFloat required>
+                            </mat-form-field>
+                        </cdk-cell>
+                    </ng-container>
+                    <ng-container cdkColumnDef="multipleE">
+                        <cdk-header-cell *cdkHeaderCellDef>累计早偿率倍数</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">
+                            <mat-form-field style="width: 40px;">
+                                <input matInput [(ngModel)]="element.multipleE" jyFloat required>
+                            </mat-form-field>
+                        </cdk-cell>
+                    </ng-container>
+                    <cdk-header-row *cdkHeaderRowDef="columns"></cdk-header-row>
+                    <cdk-row *cdkRowDef="let row; columns: columns;"></cdk-row>
+                </mat-ext-table>
+            </div>
+
+            <div class="col-4" style="padding-right: 0px;padding-left: 0px;">
+                <mat-ext-table [dataSource]="dataSource3">
+                    <ng-container cdkColumnDef="prSceneCode">
+                        <cdk-header-cell *cdkHeaderCellDef>情景</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">{{element.prSceneCode}}</cdk-cell>
+                    </ng-container>
+                    <ng-container cdkColumnDef="multipleD">
+                        <cdk-header-cell *cdkHeaderCellDef>累计违约率倍数</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">
+                            <mat-form-field style="width: 40px;">
+                                <input matInput [(ngModel)]="element.multipleD" jyFloat required>
+                            </mat-form-field>
+                        </cdk-cell>
+                    </ng-container>
+                    <ng-container cdkColumnDef="multipleE">
+                        <cdk-header-cell *cdkHeaderCellDef>累计早偿率倍数</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">
+                            <mat-form-field style="width: 40px;">
+                                <input matInput [(ngModel)]="element.multipleE" jyFloat required>
+                            </mat-form-field>
+                        </cdk-cell>
+                    </ng-container>
+                    <cdk-header-row *cdkHeaderRowDef="columns"></cdk-header-row>
+                    <cdk-row *cdkRowDef="let row; columns: columns;"></cdk-row>
+                </mat-ext-table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

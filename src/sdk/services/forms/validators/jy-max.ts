@@ -22,7 +22,7 @@ export class JyMaxValidator implements Validator, OnChanges {
     validate(c: AbstractControl): ValidationErrors|null {
         const _v = c.value + '';
         if (validator.isFloat(this.max + '')) {
-            return _v > this.max ? {'jyMax': {max: this.max}} : null;
+            return (+_v) > (+this.max) ? {'jyMax': {max: this.max}} : null;
         }
         return null;
     }

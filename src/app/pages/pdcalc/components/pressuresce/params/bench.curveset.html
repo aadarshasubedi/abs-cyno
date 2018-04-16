@@ -1,0 +1,35 @@
+<div mat-dialog-content>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6" style="padding: 20px 0px;overflow: auto;height: 370px;">
+                <mat-ext-table [dataSource]="dataSource">
+                    <ng-container cdkColumnDef="periods">
+                        <cdk-header-cell *cdkHeaderCellDef>第N月</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">{{element.periods}}</cdk-cell>
+                    </ng-container>
+                    <ng-container cdkColumnDef="rateRefer">
+                        <cdk-header-cell *cdkHeaderCellDef>参数值%</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">{{element.rateRefer| number: '0.2-4'}}</cdk-cell>
+                    </ng-container>
+                    <ng-container cdkColumnDef="adjustCoef">
+                        <cdk-header-cell *cdkHeaderCellDef>调整系数</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">
+                            <mat-form-field style="width: 40px;">
+                                <input matInput [(ngModel)]="element.adjustCoef" jyFloat required (input)="doUpdate()">
+                            </mat-form-field>
+                        </cdk-cell>
+                    </ng-container>
+                    <ng-container cdkColumnDef="rateBase">
+                        <cdk-header-cell *cdkHeaderCellDef>基准值%</cdk-header-cell>
+                        <cdk-cell *matCellDef="let element">{{element.rateBase | number: '0.2-4'}}</cdk-cell>
+                    </ng-container>
+                    <cdk-header-row *cdkHeaderRowDef="columns"></cdk-header-row>
+                    <cdk-row *cdkRowDef="let row; columns: columns;"></cdk-row>
+                </mat-ext-table>
+            </div>
+           <div class="col-6">
+                <div echarts [options]="chartOption" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>

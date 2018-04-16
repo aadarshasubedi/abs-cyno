@@ -1,4 +1,4 @@
-<div class="card cyno-body function-body projects-main" style="padding-top: 20px;">
+<div class="card cyno-body function-body projects-main">
     <mat-tab-group>
         <mat-tab label="我的关注"></mat-tab>
         <mat-tab [label]="item.paramName" *ngFor="let item of marketsLists"></mat-tab>
@@ -15,7 +15,7 @@
             <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 60px;height: 40px;color: #000;font-weight: 700;"> 测算 </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element" style="flex: 0 0 60px;height: 35px;text-align: left;"> 
                 <button mat-icon-button style="width: 20px;height: 20px;line-height: 20px;" matTooltip="概率分布测算" (click)="goToCs(0, element)">
-                    <mat-icon fontSet="fa" fontIcon="fa-sitemap"  style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
+                    <mat-icon fontSet="fa" fontIcon="pie-chart"  style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
                 </button>
                 <button mat-icon-button style="width: 20px;height: 20px;line-height: 20px;" matTooltip="情景分析测算" (click)="goToCs(1, element)">
                     <mat-icon fontSet="fa" fontIcon="fa-sitemap" style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>

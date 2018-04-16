@@ -1,0 +1,49 @@
+<div class="card card-region">
+    <div class="card-header">
+        收益率类型
+        <button data-toggle="collapse" data-target="#collapseOne1" type="button" 
+    class="btn btn-light btn-sm"><i class="fa fa-angle-down"></i></button>
+    </div>
+    <div class="card-body"  id="collapseOne3" style="padding: 0px;">
+        <div class="container-fluid" style="padding: 0px;">
+            <div class="row">
+                <div class="col-6" style="padding: 0rem;color: #8f9396;font-size: 0.7rem;">
+                    <mat-radio-group>
+                        <mat-radio-button value="1"> 发行持有收益率 </mat-radio-button>
+                        <mat-radio-button value="2"> 当前持有收益率 </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6" style="padding: 0rem;color: #8f9396;font-size: 0.7rem;">
+                    <mat-ext-table [dataSource]="dataSource">
+                        <ng-container cdkColumnDef="periods">
+                            <cdk-header-cell *cdkHeaderCellDef>证券</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">{{element.periods}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="rateRefer">
+                            <cdk-header-cell *cdkHeaderCellDef>优先A1档                                </cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">{{element.rateRefer| number: '0.2-4'}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="adjustCoef">
+                            <cdk-header-cell *cdkHeaderCellDef>调整系数</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">
+                                <mat-form-field style="width: 40px;">
+                                    <input matInput [(ngModel)]="element.adjustCoef" jyFloat required (input)="doUpdate()">
+                                </mat-form-field>
+                            </cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="rateBase">
+                            <cdk-header-cell *cdkHeaderCellDef>基准值%</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">{{element.rateBase | number: '0.2-4'}}</cdk-cell>
+                        </ng-container>
+                        <cdk-header-row *cdkHeaderRowDef="columns"></cdk-header-row>
+                        <cdk-row *cdkRowDef="let row; columns: columns;"></cdk-row>
+                    </mat-ext-table>              
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -20,14 +20,32 @@ import { PdcalcComponent } from './pdcalc.component';
 import { MainComponent } from './components/main.component';
 import { CesuanParam } from './components/chart/cesuan-param';
 import { ChartIncomeRateComponent } from './components/chart/incomerate';
+import { PressureSceMain } from './components/pressuresce/main';
+import { benchParam } from './components/pressuresce/params/bench';
+import { SceneParam } from './components/pressuresce/params/scene';
+import { RateTypeParam } from './components/pressuresce/params/rate.type';
+import { BenchCurveset } from './components/pressuresce/params/bench.curveset';
 import { SecuStructureComponent } from './components/secustructure/secustructure.compoment';
 import { PdcalcRoutingModule } from './pdcalc.routing.module';
 import { PdcalsService } from './service/pdcalc.service';
 import { jyFormsModule } from '../../../sdk/services';
+import { TableModule} from '../../../sdk/compoments/table/module';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
-    declarations: [CesuanParam, PdcalcComponent, MainComponent, SecuStructureComponent, ChartIncomeRateComponent],
+    declarations: [
+        PressureSceMain,
+        BenchCurveset,
+        benchParam,
+        SceneParam,
+        RateTypeParam,
+        CesuanParam,
+        PdcalcComponent,
+        MainComponent,
+        SecuStructureComponent,
+        ChartIncomeRateComponent],
     imports: [
+        TableModule,
         CommonModule,
         MatIconModule,
         MatMenuModule,
@@ -46,9 +64,10 @@ import { jyFormsModule } from '../../../sdk/services';
         MatCheckboxModule,
         jyFormsModule,
         FormsModule,
+        NgxEchartsModule,
         PdcalcRoutingModule],
     exports: [CesuanParam],
-    entryComponents: [CesuanParam],
+    entryComponents: [CesuanParam, BenchCurveset],
     providers: [PdcalsService],
 })
 export class PdcalcModule {}

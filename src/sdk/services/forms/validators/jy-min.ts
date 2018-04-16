@@ -22,7 +22,7 @@ export class JyMinValidator implements Validator, OnChanges {
     validate(c: AbstractControl): ValidationErrors|null {
         const _v = c.value + '';
         if (validator.isFloat(this.min + '')) {
-            return _v < this.min ? {'jyMin': {max: this.min}} : null;
+            return (+_v) < (+this.min) ? {'jyMin': {max: this.min}} : null;
         }
         return null;
     }

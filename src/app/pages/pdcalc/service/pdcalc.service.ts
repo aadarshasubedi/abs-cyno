@@ -65,4 +65,26 @@ export class PdcalsService {
     savePdCalc(proposalId: string) {
         return this.http.get(Options.savePdCalc.url, {params: {proposalId: proposalId}}).pipe(jsonMap());
     }
+
+    /**
+     * 获取压力情景默认参数
+     * @param proposalId 产品ID
+     * @param initType 
+     */
+    iniPressurescePage(proposalId: string, initType?: string) {
+        return this.http.get(Options.iniPressurescePage.url, 
+            {params: { proposalId: proposalId, initType: initType ? initType : 'S' }}).pipe(jsonMap());
+    }
+
+    /**
+     * 获取更多测算结果
+     * @param resultId 
+     */
+    getPrCalcExtres(resultId: string) {
+        return this.http.get(Options.getPrCalcExtres.url, {params: { resultId: resultId}}).pipe(jsonMap());
+    }
+
+    doPrCalcByPara(proposalId: string, params: any) {
+        return this.http.get(Options.doPrCalcByPara.url + '?proposalId=' + proposalId, params).pipe(jsonMap());
+    }
 }

@@ -1,0 +1,296 @@
+<bench-param [inputParams]="params"></bench-param>
+<scene-param [inputParams]="params"></scene-param>
+<div class="card card-region calc-result">
+    <div class="card-header"  style="display: flex; align-items: center;background-color: #ffffff">
+        <div style="flex: 0 0 100px;">压力测算结果</div>
+        <div style="flex: 1 1 50px;"></div>
+        <mat-tab-group style="max-width:  600px;"  [selectedIndex]="selectedIndex">
+            <mat-tab [label]="item.securitiesShortName" *ngFor="let item of proData.list"></mat-tab>
+        </mat-tab-group>
+    </div>
+    <div class="card-body" style="padding: 0px;">
+        <div class="container-fluid" style="padding: 0px;">
+            <div class="row">
+                <div class="col" style="padding: 0px;">
+                    <mat-ext-table [dataSource]="dataSource1">
+                        <ng-container cdkColumnDef="prSceneCode">
+                            <cdk-header-cell *cdkHeaderCellDef>情景</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">{{element.prSceneCode}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="accumDefRate">
+                            <cdk-header-cell *cdkHeaderCellDef>累计违约率</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">{{ element.accumDefRate | percent:'0.2-2'}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="accumEarlyRate">
+                            <cdk-header-cell *cdkHeaderCellDef>累计早偿率</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">{{ element.accumEarlyRate | percent:'0.2-2'}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="lgIrr">
+                            <cdk-header-cell *cdkHeaderCellDef>乐观利率IRR</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">{{ element.lgIrr | percent:'0.2-2'}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="jzIrr">
+                            <cdk-header-cell *cdkHeaderCellDef>基准利率IRR</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">{{ element.jzIrr | percent:'0.2-2'}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="bgIrr">
+                            <cdk-header-cell *cdkHeaderCellDef>悲观利率IRR</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element">{{ element.bgIrr | percent:'0.2-2'}}</cdk-cell>
+                        </ng-container>
+                        <cdk-header-row *cdkHeaderRowDef="columns1" style="background-color: #fbeeee;"></cdk-header-row>
+                        <cdk-row *cdkRowDef="let row; columns: columns1;" style="border:none; background-color: #fbeeee;"></cdk-row>
+                    </mat-ext-table>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="isSecondary">
+                <div class="col-12" style="padding: 0px;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div style="padding-left:10px;font-size: 0.8rem;margin: 10px 0px;">极端情景下的测算结论</div>
+                        </div>
+                        <div class="card-body">
+                                <div class="container-fluid" style="padding: 0px;">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <mat-ext-table [dataSource]="dataSource2">
+                                                <ng-container cdkColumnDef="rateSceneCode">
+                                                    <cdk-header-cell *cdkHeaderCellDef>利率情景</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">{{element.rateSceneCode}}</cdk-cell>
+                                                </ng-container>
+                                                <ng-container cdkColumnDef="accumDefRate">
+                                                    <cdk-header-cell *cdkHeaderCellDef>累计违约率</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">{{element.accumDefRate | percent:'0.2-2'}}</cdk-cell>
+                                                </ng-container>
+                                                <ng-container cdkColumnDef="accumEarlyRate">
+                                                    <cdk-header-cell *cdkHeaderCellDef>累计早偿率</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">{{element.accumEarlyRate | percent:'0.2-2'}}</cdk-cell>
+                                                </ng-container>
+                                                <ng-container cdkColumnDef="multipleR">
+                                                    <cdk-header-cell *cdkHeaderCellDef>回收率</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">0</cdk-cell>
+                                                </ng-container>
+                                                <ng-container cdkColumnDef="irr">
+                                                    <cdk-header-cell *cdkHeaderCellDef>次级IRR</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">{{element.irr | percent:'0.2-2'}}</cdk-cell>
+                                                </ng-container>
+                                                <cdk-header-row *cdkHeaderRowDef="columns2" style="background-color: #fbeeee;"></cdk-header-row>
+                                                <cdk-row *cdkRowDef="let row; columns: columns2;" style="border:none; background-color: #fbeeee;"></cdk-row>
+                                            </mat-ext-table>
+                                            <div style="font-size: 0.7rem;color: #cecaca;">
+                                                在基准利率情景下，当资产池累计违约率达到5.20%且累计早偿率为12.00%的场景设置下，次级仍可以获取期间收益。
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <mat-ext-table [dataSource]="dataSource3">
+                                                <ng-container cdkColumnDef="rateSceneCode">
+                                                    <cdk-header-cell *cdkHeaderCellDef>利率情景</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">{{element.rateSceneCode}}</cdk-cell>
+                                                </ng-container>
+                                                <ng-container cdkColumnDef="accumDefRate">
+                                                    <cdk-header-cell *cdkHeaderCellDef>累计违约率</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">{{element.accumDefRate | percent:'0.2-2'}}</cdk-cell>
+                                                </ng-container>
+                                                <ng-container cdkColumnDef="accumEarlyRate">
+                                                    <cdk-header-cell *cdkHeaderCellDef>累计早偿率</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">{{element.accumEarlyRate | percent:'0.2-2'}}</cdk-cell>
+                                                </ng-container>
+                                                <ng-container cdkColumnDef="multipleR">
+                                                    <cdk-header-cell *cdkHeaderCellDef>回收率</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">0</cdk-cell>
+                                                </ng-container>
+                                                <ng-container cdkColumnDef="irr">
+                                                    <cdk-header-cell *cdkHeaderCellDef>次级IRR</cdk-header-cell>
+                                                    <cdk-cell *matCellDef="let element">{{element.irr | percent:'0.2-2'}}</cdk-cell>
+                                                </ng-container>
+                                                <cdk-header-row *cdkHeaderRowDef="columns2" style="background-color: #fbeeee;"></cdk-header-row>
+                                                <cdk-row *cdkRowDef="let row; columns: columns2;" style="border:none; background-color: #fbeeee;"></cdk-row>
+                                            </mat-ext-table>
+                                            <div style="font-size: 0.7rem;color: #cecaca;">
+                                                在基准利率情景下，当资产池累计违约率达到5.20%且累计早偿率为12.00%的场景设置下，次级的本金仍可以获得保证。
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <!--更多-->
+            <div class="row" *ngIf="isSecondary">
+                <div class="col-12" style="text-align: center">
+                    <button type="button"  class="btn btn-link btn-sm" style="position: relative;top: 4px;font-size: 0.8rem;" (click)="renderMoreClacResult()" data-toggle="collapse" data-target=".collapseOne5">查看更多测算结果</button>
+                </div>
+            </div>
+            <div class="row" *ngIf="isSecondary" class="collapseOne5 collapse">
+                <div class="col-12" style="padding: 0px;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div style="padding-left:10px;font-size: 0.8rem;margin: 10px 0px;">乐观情景下</div>
+                        </div>
+                        <div class="card-body more-result" style="padding: 0px;">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">IRR</th>
+                                        <th scope="col">0.0</th>
+                                        <th scope="col">0.2</th>
+                                        <th scope="col">0.4</th>
+                                        <th scope="col">0.6</th>
+                                        <th scope="col">0.8</th>
+                                        <th scope="col">1.0</th>
+                                        <th scope="col">1.2</th>
+                                        <th scope="col">1.4</th>
+                                        <th scope="col">1.6</th>
+                                        <th scope="col">1.8</th>
+                                        <th scope="col">2.0</th>
+                                        <th scope="col">2.2</th>
+                                        <th scope="col">2.4</th>
+                                        <th scope="col">2.6</th>
+                                        <th scope="col">2.8</th>
+                                        <th scope="col">3.0</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of morePrCalcExtres.LG; let i=index">
+                                        <th>{{ item[0] }}</th>
+                                        <td>{{ item[1].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[2].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[3].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[4].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[5].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[6].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[7].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[8].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[9].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[10].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[11].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[12].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[13].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[14].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[15].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[16].irr | percent:'0.2-2' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            
+            <div class="row" *ngIf="isSecondary"  class="collapseOne5 collapse">
+                <div class="col-12" style="padding: 0px;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div style="padding-left:10px;font-size: 0.8rem;margin: 10px 0px;">基准情景下</div>
+                        </div>
+                        <div class="card-body more-result" style="padding: 0px;">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">IRR</th>
+                                        <th scope="col">0.0</th>
+                                        <th scope="col">0.2</th>
+                                        <th scope="col">0.4</th>
+                                        <th scope="col">0.6</th>
+                                        <th scope="col">0.8</th>
+                                        <th scope="col">1.0</th>
+                                        <th scope="col">1.2</th>
+                                        <th scope="col">1.4</th>
+                                        <th scope="col">1.6</th>
+                                        <th scope="col">1.8</th>
+                                        <th scope="col">2.0</th>
+                                        <th scope="col">2.2</th>
+                                        <th scope="col">2.4</th>
+                                        <th scope="col">2.6</th>
+                                        <th scope="col">2.8</th>
+                                        <th scope="col">3.0</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of morePrCalcExtres.JZ; let i=index">
+                                        <th>{{ item[0] }}</th>
+                                        <td>{{ item[1].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[2].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[3].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[4].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[5].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[6].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[7].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[8].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[9].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[10].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[11].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[12].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[13].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[14].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[15].irr | percent:'0.2-2' }}</td>
+                                        <td>{{ item[16].irr | percent:'0.2-2' }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            
+            <div class="row" *ngIf="isSecondary"  class="collapseOne5 collapse">
+                <div class="col-12" style="padding: 0px;">
+                    <div class="card">
+                        <div class="card-header">
+                            <div style="padding-left:10px;font-size: 0.8rem;margin: 10px 0px;">悲观情景下</div>
+                        </div>
+                        <div class="card-body more-result" style="padding: 0px;">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th scope="col">IRR</th>
+                                    <th scope="col">0.0</th>
+                                    <th scope="col">0.2</th>
+                                    <th scope="col">0.4</th>
+                                    <th scope="col">0.6</th>
+                                    <th scope="col">0.8</th>
+                                    <th scope="col">1.0</th>
+                                    <th scope="col">1.2</th>
+                                    <th scope="col">1.4</th>
+                                    <th scope="col">1.6</th>
+                                    <th scope="col">1.8</th>
+                                    <th scope="col">2.0</th>
+                                    <th scope="col">2.2</th>
+                                    <th scope="col">2.4</th>
+                                    <th scope="col">2.6</th>
+                                    <th scope="col">2.8</th>
+                                    <th scope="col">3.0</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of morePrCalcExtres.BG; let i=index">
+                                    <th>{{ item[0] }}</th>
+                                    <td>{{ item[1].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[2].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[3].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[4].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[5].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[6].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[7].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[8].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[9].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[10].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[11].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[12].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[13].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[14].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[15].irr | percent:'0.2-2' }}</td>
+                                    <td>{{ item[16].irr | percent:'0.2-2' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+        </div>
+    </div>
+</div>

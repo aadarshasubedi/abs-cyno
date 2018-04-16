@@ -1,0 +1,56 @@
+.pressuresce-main .card-region.card {
+    border-radius: 0px; border: 1px solid rgba(0, 0, 0, 0.125); margin-top: 10px;
+}
+.pressuresce-main .card-region > .card-header{
+    margin-bottom: 0px;position: relative;left: 0px;top: 0px;font-weight: 500;font-size: 0.8rem;padding: 0.5rem 0.5rem;background-color: rgba(248,248,248,1);
+}
+.pressuresce-main .card-region > .card-header > button[data-toggle="collapse"]{
+    background-color: none;position: absolute;right: 10px;top: 2px;
+}
+.pressuresce-main .card-region > .card-body{
+    padding:  0.5rem;
+}
+
+.pressuresce-main .cdk-cell .mat-form-field .mat-form-field-subscript-wrapper{
+    overflow: visible;
+}
+
+.pressuresce-main .mat-form-field .mat-form-field-wrapper{
+    top: -2px;
+    padding-bottom: 1em;
+}
+
+.pressuresce-main .mat-ext-table .cdk-row{
+    height: 35px;
+}
+
+.pressuresce-main .ratetype-param .mat-radio-container,
+.pressuresce-main .ratetype-param .mat-radio-container .mat-radio-outer-circle,
+.pressuresce-main .ratetype-param .mat-radio-container .mat-radio-inner-circle
+{
+    width: 15px;
+    height: 15px;
+}
+
+.pressuresce-main .calc-result .mat-tab-label {
+    min-width: 60px;
+    height: 28px;
+    padding: 0px 10px;
+    font-size: 0.7rem;
+}
+
+.pressuresce-main .card-body .container-fluid .row{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.pressuresce-main .more-result tr th{
+    background-color: #FF9800;
+}
+.pressuresce-main .more-result tr td, .pressuresce-main .more-result tr th{
+    text-align: center;
+}
+
+.pressuresce-main .more-result .table-bordered th, .pressuresce-main .more-result .table-bordered td {
+    border: 1px solid #191818;
+}

@@ -4,12 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService, LoadingService } from '../../../../sdk/services';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { merge} from 'rxjs/observable/merge';
+import { MatTabGroup } from '@angular/material/tabs';
 import {of as observableOf} from 'rxjs/observable/of';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { catchError} from 'rxjs/operators/catchError';
 import { map } from 'rxjs/operators/map';
 import { throttleTime } from 'rxjs/operators/throttleTime';
 import { ChartIncomeRateComponent } from './chart/incomerate';
+import { PressureSceMain } from './pressuresce/main';
 
 @Component({
     templateUrl: './main.component.html',
@@ -18,9 +20,15 @@ import { ChartIncomeRateComponent } from './chart/incomerate';
 })
 export class MainComponent implements OnInit {
 
+    @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
+
+    @ViewChild(PressureSceMain) pressureSceMain: PressureSceMain;
+
     proposalId: string;
 
     activeTabIndex = 0;
+
+    selectTabIndex = 0;
 
     //产品信息
     projectInfo: any = {};
@@ -42,9 +50,7 @@ export class MainComponent implements OnInit {
         private route: ActivatedRoute,
         private messageService: MessageService,
         private loadingService: LoadingService
-    ) {
-        
-     }
+    ) {}
 
     //初始胡
     ngOnInit() {
@@ -53,7 +59,7 @@ export class MainComponent implements OnInit {
                 this.initType = 'U';
             }
         })
-
+        
         this.chartIncomeRateComponent.selectProposaChange.subscribe((r) => {
             this._selectProposaIndex = r.index;
             if (!this.projectInfo){
@@ -70,6 +76,11 @@ export class MainComponent implements OnInit {
         this.route.params.subscribe((data) => {
             this.proposalId = data.proposalId;
             this.activeTabIndex = data.type;
+            this.selectTabIndex = this.activeTabIndex;
+        })
+
+        this.tabGroup.selectedIndexChange.subscribe((index) => {
+            this.selectTabIndex = index;
         })
 
         merge(this.route.params)
@@ -117,5 +128,11 @@ export class MainComponent implements OnInit {
                 this.messageService.alertInfo('操作成功');
             }
         })
+    }
+
+    //测算
+    doPrCalcByPara(){
+        const r = this.pressureSceMain.params;
+        
     }
 }

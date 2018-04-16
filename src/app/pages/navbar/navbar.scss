@@ -6,10 +6,10 @@
     background: $navbar-background;
     font-size: $navbar-fontsize;
     color: rgba(254, 254, 254, 1);
-    height: 110px;
+    height: 168px;
     //滚动，隐藏line banner breadcrumb-banner
     &.scrolled {
-        height: 35px;
+        height: 42px;
         overflow: hidden;
         opacity: 0.6;
         &::before, &::after {
@@ -23,6 +23,7 @@
 
     .cyno-navbar{
         display: flex;
+        height: 42px;
         nav {
             &:first-child{
                 flex: 0 0 100px
@@ -43,36 +44,57 @@
 
     .line {
         height: 2px;
-        box-shadow: inset 0 -2px 0 rgba(209, 209, 220, 0.2), inset 0 -2px 0 rgba(60, 31, 175, 0.5);
+        border-top: 1px solid #265aab;
+        position: fixed;
+        top: 40px;
+        left: 0px;
+        width: 100%;
+        z-index: 10;
     }
 
     .banner{
         display: flex;
         background: none;
-        padding: 10px 0px;
+        padding: 0px;
         .navbar-brand {
             font-size: 1.5rem;
             color: inherit;
-            font-weight: 600;
-            line-height: 1rem;
+            line-height: 40px;
             flex:  1 1 auto;
+
+            &::before{
+                content: '';
+                display: block;
+                width: 2px;
+                position: relative;
+                height: 20px;
+                left: 85px;
+                top: 31px;
+                border-left: 1px solid #fff;
+
+            }
         }
 
         .nav{
             .btn-sm {
-                padding: 0.3rem;
+                margin-left: 10px;
+                padding: 0.4rem 0.8rem;
                 font-size: inherit;
                 line-height: 1.1em;
-                border-radius: 0rem;
-            }
+                border-radius:25px;
+                color: inherit;
+                border-color: #b79494;
 
-            font-weight: 600;
-            margin-left: 5px;
+                &:hover{
+                    border-color: #0d47a1;
+                }
+            }
         }
     }
      .breadcrumb-banner{
         height: 23px;
-        .breadcrumb{
+        margin-top: 30px !important;
+        .breadcrumb {
             background: none;
             color: inherit;
             padding: 0rem 0rem 2rem 0.3rem;
@@ -103,10 +125,10 @@
         position: absolute;
         display: inline-block;
         width: 50px;
-        height: 200px;
+        height: 300px;
         left: 0px;
         top: 0px;
-        background: #0808ad;
+        background: #0d47a1;
         content: '';
     }
     
@@ -115,10 +137,10 @@
         position: absolute;
         display: inline-block;
         width: 50px;
-        height: 200px;
+        height: 300px;
         right: 0px;
         top: 0px;
-        background: #0808ad;
+        background: #0d47a1;
         content: '';
     }
 }
