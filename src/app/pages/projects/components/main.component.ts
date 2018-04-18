@@ -132,7 +132,7 @@ export class MainComponent implements OnInit {
                 issueMarket: this.selectType ? this.marketsLists[this.selectType - 1].paramCode : '',
                 projectTypeList: (this._selectProTypes || []).join(','),
                 sponsorOrgList: (this._selectSponsorOrgs || []).join(','),
-                searchText: this.searchText
+                searchText: (this.searchText || '').trim()
             }
         })
     }
