@@ -5,9 +5,9 @@ import { IndexComponent } from './pages/index';
 import { AuthGuard } from './services/auth-guard';
 
 export const routes: Routes = [
-    { path: 'index',  canActivate: [AuthGuard], component: IndexComponent, loadChildren: './pages/pages.module#PagesModule'},
+    { path: 'index', canLoad: [AuthGuard], component: IndexComponent, loadChildren: './pages/pages.module#PagesModule'},
     { path: 'login', component: LoginCmp},
-    { path: '', redirectTo: 'login', pathMatch: 'full' }
+    { path: '', redirectTo: 'index', pathMatch: 'full' }
 ];
 
 
