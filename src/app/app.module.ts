@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { ThemesModule } from '../themes/themes.module';
+//import { ThemesModule } from '../themes/themes.module';
 import { environment } from '../environments/environment';
 import { AppMockDevModule } from './app.mock.module';
 import { AppMockModule } from './app.mock.module.prod';
@@ -28,7 +28,7 @@ import { BASE_PROVODERS } from './services/public-api';
   ],
   imports: [
     BrowserModule,
-    ThemesModule,
+    //ThemesModule,
     CommonModule,
     BrowserAnimationsModule,
     AppMockDevModule,

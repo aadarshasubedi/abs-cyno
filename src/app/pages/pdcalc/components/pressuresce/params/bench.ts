@@ -28,7 +28,7 @@ export class BenchParam implements OnInit, OnChanges {
 
     cacheParams: any;
 
-    titles = {BG: '乐观', JZ: '基准', LG: '悲观'};
+    titles = {BG: '悲观', JZ: '基准', LG: '乐观'};
 
     cacheColumnMap: Map<string, any> = new Map<string, any>();
 

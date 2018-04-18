@@ -1,39 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoginService } from './login.service';
-import { LoadingService } from '../../sdk/services';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
-    templateUrl: './login.html',
-    styleUrls: ['./login.scss'],
-    providers: [LoginService]
+    template:  '<a href="/login.html" #loginLink></a>',
+    providers: []
 })
-export class LoginCmp implements OnInit {
+export class LoginCmp implements AfterViewInit {
 
-    user: {userName?: string, password?: string} = {};
+    @ViewChild('loginLink') loginLink: ElementRef;
 
-    message: {account?: string} = {};
+    constructor() { }
 
-    constructor(
-        private loadingService: LoadingService,
-        private loginService: LoginService,
-        private router: Router
-    ) { }
-
-    ngOnInit() { }
-
-    login() {
-        if ((this.user.userName || '').trim() === '') {
-            this.message.account = '账号不能为空!';
-            return;
-        }
-        this.loadingService.showFull('登录中....');
-        this.loginService.doLogin(this.user.userName, this.user.password).subscribe((data: any) => {
-            this.loadingService.close();
-            this.router.navigate(['index', 'projects', 'projects']);
-        }, (error: any) => {
-            this.message.account = error.error;
-            this.loadingService.close();
-        });
-    }
+    ngAfterViewInit() {this.loginLink.nativeElement.click();}
 }

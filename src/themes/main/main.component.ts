@@ -5,7 +5,6 @@ import { AppComponent } from '../../app/app.component';
 import { HttpClient } from '@angular/common/http';
 import { MessageService, LoadingService } from '../../sdk/services';
 import { filter } from 'rxjs/operators/filter';
-import { IndexComponent } from '../index.component';
 
 @Component({
   selector: 'app-main-component',
@@ -21,13 +20,10 @@ export class MainComponent implements OnInit, OnDestroy {
     private _appComponent: AppComponent,
     @Optional() private httpClient: HttpClient,
     private messageService: MessageService,
-    private loadingService: LoadingService,
-    private indexComponent: IndexComponent
+    private loadingService: LoadingService
   ) { }
 
-  ngOnInit() {
-   
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.onlyOneSidebarTriggerNotice.complete();

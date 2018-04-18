@@ -17,23 +17,14 @@ import { MatTabsModule} from '@angular/material/tabs';
 
 // 定义页头 导航菜单 工作区三个组件
 import { NavComponent } from './nav/nav.component';
-import { IndexComponent } from './index.component';
-import { LoginComponent } from './login.component';
 import { MainComponent } from './main/main.component';
 import { IndexBanner } from './index-banner/index-banner';
 
-import { Index1Component } from './index1';
-import { Index2Component } from './index2';
-
 @NgModule({
   declarations: [
-    IndexComponent,
-    LoginComponent,
     MainComponent,
     NavComponent,
     IndexBanner,
-    Index1Component,
-    Index2Component
   ],
   imports: [
     CommonModule,
