@@ -72,7 +72,8 @@
     "styleExt": "css",
     "component": {},
     "serve": {
-      "proxyConfig": "./http-proxy.js"
+      "proxyConfig": "./http-proxy.js",
+       "host": "192.168.20.67"
     }
   }
 }

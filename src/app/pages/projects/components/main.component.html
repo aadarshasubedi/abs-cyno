@@ -3,7 +3,7 @@
         <mat-tab label="我的关注"></mat-tab>
         <mat-tab [label]="item.paramName" *ngFor="let item of marketsLists"></mat-tab>
     </mat-tab-group>
-    <mat-form-field class="example-form-field project-search-field" style="position: absolute; right: 50px; top: 25px;z-index:10;">
+    <mat-form-field class="example-form-field project-search-field" style="position: absolute; right: 50px; top: 15px;z-index:10;">
         <input matInput type="text" placeholder="输入名称,代码" [(ngModel)]="searchText" style="font-size: 14px;" (change)="doSearch()"/>
         <button mat-button matSuffix mat-icon-button (click)="doSearch()">
             <mat-icon style="font-size: 20px;">search</mat-icon>
@@ -17,23 +17,12 @@
             <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 30px;height: 40px;color: #000;font-weight: 700;"> 序号 </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element=$implicit;let row=$row;" style="flex: 0 0 30px;height: 35px;text-align: left;"> {{row.num}} </cdk-cell>
         </ng-container>
-        <ng-container cdkColumnDef="columncesuan">
-            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 70px;height: 40px;color: #000;font-weight: 700;"> 测算 </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="flex: 0 0 70px;height: 35px;text-align: left;" class="cesuan-action-column"> 
-                <button mat-icon-button style="width: 30px; height: 30px;line-height: 30px;" matTooltip="概率分布测算" (click)="goToCs(0, element)">
-                    <mat-icon fontSet="fa" fontIcon="fa-pie-chart"  style="font-size: 20px;"></mat-icon>
-                </button>
-                <button mat-icon-button style="width: 30px; height: 30px;line-height: 30px;" matTooltip="情景分析测算" (click)="goToCs(1, element)">
-                    <mat-icon fontSet="fa" fontIcon="fa-gg-circle" style="font-size: 20px;"></mat-icon>
-                </button>
-            </cdk-cell>
-        </ng-container>
         <ng-container cdkColumnDef="projectShortName">
-            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 70px;height: 40px;color: #000;font-weight: 700;text-align: left;"> 项目简称 </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="flex: 0 0 70px;height: 35px;text-align: left;"> {{element.projectShortName}} </cdk-cell>
+            <cdk-header-cell *cdkHeaderCellDef style="flex: 1 0 70px; max-width: 160px; height: 40px;color: #000;font-weight: 700;text-align: left;"> 项目简称 </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let element" style="flex: 1 0 70px;  max-width: 160px;height: 35px;text-align: left;"> <a [routerLink]="'/index/pdcalc/pdcalc/' + element.proposalId + '/0'">{{element.projectShortName}}</a></cdk-cell>
         </ng-container>
         <ng-container cdkColumnDef="projectType">
-            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 70px;height: 40px;color: #000;font-weight: 700;text-align: left;"> 
+            <cdk-header-cell *cdkHeaderCellDef style="flex: 1 0 70px;max-width: 150px; height: 40px;color: #000;font-weight: 700;text-align: left;"> 
                 项目分类
                 <button [matJyDropDownTriggerFor]="proTypeFilterPanel" mat-icon-button style="width: 20px;height: 20px;line-height: 20px;position: relative;left: 47px;top: -20px;">
                     <mat-icon fontSet="fa" fontIcon="fa-filter"  style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
@@ -44,57 +33,65 @@
                 </mat-jydropdown>
 
              </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="flex: 0 0 70px;height: 35px;text-align: left;"> {{element.projectType}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let element" style="flex: 1 0 70px;max-width: 150px;height: 35px;text-align: left;"> {{element.projectType}} </cdk-cell>
         </ng-container>
         <ng-container cdkColumnDef="sponsorOrg">
-            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 100px;height: 40px;color: #000;font-weight: 700;">
+            <cdk-header-cell *cdkHeaderCellDef style="flex: 1 0 100px; max-width: 160px;height: 40px;color: #000;font-weight: 700;">
                  原始权益人/发起机构 
-                 <button [matJyDropDownTriggerFor]="sponsorOrgFilterPanel" mat-icon-button style="width: 20px;height: 20px;line-height: 20px;position: relative;left: 0px;top: 0px;">
+                <button [matJyDropDownTriggerFor]="sponsorOrgFilterPanel" mat-icon-button style="width: 20px;height: 20px;line-height: 20px;position: relative;left: 0px;top: 0px;">
                     <mat-icon fontSet="fa" fontIcon="fa-filter"  style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
                 </button>
                 <mat-jydropdown #sponsorOrgFilterPanel [multiple]="true" (onSelectChange)="onFilterForSponsorOrgChange($event)">
                     <mat-option  [value]="item.institutionCode" *ngFor="let item of _sponsorOrgsDatas">{{item.institutionName}}</mat-option>
                 </mat-jydropdown>  
             </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="flex: 0 0 100px;height: 35px;text-align: left;"> {{element.sponsorOrg}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let element" style="flex: 1 0 100px; max-width: 160px;height: 35px;text-align: left;"> {{element.sponsorOrg}} </cdk-cell>
         </ng-container>
         <ng-container cdkColumnDef="valueDate">
-            <cdk-header-cell *cdkHeaderCellDef style="flex: 0 0 60px;height: 40px;color: #000;font-weight: 700;text-align: left;"> 起息日 </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="flex: 0 0 60px;height: 35px;text-align: left;"> {{element.valueDate}} </cdk-cell>
+            <cdk-header-cell *cdkHeaderCellDef style="flex: 1 0 60px; max-width: 90px;height: 40px;color: #000;font-weight: 700;text-align: left;"> 起息日 </cdk-header-cell>
+            <cdk-cell *cdkCellDef="let element" style="flex: 1 0 60px;max-width: 90px; height: 35px;text-align: left;"> {{element.valueDate | date:"yyyy-MM-dd"}} </cdk-cell>
         </ng-container>
         <ng-container cdkColumnDef="securitiesInfo">
-            <header-group-cell *cdkHeaderCellDef title="证券结构" style="color: #000;font-weight: 700;flex: 0 0 780px;">
-                <header-group-cell title="证券代码" style="flex:0 0 60px; height: 40px;color: #000;font-weight: 700;"></header-group-cell>
-                <header-group-cell title="证券类型" style="flex:0 0 80px;  height: 40px;color: #000;font-weight: 700;">
-                 </header-group-cell>
-                <header-group-cell title="发行金额(万元)" style="flex:0 0 70px;height: 40px;color: #000;font-weight: 700;"></header-group-cell>
-                <header-group-cell title="期限/剩余期限(年)" style="flex:0 0 90px; height: 40px;color: #000;font-weight: 700;"></header-group-cell>
-                <header-group-cell title="当前利率(%)" style="flex:0 0 60px;height: 40px;color: #000;font-weight: 700;text-align:left;"></header-group-cell>
-                <header-group-cell title="当前评级" style="flex:0 0 60px;height: 40px;color: #000;font-weight: 700;text-align:left;"></header-group-cell>
-                <header-group-cell title="收益率均值" style="flex: 0 0 80px;height: 40px;color: #000;font-weight: 700;"></header-group-cell>
-                <header-group-cell title="收益率分位点" style="flex:0 0 270px; color: #000;font-weight: 700;">
-                    <header-group-cell title="25%" style="height: 20px;color: #000;font-weight: 700;"></header-group-cell>
-                    <header-group-cell title="50%" style="height: 20px;color: #000;font-weight: 700;"></header-group-cell>
-                    <header-group-cell title="75%" style="height: 20px;color: #000;font-weight: 700;"></header-group-cell>
+            <header-group-cell *cdkHeaderCellDef title="证券结构" style="color: #000;font-weight: 700;flex: 1 0 780px;">
+                <header-group-cell title="证券代码" style="flex:1 0 70px; height: 40px;color: #000;font-weight: 700;"></header-group-cell>
+                <header-group-cell title="证券类型" style="flex:1 0 70px;  height: 40px;color: #000;font-weight: 700;">
+                    <div class="header-group-cell-content" style="display: inline;">
+                        <button [matJyDropDownTriggerFor]="sponsorOrgFilterPanel111" mat-icon-button style="width: 20px;height: 20px;line-height: 20px;position: relative;left: 0px;top: 0px;">
+                            <mat-icon fontSet="fa" fontIcon="fa-filter"  style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
+                        </button>
+                        <mat-jydropdown #sponsorOrgFilterPanel111 [multiple]="true" (onSelectChange)="onFilterForSponsorOrgChange($event)">
+                            <mat-option  [value]="item.institutionCode" *ngFor="let item of _sponsorOrgsDatas">{{item.institutionName}}</mat-option>
+                        </mat-jydropdown>
+                    </div>
+                </header-group-cell>
+                <header-group-cell title="发行金额(万元)" style="flex:1 0 70px;height: 40px;color: #000;font-weight: 700;text-align:center;"></header-group-cell>
+                <header-group-cell title="期限/剩余期限(月)" style="flex:1 0 90px; height: 40px;color: #000;font-weight: 700;text-align:center;"></header-group-cell>
+                <header-group-cell title="当前利率(%)" style="flex:1 0 60px;height: 40px;color: #000;font-weight: 700;text-align:center;"></header-group-cell>
+                <header-group-cell title="当前评级" style="flex:1 0 60px;height: 40px;color: #000;font-weight: 700;text-align:center;"></header-group-cell>
+                <header-group-cell title="收益率均值" style="flex: 1 0 80px;height: 40px;color: #000;font-weight:700;text-align:center;"></header-group-cell>
+                <header-group-cell title="收益率分位点" style="flex:0 0 270px; color: #000;font-weight: 700;text-align:center;">
+                    <header-group-cell title="25%" style="height: 20px;color: #000;font-weight: 700;text-align:center;"></header-group-cell>
+                    <header-group-cell title="50%" style="height: 20px;color: #000;font-weight: 700;text-align:center;"></header-group-cell>
+                    <header-group-cell title="75%" style="height: 20px;color: #000;font-weight: 700;text-align:center;"></header-group-cell>
                 </header-group-cell>
             </header-group-cell>
             <!-- cell grow row -->
-            <group-row-cell *cdkCellDef="let element" style="flex: 0 0 780px;">
+            <group-row-cell *cdkCellDef="let element" style="flex: 1 0 780px;">
                 <jycdk-group-row *groupCellRowDef="let data; rows: element.list;">
                     <group-cell>
-                        <group-cell style="flex:0 0 60px;" >{{data.securitiesCode}}</group-cell>
-                        <group-cell style="flex:0 0 80px;">{{data.securitiesType}}</group-cell> 
-                        <group-cell style="flex:0 0 70px;">{{(data.securitiesSize / 10000) | currency:'':true:'0.2-2'}}</group-cell>  
-                        <group-cell style="flex:0 0 90px; position: relative;height: 30px;">
-                            <span style="position: absolute;top: -3px;z-index: 2;left: 0px;"> {{data.expectedYears | number: '0.0-2'}}/{{(data.remainYears <= 0 ? 0 : data.remainYears)| number: '0.0-2'}}</span>
+                        <group-cell style="flex:1 0 70px;" ><a [routerLink]="'/index/pdcalc/pdcalc/' + element.proposalId + '/0/' + data.securitiesId">{{data.securitiesCode}}</a></group-cell>
+                        <group-cell style="flex:1 0 70px;">{{data.securitiesType}}</group-cell> 
+                        <group-cell style="flex:1 0 70px;">{{(data.securitiesSize / 10000) | currency:'':true:'0.2-2'}}</group-cell>  
+                        <group-cell style="flex:1 0 90px; position: relative;height: 30px;">
+                            <span style="position: absolute;top: -3px;z-index: 2;right: 0px;"> {{data.expectedYears | number: '0.0-2'}}/{{(data.remainYears <= 0 ? 0 : data.remainYears)| number: '0.0-2'}}</span>
                             <mat-progress-bar mode="determinate" [value]="(1 - (data.remainYears > 0 ? data.remainYears : 0)) * 100" style="margin-top: 15px;"></mat-progress-bar>
                         </group-cell>
-                        <group-cell style="flex:0 0 60px;">{{data.rate | percent:'0.2-2'}}</group-cell> 
-                        <group-cell style="flex:0 0 60px;">{{data.grade}}</group-cell>
-                        <group-cell  style="flex:0 0 80px;">
+                        <group-cell style="flex:1 0 60px;">{{data.rate | percent:'0.2-2'}}</group-cell> 
+                        <group-cell style="flex:1 0 60px;">{{data.grade}}</group-cell>
+                        <group-cell  style="flex:1 0 80px;">
                             <div style="position: relative;height: 25px;width: 68px;background: #d4ece8;margin: 0 auto;box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);">
                                 <div style="height: 10px;position: absolute;width: 100%;bottom: 0px;left: 0px;background: rgba(116, 181, 116, 0.5);z-index:  2;" [ngStyle]="{'height': (((data.rateAvg)*25)) + 'px'}"></div>
-                                <span style="position: absolute; left: 15px; top: 0px;">{{data.rateAvg | percent:'0.2-2'}}</span>
+                                <span style="position: absolute; left: 15px; top: 0px;"><a [routerLink]="'/index/pdcalc/pdcalc/' + element.proposalId + '/0/' + data.securitiesId">{{data.rateAvg | percent:'0.2-2'}}</a></span>
                             </div>
                         </group-cell>
                         <group-cell style="flex:0 0 270px;"> 
@@ -133,8 +130,8 @@
             </cdk-cell>
         </ng-container>
 
-        <cdk-header-row *cdkHeaderRowDef="['num', 'columncesuan','projectShortName','projectType','sponsorOrg','valueDate','securitiesInfo','isFavorites']"></cdk-header-row>
-        <cdk-row *cdkRowDef="let row; columns: ['num', 'columncesuan','projectShortName','projectType','sponsorOrg','valueDate','securitiesInfo','isFavorites']"></cdk-row>
+        <cdk-header-row *cdkHeaderRowDef="['num', 'projectShortName','projectType','sponsorOrg','valueDate','securitiesInfo','isFavorites']"></cdk-header-row>
+        <cdk-row *cdkRowDef="let row; columns: ['num','projectShortName','projectType','sponsorOrg','valueDate','securitiesInfo','isFavorites']"></cdk-row>
     </mat-ext-table>
     <!-- 分页条 -->
     <mat-paginator [pageSizeOptions]="[5, 10, 15]" [length]="resultsLength" [pageSize]="pageSize"></mat-paginator>

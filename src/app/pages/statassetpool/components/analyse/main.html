@@ -1,0 +1,132 @@
+<div class="card cyno-body analyse-main">
+    <div class="card-header" style="display: flex;">
+        <h5 class="card-title project-title" style="flex: 0 0 auto;font-weight: 700;margin-right: 20px;">2017年开元第六期第六期第六期</h5>
+        <button type="button" class="btn btn-link btn-sm" style="padding: 0px;">查看样本明细</button>
+        <div style="flex: 1;"></div>
+        <button mat-raised-button style="flex: 0 0 120px;" routerLink="/index/statassetpool/add">
+            导入样本数据
+        </button>
+    </div>
+
+    <div class="card-body">
+        <div class="jumbotron base-info" style="padding: 0.1rem 0.5rem;background-color: #fff;">
+            <h1 class="display-6 base-info-title">资产池基本信息</h1>
+            <div class="container-fluid base-info-content" style="padding-left: 0px;">
+                <div class="row justify-content-md-left">
+                    <div class="col-md-auto">静态池代码：ABS38484022</div>
+                    <div class="col-md-auto">贷款发放起始日：2018-04-01</div>
+                    <div class="col-md-auto">贷款发放截止日：2020-03-31</div>
+                    <div class="col-md-auto">资产类型：对公贷款</div>
+                    <div class="col-md-auto">数据来源：上海证券</div>
+                </div>
+            </div>
+            <hr class="my-2">
+        </div>
+        <mat-tab-group class="tab-layout-main">
+            <mat-tab label="违约率分析">
+                <!-- start -->
+                <div class="tab-content" style="padding: 20px 0px;">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr style="background-color: rgba(228,228,228,1);">
+                                <th scope="col">累计违约率均值</th>
+                                <th scope="col">累计违约率方差</th>
+                                <th scope="col">提前还款率</th>
+                                <th scope="col">回收率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="color:red">12.83%</td>
+                                <td style="color:red">12.83%</td>
+                                <td style="color:red">12.83%</td>
+                                <td style="color:red">12.83%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="jumbotron base-info" style="padding: 0.1rem 0.5rem;background-color: #fff;">
+                        <h1 class="display-6 content-item-title">累计违约率</h1>
+                        <hr class="my-2">
+                        <div class="container-fluid content-item-content" style="padding-left: 0px;">
+                            <div class="row justify-content-md-left" style="flex-wrap: nowrap;">
+                                <div class="col-md-auto" style="min-width: 630px;border: 1px solid #b9a7a7;margin-left: 9px;">
+                                    <div echarts [options]="chartOption1" style="height: 400px;width: 600px;"></div>
+                                </div>
+                                <div class="col-md-auto" style="display:flex;align-items:center;min-width:160px;">
+                                    <div style="display: flex;width: 150px;flex-direction: column">
+                                        <span style="color: red;text-align: center;">12.67%</span>
+                                        <span style="text-align: center;position: relative;">
+                                            <i class="fa fa-bar-chart" style="font-size: 40px;font-weight: 200px;"></i>
+                                            <label style="position:  absolute;bottom: -30px;left: 35px;font-size: 1rem;">违约率均值</label>
+                                        </span>
+                                        <div style="height: 80px;"></div>
+                                        <span style="color: red;text-align: center">8.67%</span>
+                                        <span style="text-align: center;position: relative;">
+                                            <i class="fa fa-line-chart" style="font-size: 40px;font-weight: 200px;"></i>
+                                            <label style="position:  absolute;bottom: -30px;left: 35px;font-size: 1rem;">违约率方差</label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jumbotron base-info" style="padding: 1rem 0.5rem;background-color: #fff;">
+                        <h1 class="display-6 content-item-title">加权累计违约率</h1>
+                        <hr class="my-2">
+                        <div class="container-fluid content-item-content" style="padding-left: 0px;">
+                            <div class="row justify-content-md-left" style="flex-wrap: nowrap;">
+                                <div class="col-md-auto" style="min-width: 630px;border: 1px solid #b9a7a7;margin-left: 9px;">
+                                    <div echarts [options]="chartOption2" style="height: 400px;width: 600px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jumbotron base-info" style="padding: 1rem 0.5rem;background-color: #fff;">
+                        <h1 class="display-6 content-item-title">CYD加权新增违约率</h1>
+                        <hr class="my-2">
+                        <div class="container-fluid content-item-content" style="padding-left: 0px;">
+                            <div class="row justify-content-md-left" style="flex-wrap: nowrap;">
+                                <div class="col-md-auto" style="min-width: 630px;border: 1px solid #b9a7a7;margin-left: 9px;">
+                                    <div echarts [options]="chartOption2" style="height: 400px;width: 600px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="jumbotron base-info" style="padding: 1rem 0.5rem;background-color: #fff;">
+                        <h1 class="display-6 content-item-title">违约时间分布</h1>
+                        <hr class="my-2">
+                        <div class="container-fluid content-item-content" style="padding-left: 0px;">
+                            <div class="row justify-content-md-left" style="flex-wrap: nowrap;">
+                                <div class="col-md-auto" style="min-width: 630px;border: 1px solid #b9a7a7;margin-left: 9px;">
+                                    <div echarts [options]="chartOption2" style="height: 400px;width: 600px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="jumbotron base-info" style="padding: 0.1rem 0.5rem;background-color: #fff;">
+                        <h1 class="display-6 content-item-title">违约时间分布</h1>
+                        <hr class="my-2">
+                        <div class="container-fluid content-item-content" style="padding-left: 0px;">
+                            <div class="row justify-content-md-left" style="flex-wrap: nowrap;">
+                                <div class="col-md-auto" style="min-width: 630px;border: 1px solid #b9a7a7;margin-left: 9px;">
+                                    <div echarts [options]="chartOption2" style="height: 400px;width: 600px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- end -->
+            </mat-tab>
+            <mat-tab label="早偿率分析">早偿率分析</mat-tab>
+            <mat-tab label="回收率分析">回收率分析</mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

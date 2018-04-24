@@ -15,4 +15,10 @@
     .mat-tab-body-wrapper .mat-tab-body-content{
         overflow: hidden;
     }
+
+    .table-sm th{
+        border-bottom: none;
+        border-top: none;
+        color: #655959;
+    }
 }

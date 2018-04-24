@@ -1,0 +1,41 @@
+.analyse-main .base-info{
+    margin-bottom: 0px;
+    .base-info-title{
+        font-weight: normal;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+
+    .base-info-content{
+        font-size: 0.876rem;
+    }
+}
+
+.analyse-main  .card-body .tab-layout-main {
+    .mat-tab-label{
+        min-width: 100px;
+        padding: 0px;
+        .mat-tab-label-content{
+            font-size: 1rem;
+            color: #000;
+        }
+    }
+
+   .table-sm th, .table-sm td {
+       text-align: center;
+       font-size: 0.876rem;
+    }
+}
+
+.analyse-main .content-item-title{
+    font-size: 1.1rem;
+    font-weight: normal;
+    display: inline-block;
+    &:before{
+        content: '';
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border-left: 4px solid red;
+    }
+}

@@ -1,0 +1,80 @@
+<div class="card cyno-body statassetpool-main function-body">
+        <div class="card-header" style="display: flex;">
+            <h5 class="card-title project-title" style="flex: 1;font-weight: 700;">创建静态资产池</h5>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col" style="text-align: center;"> 
+                            <mat-form-field style="width: 400px;font-size: 14px;">
+                                <input matInput placeholder="静态池代码">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <mat-form-field style="width: 400px;font-size: 14px;">
+                                <input matInput placeholder="静态池名称">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <mat-form-field style="width: 400px;font-size: 14px;">
+                                <input matInput placeholder="项目名称">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <mat-form-field style="width: 400px;font-size: 14px;">
+                                <mat-select multiple placeholder="资产类型">
+                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <mat-form-field style="width: 400px;font-size: 14px;">
+                                <mat-select multiple placeholder="数据来源">
+                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <mat-form-field style="width: 400px;font-size: 14px;">
+                                <mat-select multiple placeholder="贷款发放起止日">
+                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="text-align: center;">
+                            <mat-form-field style="width: 400px;font-size: 14px;">
+                                <textarea matInput placeholder="静态池说明" style="height: 100px;"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="display: flex;justify-content: center;">
+                            <div style="width: 400px">
+                                <button mat-raised-button>
+                                    <mat-icon fontSet="fa" fontIcon="fa-plus" style="font-size: 14px;line-height:23px;font-weight: 700;"></mat-icon>
+                                    创建
+                                </button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

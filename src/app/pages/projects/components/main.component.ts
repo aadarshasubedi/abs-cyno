@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatPaginator, MatSort, MatTabGroup} from '@angular/material';
 import { ProjectsService } from '../service/projects.service';
@@ -57,7 +57,8 @@ export class MainComponent implements OnInit {
     constructor(
         private projectsService: ProjectsService,
         private router: Router,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private changeDetectorRef: ChangeDetectorRef
     ) {  }
 
     ngOnInit() {
@@ -72,6 +73,13 @@ export class MainComponent implements OnInit {
             this.selectType = index;
             this._selectProTypes = [];
             this._selectSponsorOrgs = [];
+            //更新表格过滤选项的绑定数据: 从而解决重置选择的问题
+            this._assertDatas = (this._assertDatas || []).map((r) => {
+                return Object.assign({}, r);
+            });
+            this._sponsorOrgsDatas = (this._sponsorOrgsDatas || []).map((r) => {
+                return Object.assign({}, r);
+            });
         })
 
         this._onProTypeFilter.subscribe((dt) => {

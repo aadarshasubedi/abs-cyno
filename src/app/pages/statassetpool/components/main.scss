@@ -1,0 +1,71 @@
+.statassetpool-main {
+    .card-header .mat-raised-button, .select-column .mat-raised-button{
+        &:hover, &:focus{
+            border: none;
+            outline: 0;
+        }
+    }
+
+    .mat-checkbox-label{
+        font-size: 14px;
+    }
+    //搜索表单样式
+    .search-region {
+       .mat-form-field .mat-form-field-wrapper .mat-form-field-infix{
+            min-width: 110px;
+            max-width: 150px;
+        }
+        .mat-raised-button{
+            min-width: 60px;
+            padding: 0px 6px;
+            margin-left: 5px;
+            
+            &:hover, &:focus{
+                border: none;
+                outline: 0;
+            }
+        }
+    }
+
+    .data-body {
+        .mat-paginator .mat-paginator-container{
+            justify-content:  center;
+        }
+        .opt-column .btn-link::after{
+            content: '';
+            display: inline-block;
+            width: 2px;
+            position: relative;
+            left: 2px;
+            height: 10px;
+            border-right: 1px solid #967676;
+        }
+        .opt-column .btn-link:last-child::after{
+            content: '';
+            display: inline-block;
+            width: 1px;
+            position: relative;
+            left: 2px;
+            height: 10px;
+            border-right: none;
+        }
+
+        .select-column .mat-checkbox .mat-checkbox-inner-container {
+            height: 14px;
+            width: 14px;
+            .mat-checkbox-ripple.mat-ripple {
+                position: absolute;
+                left: calc(50% - 10px);
+                top: calc(50% - 15px);
+                height: 30px;
+                width: 20px;
+                z-index: 1;
+                pointer-events: none;
+            }
+        }
+        .select-column .mat-checkbox .mat-checkbox-layout{
+            margin-bottom: .1rem;
+        }
+    }
+    
+}

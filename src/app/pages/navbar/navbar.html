@@ -3,14 +3,22 @@
     <div class="cyno-navbar">
         <nav class="nav">
             <a class="nav-link active" href="#"><i class="fa fa-bars"></i></a>
-            <a class="nav-link" href="#"><i class="fa fa-crosshairs"></i></a>
+            <a class="nav-link" href="#" ><i class="fa fa-crosshairs"></i></a>
             <a class="nav-link" href="#"><i class="fa fa-search"></i></a>
         </nav>
 
-        <nav class="nav ">
+        <nav class="nav dropdown">
             <a class="nav-link active" routerLink="/index/projects/projects">首页</a>
             <a class="nav-link" href="/cyno/console/index.html#page/ASSTS03" target="_blank">资产池管理</a>
-            <a class="nav-link" href="javascript:void(0)">静/动池分析</a>
+            
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" >静/动池分析</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" routerLink="/index/statassetpool/main" style="font-size: 14px;padding: 0.1rem 1rem;">静态池分析</a>
+                    <a class="dropdown-item" routerLink="/index/dyncassetpool/main" style="font-size: 14px;padding: 0.1rem 1rem;">动态态池分析</a>
+                </div>
+             </div>
+            
             <a class="nav-link" href="javascript:void(0)">系统信息</a>
         </nav>
 

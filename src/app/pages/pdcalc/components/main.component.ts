@@ -44,6 +44,8 @@ export class MainComponent implements OnInit {
 
     hasCustomerCesuan = false;
 
+    defaultSecCode;
+
     constructor(
         private pdcalsService: PdcalsService,
         private router: Router,
@@ -59,7 +61,12 @@ export class MainComponent implements OnInit {
                 this.initType = 'U';
             }
         })
-        
+        this.route.params.subscribe((data) => {
+            this.proposalId = data.proposalId;
+            this.activeTabIndex = data.type;
+            this.selectTabIndex = this.activeTabIndex;
+            this.defaultSecCode = data.secCode;
+        })
         this.chartIncomeRateComponent.selectProposaChange.subscribe((r) => {
             this._selectProposaIndex = r.index;
             if (!this.projectInfo){
@@ -73,13 +80,7 @@ export class MainComponent implements OnInit {
             });
         })
 
-        this.route.params.subscribe((data) => {
-            this.proposalId = data.proposalId;
-            this.activeTabIndex = data.type;
-            this.selectTabIndex = this.activeTabIndex;
-        })
-
-        this.tabGroup.selectedIndexChange.subscribe((index) => {
+       this.tabGroup.selectedIndexChange.subscribe((index) => {
             this.selectTabIndex = index;
         })
 
@@ -90,8 +91,11 @@ export class MainComponent implements OnInit {
             return this.pdcalsService.getSecscommList(this.proposalId);
             }),
             switchMap((data: any) => {
+                const r = !this.projectInfo.list;
                 this.projectInfo = data;
-                this._selectProposaIndex = this.findCesuanLevelIndex();
+                if (r){
+                    this._selectProposaIndex = this.findCesuanLevelIndex(this.defaultSecCode);
+                }
                 return this.pdcalsService.initPdCalsResult(data.list[this._selectProposaIndex].securitiesId,
                     this.proposalId, this.hasCustomerCesuan, this.initType);
             }),
@@ -108,9 +112,15 @@ export class MainComponent implements OnInit {
         return this.projectInfo && this.projectInfo.projInfo && this.projectInfo.projInfo.arr;
     }
 
-    private findCesuanLevelIndex(){
+    private findCesuanLevelIndex(secId?: string) {
         const r: Array<any> = this.projectInfo.list || [];
-        const k = r.filter(d => d.securitiesType === 'SRL_S');
+        let k = r.filter(d => d.securitiesType === 'SRL_S');
+        if (secId){
+            k = r.filter(d => d.securitiesId === secId);
+            if (k.length === 0){
+                k = r.filter(d => d.securitiesType === 'SRL_S');
+            }
+        }
         return k.length > 0 ? r.indexOf(k[0]) : 0;
     }
 

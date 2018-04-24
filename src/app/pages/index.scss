@@ -26,8 +26,8 @@
     }
 }
 .cyno-body{
-    padding: 30px;
-   
+    padding: 20px;
+    min-height: calc(100vh - 250px);
     & > .card-header{
         margin-top: 1.2rem;
         padding: 0.75rem 1.25rem 0.3rem 1.25rem;
@@ -76,16 +76,10 @@
         }
        
         .table-sm th, .table-sm td {
-            padding: 0.3rem;
+            padding: 0.5rem;
             font-size: 0.6rem;
         }
         
-        .table-sm th{
-            border-bottom: none;
-            border-top: none;
-            color: #655959;
-        }
-
         .table-sm td {
             color: #bac3cc;
         }

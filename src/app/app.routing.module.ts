@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginCmp } from './login/login';
 import { IndexComponent } from './pages/index';
 import { AuthGuard } from './services/auth-guard';
-
+//canLoad: [AuthGuard],
 export const routes: Routes = [
     { path: 'index', canLoad: [AuthGuard], component: IndexComponent, loadChildren: './pages/pages.module#PagesModule'},
     { path: 'login', component: LoginCmp},

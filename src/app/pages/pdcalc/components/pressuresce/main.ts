@@ -157,7 +157,11 @@ export class PressureSceMain implements OnInit, AfterViewChecked {
      * 更新最新测算结果数据
      */
     setLastData(newparams: any) {
-        this.params = newparams;
-        this.renderMoreClacResult();
+        if (this.params){
+            this.params = Object.assign({}, this.params, newparams);
+        }
+        this.renderClacResult();
+        this.changeDetectorRef.markForCheck();
+        //this.renderMoreClacResult();
     }
 }

@@ -10,10 +10,14 @@
     //滚动，隐藏line banner breadcrumb-banner
     &.scrolled {
         height: 42px;
-        overflow: hidden;
-        opacity: 0.6;
+        overflow: visible;
+        opacity: 0.9;
         &::before, &::after {
             height: 0px;
+        }
+
+        .banner, .breadcrumb-banner{
+            visibility: hidden;
         }
     }
 

@@ -39,9 +39,7 @@
                     <ng-container cdkColumnDef="prSceneCode">
                         <cdk-header-cell *cdkHeaderCellDef>情景</cdk-header-cell>
                         <cdk-cell *matCellDef="let element">
-                            <mat-form-field style="width: 40px;">
-                                <input matInput [(ngModel)]="element.prSceneCode" jyFloat required>
-                            </mat-form-field>
+                            {{element.prSceneCode}}
                         </cdk-cell>
                     </ng-container>
                     <ng-container cdkColumnDef="multipleD">
