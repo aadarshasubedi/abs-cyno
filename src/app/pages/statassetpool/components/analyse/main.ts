@@ -1,69 +1,21 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
-const xAxisData = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-'11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-'21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-'31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
-'41', '42', '43', '44', '45', '46', '47', '48', '49'
-];
-
-const legendData = [
-    '2013-01', '2013-02', '2013-03', '2013-04', '2013-05', '2013-06', '2013-07', '2013-08', '2013-09', '2013-10',
-    '2013-11', '2013-12', '2014-01', '2014-02', '2014-03', '2014-04', '2014-05', '2014-06', '2014-07', '2014-08',
-    '2014-09', '2014-10', '2014-11', '2014-12', '2014-13'
-];
-
-function getMockSeries(){
-    const r = [];
-        for (let i = 0; i < legendData.length; i++) {
-            const d = [];
-            //模拟数据
-            for (let j = 0; j < xAxisData.length; j++) {
-                let sign = 0;
-                while (sign < 0.01 || sign > 0.08) {
-                    sign = ((Math.random() * 10000) | 0) / 10000;
-                }
-                d.push(sign);
-            }
-            r.push({
-                name: legendData[i],
-                type: 'line',
-                data: d,
-            });
-
-        }
-        return r;
-
-}
-
-const Mock = {
-    chartOption1: {
-        grid: {
-            left: 50,
-            top: 30,
-            right: 30,
-            bottom: 140,
-            borderWidth: 1
-        },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: xAxisData
-        },
-        legend: {
-            data: legendData,
-            bottom: 10,
-            left: 50,
-            right: 30,
-            padding: 1
-        },
-        yAxis: {
-            type: 'value'
-        },
-        series: getMockSeries()
-    }
-}
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatTableDataSource, MatPaginator, MatSort, MatTabGroup} from '@angular/material';
+import { StatAssetPoolService } from '../../service/statassetpool.service';
+import { merge} from 'rxjs/observable/merge';
+import { startWith } from 'rxjs/operators/startWith';
+import { switchMap } from 'rxjs/operators/switchMap';
+import { map } from 'rxjs/operators/map';
+import { Subject } from 'rxjs/Subject';
+import { of} from 'rxjs/observable/of';
+import {catchError} from 'rxjs/operators/catchError';
+import { debounceTime} from 'rxjs/operators/debounceTime';
+import { HttpParams} from '@angular/common/http';
+import { MessageService } from '../../../../../sdk/services';
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
+import { zip } from 'rxjs/observable/zip';
+import { FormControl} from '@angular/forms';
 
 @Component({
     selector: 'analyse-main',
@@ -73,23 +25,47 @@ const Mock = {
 })
 export class AnalyseMainComponent implements OnInit {
 
-    chartOption1;
+    staticPool: any = {};
 
-    chartOption2;
+    poolId;
 
-    constructor() { }
+    isShoLoading = true;
+
+    constructor(
+        private statAssetPoolService: StatAssetPoolService,
+        private messageService: MessageService,
+        private route: ActivatedRoute
+    ) {
+        this.route.params.subscribe(param => this.poolId = param.id);
+    }
 
     ngOnInit(): void {
-        this.chartOption1 = Mock.chartOption1;
-        this.chartOption2 = Object.assign({}, this.chartOption1);
-        this.chartOption2.series = [this.chartOption2.series[0]];
-        this.chartOption2.grid = {
-            left: 30,
-            top: 30,
-            right: 30,
-            bottom: 30,
-            borderWidth: 1
-        };
-        this.chartOption2.legend = null;
+        if (!this.poolId) {
+            return;
+        }
+        zip(
+            this.statAssetPoolService.getAssetTypes(),
+            this.statAssetPoolService.querySponsorOrg(),
+            this.statAssetPoolService.get(this.poolId)
+        ).pipe(
+            catchError(() => {
+                return of({$error: true});
+            })
+        ).subscribe((datas: any) => {
+            this.isShoLoading = false;
+            if (datas.$error === true) {
+                this.messageService.alertError('数据初始化失败!');
+                return;
+            }
+            let r: any;
+            const assetTypes = datas[0].assetTypes || [];
+            const datasources = datas[1].sponsorOrgs || [];
+            this.staticPool = datas[2].list[0];
+            r = assetTypes.filter(item => item.paramCode === this.staticPool.assetType);
+            this.staticPool.assetTypesName = r.length > 0 ? r[0].paramName : '';
+
+            r = datasources.filter(item => item.institutionCode === this.staticPool.dataSource);
+            this.staticPool.dataSourceName = r.length > 0 ? r[0].institutionName : '';
+        })
     }
 }

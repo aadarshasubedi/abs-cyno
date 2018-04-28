@@ -47,6 +47,10 @@ const TABLE_ERROR = {
     tableUnknownDataRowError: '为获取可用数据行模板'
 };
 
+export const JYCDK_TABLE_TEMPLATE = `
+  <div class="mattable-header-container" #headerContainer><ng-container headerRowPlaceholder></ng-container></div>
+  <div class="mattable-body-container" #bodyContainer><ng-container rowPlaceholder></ng-container></div>`;
+
 abstract class RowViewRef<T> extends EmbeddedViewRef<CdkCellOutletRowContext<T>> { }
 
 /** 
@@ -56,7 +60,7 @@ abstract class RowViewRef<T> extends EmbeddedViewRef<CdkCellOutletRowContext<T>>
 @Component({
     moduleId: module.id,
     selector: 'mat-ext-table',
-    template: CDK_TABLE_TEMPLATE,
+    template: JYCDK_TABLE_TEMPLATE,
     exportAs: 'MatExtTable',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -65,9 +69,19 @@ abstract class RowViewRef<T> extends EmbeddedViewRef<CdkCellOutletRowContext<T>>
         'class': 'mat-table mat-ext-table'
     }
 })
-export class MatExtTable implements CollectionViewer, OnInit, AfterContentChecked, OnDestroy{
+export class MatExtTable implements CollectionViewer, OnInit, AfterContentChecked, OnDestroy {
 
     @Input() _data: any[];
+
+    @Input() scrollHeight = 200;
+
+    @Input() minHeight = 50;
+
+    @Input() scroll: Boolean = false;
+
+    @ViewChild('headerContainer') headerContainer: ElementRef;
+
+    @ViewChild('bodyContainer') bodyContainer: ElementRef;
 
     private _dataSource: DataSource<any> | Observable<any[]> | any[] | any[];
 
@@ -127,11 +141,12 @@ export class MatExtTable implements CollectionViewer, OnInit, AfterContentChecke
         }
     }
 
-    ngOnInit() { 
+    ngOnInit() {
         if (this._headerRowDef){
             this._headerRowDefChanged = true;
         }
-        this._dataDiffer = this._differs.find([]).create(this._trackByFn);
+        this._dataDiffer = this._differs.find([]).create(this._trackByFn)
+        this.updateScrollBody();
     }
 
     //渲染表格
@@ -336,4 +351,16 @@ export class MatExtTable implements CollectionViewer, OnInit, AfterContentChecke
           viewRef.context.odd = !viewRef.context.even;
         }
       }
+
+    private updateScrollBody() {
+        if (this.scroll === true) {
+            this.bodyContainer.nativeElement.style.height = this.scrollHeight + 'px';
+            this.bodyContainer.nativeElement.style.overflow = 'auto';
+        } else {
+            this.bodyContainer.nativeElement.style.height = 'auto';
+            this.bodyContainer.nativeElement.style.overflow = 'none';
+        }
+
+        this.bodyContainer.nativeElement.style.minHeight = this.minHeight + 'px';
+    }
 }

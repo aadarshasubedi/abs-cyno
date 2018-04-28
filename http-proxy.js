@@ -12,6 +12,9 @@ function proxy_cookie_path(oldCookie) {
     return newCookie;
 }
 
+//const proxyHost = 'http://192.168.20.17:8080';
+const proxyHost = 'http://192.168.70.39:8001';
+
 module.exports = {
     "/proxy/test": {
         target: "http://localhost:3000/prifex"
@@ -23,8 +26,20 @@ module.exports = {
         }
     },
     "/cyno/cynoweb": {
-        //target: "http://192.168.70.39:8001"
-        target: "http://192.168.70.39:8001",
+        target: proxyHost,
+        "secure": false,
+        onProxyRes: function (proxyRes, req, res) {
+            let oldCookie = proxyRes.headers['set-cookie'];
+            if (oldCookie == null || oldCookie.length == 0) {
+                delete proxyRes.headers['set-cookie']
+                return
+            }
+            proxyRes.headers['set-cookie'] = [proxy_cookie_path(oldCookie)];
+        }
+    },
+
+    "/cyno/abswebapp": {
+        target: proxyHost,
         "secure": false,
         onProxyRes: function (proxyRes, req, res) {
             let oldCookie = proxyRes.headers['set-cookie'];
@@ -37,14 +52,14 @@ module.exports = {
     },
 
     '/login2': {
-        target: "http://192.168.70.39:8001/cyno/"
+        target: proxyHost + "/cyno/"
     },
 
     '/system' : {
-        target: "http://192.168.70.39:8001/cyno/"
+        target: proxyHost + "/cyno/"
     },
     '/login':  {
-        target: "http://192.168.70.39:8001/cyno/",
+        target: proxyHost + "/cyno/",
         "secure": false,
         onProxyRes: function (proxyRes, req, res) {
             let oldCookie = proxyRes.headers['set-cookie'];
@@ -57,7 +72,7 @@ module.exports = {
     },
 
     '/cyno/webbase': {
-        target: "http://192.168.70.39:8001",
+        target: proxyHost,
         "secure": false,
         onProxyRes: function (proxyRes, req, res) {
             let oldCookie = proxyRes.headers['set-cookie'];
@@ -67,5 +82,9 @@ module.exports = {
             }
             proxyRes.headers['set-cookie'] = [proxy_cookie_path(oldCookie)];
         }
+    },
+
+    '/imag/output/': {
+        target: "http://localhost:8000/"
     }
 }

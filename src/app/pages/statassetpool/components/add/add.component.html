@@ -3,12 +3,14 @@
             <h5 class="card-title project-title" style="flex: 1;font-weight: 700;">创建静态资产池</h5>
         </div>
         <div class="card-body">
-            <form>
+            <mat-spinner *ngIf="isShoLoading" style="z-index: 1;position: fixed;top: calc(50vh - 50px);left: calc(50vw - 50px);"></mat-spinner>
+            <form #staticPoolForm="ngForm">
                 <div class="container-fluid">
-                    <div class="row">
+                    <div class="row"  *ngIf="!updatePool">
                         <div class="col" style="text-align: center;"> 
                             <mat-form-field style="width: 400px;font-size: 14px;">
-                                <input matInput placeholder="静态池代码">
+                                <input matInput placeholder="静态池代码" [formControl]="poolCodeFormControl" name="poolCode">
+                                <mat-error *ngIf="poolCodeFormControl.invalid">{{poolCodeFormControl.errors.unique || '必填项'}}</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -16,7 +18,8 @@
                     <div class="row">
                         <div class="col" style="text-align: center;">
                             <mat-form-field style="width: 400px;font-size: 14px;">
-                                <input matInput placeholder="静态池名称">
+                                <input matInput placeholder="静态池名称" [formControl]="poolNameFormControl" name="poolName">
+                                <mat-error *ngIf="poolCodeFormControl.invalid">必填项</mat-error>
                             </mat-form-field>
                         </div>
                     </div>
@@ -24,7 +27,9 @@
                     <div class="row">
                         <div class="col" style="text-align: center;">
                             <mat-form-field style="width: 400px;font-size: 14px;">
-                                <input matInput placeholder="项目名称">
+                                <mat-select placeholder="项目名称" [formControl]="projectFormControl" name="project">
+                                   <mat-option *ngFor="let option of projectSource" [value]="option.projectId">{{option.projectShortName}}</mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
@@ -32,8 +37,8 @@
                     <div class="row">
                         <div class="col" style="text-align: center;">
                             <mat-form-field style="width: 400px;font-size: 14px;">
-                                <mat-select multiple placeholder="资产类型">
-                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                                <mat-select placeholder="资产类型" [formControl]="assetTypeFormControl" name="assetType">
+                                    <mat-option *ngFor="let option of assetTypeSource" [value]="option.paramCode">{{option.paramName}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -41,34 +46,39 @@
                     <div class="row">
                         <div class="col" style="text-align: center;">
                             <mat-form-field style="width: 400px;font-size: 14px;">
-                                <mat-select multiple placeholder="数据来源">
-                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                                <mat-select placeholder="数据来源" [formControl]="dataFromFormControl" name="dataFrom">
+                                    <mat-option *ngFor="let option of dataFromSource" [value]="option.institutionCode">{{option.institutionName}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col" style="text-align: center;">
-                            <mat-form-field style="width: 400px;font-size: 14px;">
-                                <mat-select multiple placeholder="贷款发放起止日">
-                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-                                </mat-select>
+                            <mat-form-field style="width: 200px;font-size: 14px;">
+                                <input matInput [matDatepicker]="startPicker" placeholder="贷款发放起始日期" [formControl]="startDateFormControl" name="startDate" [max]="endDateFormControl.value">
+                                <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #startPicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-form-field style="width: 200px;font-size: 14px;">
+                                <input matInput [matDatepicker]="endPicker" placeholder="贷款发放截止日期" [formControl]="endDateFormControl" name="endDate"  [min]="startDateFormControl.value">
+                                <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #endPicker></mat-datepicker>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col" style="text-align: center;">
                             <mat-form-field style="width: 400px;font-size: 14px;">
-                                <textarea matInput placeholder="静态池说明" style="height: 100px;"></textarea>
+                                <textarea matInput placeholder="静态池说明" style="height: 100px;" [formControl]="bakFormControl" name="bak"></textarea>
                             </mat-form-field>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col" style="display: flex;justify-content: center;">
                             <div style="width: 400px">
-                                <button mat-raised-button>
+                                <button mat-raised-button [disabled]="!isVaild()" (click)="save()">
                                     <mat-icon fontSet="fa" fontIcon="fa-plus" style="font-size: 14px;line-height:23px;font-weight: 700;"></mat-icon>
-                                    创建
+                                    {{updatePool ? '保存修改' : '创建'}}
                                 </button>
                             </div>
                             

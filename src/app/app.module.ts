@@ -19,6 +19,10 @@ import { NavBarComponent } from './pages/navbar/navbar';
 
 //扩展services
 import { BASE_PROVODERS } from './services/public-api';
+//分页条
+import { MAT_PAGINATOR_INTL_PROVIDER } from '../sdk/compoments/paginator/matPaginatorIntl';
+//momnent日期适配器
+import { MomentAdapterModule } from '../sdk/services/momentadapter/module';
 
 @NgModule({
   declarations: [
@@ -27,6 +31,7 @@ import { BASE_PROVODERS } from './services/public-api';
     NavBarComponent
   ],
   imports: [
+    MomentAdapterModule,
     BrowserModule,
     //ThemesModule,
     CommonModule,
@@ -41,7 +46,7 @@ import { BASE_PROVODERS } from './services/public-api';
     FormsModule,
     LoginModule
   ],
-  providers: [AppConfig, BASE_PROVODERS],
+  providers: [AppConfig, BASE_PROVODERS, MAT_PAGINATOR_INTL_PROVIDER],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

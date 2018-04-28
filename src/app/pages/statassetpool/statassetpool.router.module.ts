@@ -5,6 +5,7 @@ import { StatAssetPoolComponent } from './statassetpool.component';
 import { MainComponent } from './components/main.component';
 import { AddComponent } from './components/add/add.component';
 import { AnalyseMainComponent } from './components/analyse/main';
+import { AnalyseDetail } from './components/detail/detail';
 
 const routes: Routes = [{
     path: '',
@@ -12,7 +13,9 @@ const routes: Routes = [{
     children: [
         {path: 'main', component: MainComponent},
         {path: 'add', component: AddComponent},
-        {path: 'analyse', component: AnalyseMainComponent}
+        {path: 'edit/:id', component: AddComponent},
+        {path: 'analyse/:id', component: AnalyseMainComponent},
+        {path: 'detail/:id', component: AnalyseDetail}
     ]
 }];
 

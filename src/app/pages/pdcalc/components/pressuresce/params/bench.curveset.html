@@ -1,8 +1,8 @@
 <div mat-dialog-content>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6" style="padding: 20px 0px;overflow: auto;height: 370px;">
-                <mat-ext-table [dataSource]="dataSource">
+            <div class="col-6" style="padding: 20px 0px;height: 370px;">
+                <mat-ext-table [dataSource]="dataSource" [scroll]="true" [scrollHeight]="340">
                     <ng-container cdkColumnDef="periods">
                         <cdk-header-cell *cdkHeaderCellDef>第N月</cdk-header-cell>
                         <cdk-cell *matCellDef="let element">{{element.periods}}</cdk-cell>

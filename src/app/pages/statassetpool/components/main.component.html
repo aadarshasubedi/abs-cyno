@@ -8,103 +8,115 @@
     </div>
 
     <div class="card-body">
-        <div class="container-fluid" class="search-region" style="padding-right: 0px;padding-left: 0px; position: relative;top: -20px;">
+        <mat-spinner *ngIf="isShoLoading" style="z-index: 1;position: fixed;top: calc(50vh - 50px);left: calc(50vw - 50px);"></mat-spinner>
+        <div class="container-fluid" class="search-region" style="padding-right: 0px;padding-left: 0px; position: relative;top: -10px;margin-bottom: 10px;">
             <div class="row">
                 <div class="col-sm"> 
                     <mat-form-field style="font-size: 14px;">
                         <span matPrefix>项目名称&nbsp;:</span>
-                        <mat-select multiple>
-                            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-                        </mat-select>
+                        <input type="text" matInput [matAutocomplete]="projectauto" [formControl]="projectFormControl" name="_sproject" [jyFunc]="formProjectValidator()">
+                        <mat-error *ngIf="projectFormControl.invalid">请选择项目</mat-error>
+                        <mat-autocomplete #projectauto="matAutocomplete" [displayWith]="displayProjectWith()">
+                            <mat-option *ngFor="let option of projectOptions" [value]="option">
+                                {{ option.projectShortName }}
+                            </mat-option>
+                        </mat-autocomplete>
                     </mat-form-field>
                 </div>
                 <div class="col-sm">
                     <mat-form-field style="font-size: 14px;">
                         <span matPrefix>静态池名称&nbsp;:</span>
-                        <mat-select multiple>
-                            <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-                        </mat-select>
-                        </mat-form-field>
+                        <input type="text" matInput [matAutocomplete]="staticpoolauto" [formControl]="staticPoolControl" name="_staticpool" [jyFunc]="formStaticPoolValidator()">
+                        <mat-error *ngIf="staticPoolControl.invalid">请选择静态池</mat-error>
+                        <mat-autocomplete #staticpoolauto="matAutocomplete" [displayWith]="displayStaticPoolautoWith()">
+                            <mat-option *ngFor="let option of staticpoolOptions" [value]="option">
+                                {{ option.poolName }}
+                            </mat-option>
+                        </mat-autocomplete>    
+                    </mat-form-field>
                     </div>
                     <div class="col-sm">
                         <mat-form-field style="font-size: 14px;">
                             <span matPrefix>资产类型&nbsp;:</span>
-                            <mat-select multiple>
-                                <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                            <mat-select [formControl]="assetTypeControl" name="assetType">
+                                <mat-option>--清除--</mat-option>
+                                <mat-option *ngFor="let option of assetTypeSource" [value]="option.paramCode">{{option.paramName}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-sm">
                         <mat-form-field style="font-size: 14px;">
                             <span matPrefix>数据来源&nbsp;:</span>
-                            <mat-select multiple>
-                                <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                            <mat-select [formControl]="dataFromControl">
+                                <mat-option>--清除--</mat-option>
+                                <mat-option [value]="option.institutionCode" *ngFor="let option of dataFromSource">{{option.institutionName}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-sm" style="display: flex; align-items: center;">
-                        <button mat-raised-button color="primary">
+                        <button mat-raised-button color="primary" (click)="searchSub.next('')">
                             <mat-icon fontSet="fa" fontIcon="fa-search" style="font-size: 14px;line-height:23px;"></mat-icon>
                             查询
                         </button>
-                        <button mat-raised-button>重置</button>
+                        <button mat-raised-button (click)="resetSearch()">重置</button>
                     </div>
             </div>
         </div>
+
         <div class="container-fluid" class="data-body" style="padding-right: 0px;padding-left: 0px; position: relative;top: -20px;">
             <div class="row">
                 <div class="col">
                     <mat-ext-table [dataSource]="dataSource">
                         <ng-container cdkColumnDef="select">
                             <cdk-header-cell class="select-column" style="flex: 0 0 30px;" *cdkHeaderCellDef>
-                                <mat-checkbox [align]="align"></mat-checkbox>
+                                <mat-checkbox (change)="onAllSelect($event)" [formControl]="onAllSelectFormControl"></mat-checkbox>
                             </cdk-header-cell>
                             <cdk-cell class="select-column" style="flex: 0 0 30px;" *matCellDef="let element">
-                                <mat-checkbox [align]="align"></mat-checkbox>
+                                <mat-checkbox [formControl]="element.checkboxControl" name="poolId"></mat-checkbox>
                             </cdk-cell>
                         </ng-container>
                         <ng-container cdkColumnDef="assetCode">
                             <cdk-header-cell *cdkHeaderCellDef >静态池代码</cdk-header-cell>
-                            <cdk-cell *matCellDef="let element">{{element.code}}</cdk-cell>
+                            <cdk-cell *matCellDef="let element">{{element.poolId}}</cdk-cell>
                         </ng-container>
                         <ng-container cdkColumnDef="assetName">
                             <cdk-header-cell *cdkHeaderCellDef>静态池名称</cdk-header-cell>
-                            <cdk-cell *matCellDef="let element"><a href="#" routerLink="/index/statassetpool/analyse">{{element.name}}</a></cdk-cell>
+                            <cdk-cell *matCellDef="let element"><a href="#" [routerLink]="'/index/statassetpool/analyse/' + element.poolId">{{element.poolName}}</a></cdk-cell>
                         </ng-container>
                         <ng-container cdkColumnDef="assetType">
                             <cdk-header-cell *cdkHeaderCellDef>资产类型</cdk-header-cell>
-                            <cdk-cell *matCellDef="let element">{{element.name}}</cdk-cell>
+                            <cdk-cell *matCellDef="let element">{{element.assetType}}</cdk-cell>
                         </ng-container>
                         <ng-container cdkColumnDef="assetFrom">
                             <cdk-header-cell *cdkHeaderCellDef>数据来源</cdk-header-cell>
-                            <cdk-cell *matCellDef="let element">{{element.name}}</cdk-cell>
+                            <cdk-cell *matCellDef="let element">{{element.dataSource}}</cdk-cell>
                         </ng-container>
                         <ng-container cdkColumnDef="assetDksend">
                             <cdk-header-cell *cdkHeaderCellDef>贷款发放起始日</cdk-header-cell>
-                            <cdk-cell *matCellDef="let element">{{element.name}}</cdk-cell>
+                            <cdk-cell *matCellDef="let element">{{element.lendBeginDate | date:"yyyy-MM-dd"}}</cdk-cell>
                         </ng-container>
                         <ng-container cdkColumnDef="assetDkover">
                             <cdk-header-cell *cdkHeaderCellDef>贷款发放截止日</cdk-header-cell>
-                            <cdk-cell *matCellDef="let element">{{element.name}}</cdk-cell>
+                            <cdk-cell *matCellDef="let element">{{element.lendEndDate | date:"yyyy-MM-dd"}}</cdk-cell>
                         </ng-container>
                         <ng-container cdkColumnDef="handler">
                             <cdk-header-cell  style="flex: 0 0 170px;" *cdkHeaderCellDef>操作</cdk-header-cell>
                             <cdk-cell  style="flex: 0 0 170px;" *matCellDef="let element" class="opt-column">
-                                <button type="button" class="btn btn-link btn-sm" style="padding: 0px;">编辑</button>
+                                <button type="button" class="btn btn-link btn-sm" style="padding: 0px;" [routerLink]="'/index/statassetpool/edit/' + element.poolId">编辑</button>
                                 <button type="button" class="btn btn-link btn-sm" style="padding: 0px;">导入样本</button>
-                                <button type="button" class="btn btn-link btn-sm" style="padding: 0px;">样本分析</button>
+                                <button type="button" class="btn btn-link btn-sm" style="padding: 0px;" [routerLink]="'/index/statassetpool/analyse/' + element.poolId">样本分析</button>
                             </cdk-cell>
                         </ng-container>
         
                         <cdk-header-row *cdkHeaderRowDef="['select', 'assetCode', 'assetName', 'assetType', 'assetFrom','assetDksend','assetDkover','handler']"></cdk-header-row>
                         <cdk-row *cdkRowDef="let row; columns: ['select', 'assetCode', 'assetName', 'assetType', 'assetFrom','assetDksend','assetDkover','handler'];"></cdk-row>
                     </mat-ext-table>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 15]" [length]="resultLength" [pageSize]="15"></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 15]" [length]="resultLength" [pageSize]="pageSize"></mat-paginator>
                     <div class="cdk-table-footer" style="display: inline-flex;position: relative; top: -20px;">
-                        <div class="select-column" style="flex: 0 0 60px; padding-left: 3px;align-self: center;">
-                            <mat-checkbox labelPosition="after" [align]="align">全选</mat-checkbox>
+                        <div class="select-column" style="flex: 0 0 60px; padding-left: 7px;align-self: center;">
+                            <mat-checkbox labelPosition="after" (change)="onAllSelect($event)" [formControl]="onAllSelectFormControl">全选</mat-checkbox>
                         </div>
-                        <div><button mat-raised-button>删除</button></div>
+                        <div><button mat-raised-button (click)="deleteInBatch()">删除</button></div>
                     </div>
                 </div>
             </div>

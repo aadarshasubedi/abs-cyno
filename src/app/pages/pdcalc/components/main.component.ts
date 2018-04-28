@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, Pipe } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Pipe, ElementRef } from '@angular/core';
 import { PdcalsService } from '../service/pdcalc.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService, LoadingService } from '../../../../sdk/services';
@@ -21,6 +21,8 @@ import { PressureSceMain } from './pressuresce/main';
 export class MainComponent implements OnInit {
 
     @ViewChild(MatTabGroup) tabGroup: MatTabGroup;
+
+    @ViewChild('exportReport') exportReport: ElementRef;
 
     @ViewChild(PressureSceMain) pressureSceMain: PressureSceMain;
 
@@ -80,8 +82,9 @@ export class MainComponent implements OnInit {
             });
         })
 
-       this.tabGroup.selectedIndexChange.subscribe((index) => {
-            this.selectTabIndex = index;
+        this.updateExportLink(0);
+        this.tabGroup.selectedIndexChange.subscribe((index) => {
+            this.updateExportLink(index);
         })
 
         merge(this.route.params)
@@ -106,6 +109,11 @@ export class MainComponent implements OnInit {
             })
         ).subscribe(data => this.projectYieldRateData = data);
 
+    }
+
+    updateExportLink(index) {
+        const link = index > 0 ? '/cyno/cynoweb/prcalc/createPrReport.do' : '/cyno/cynoweb/pdcalc/createPdReport.do';
+        this.exportReport.nativeElement.href = link + '?proposalId=' + this.proposalId + '&initType=' + this.initType;
     }
 
     get projInfoAttrs() {

@@ -8,7 +8,7 @@
     <div class="container-fluid" style="padding: 0px;">
         <div class="row">
             <div class="col-4" style="padding-right: 0px;padding-left: 0px;">
-                <mat-ext-table [dataSource]="dataSource1">
+                <mat-ext-table [dataSource]="dataSource1" [scroll]="false">
                     <ng-container cdkColumnDef="prSceneCode">
                         <cdk-header-cell *cdkHeaderCellDef>情景</cdk-header-cell>
                         <cdk-cell *matCellDef="let element">{{element.prSceneCode}}</cdk-cell>
@@ -35,7 +35,7 @@
             </div>
             
             <div class="col-4" style="padding-right: 0px;padding-left: 0px;">
-                <mat-ext-table [dataSource]="dataSource2">
+                <mat-ext-table [dataSource]="dataSource2"  [scroll]="false">
                     <ng-container cdkColumnDef="prSceneCode">
                         <cdk-header-cell *cdkHeaderCellDef>情景</cdk-header-cell>
                         <cdk-cell *matCellDef="let element">
@@ -64,7 +64,7 @@
             </div>
 
             <div class="col-4" style="padding-right: 0px;padding-left: 0px;">
-                <mat-ext-table [dataSource]="dataSource3">
+                <mat-ext-table [dataSource]="dataSource3"  [scroll]="false">
                     <ng-container cdkColumnDef="prSceneCode">
                         <cdk-header-cell *cdkHeaderCellDef>情景</cdk-header-cell>
                         <cdk-cell *matCellDef="let element">{{element.prSceneCode}}</cdk-cell>

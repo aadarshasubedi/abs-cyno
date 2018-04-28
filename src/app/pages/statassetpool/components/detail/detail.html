@@ -1,0 +1,77 @@
+<div class="card cyno-body analyse-main function-body">
+    <mat-spinner *ngIf="isShoLoading" style="z-index: 1;position: fixed;top: calc(50vh - 50px);left: calc(50vw - 50px);"></mat-spinner>
+    <div class="jumbotron base-info" style="padding: 1rem 0.5rem;background-color: #fff;">
+        <h1 class="display-6 content-item-title">样本明细：{{staticPool.poolName}}</h1>
+        <div class="container-fluid content-item-content" style="padding-left: 0px;overflow: auto;">
+            <div class="row justify-content-md-left" style="flex-wrap: nowrap;" style="min-width: 1800px;">
+                <div class="col">
+                    <mat-ext-table [dataSource]="dataSource" [scroll]="false">
+                        <ng-container cdkColumnDef="lendDate">
+                            <cdk-header-cell *cdkHeaderCellDef style="height: 40px; flex: 1 0 100px;">贷款发放时间</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element" style="height: 40px; flex: 1 0 100px;">{{element.lendDate}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="reportDate">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 80px;">报告月份</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element" style="height: 40px; flex: 1 0 80px;">{{element.reportDate}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="amountTotal">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">新增贷款本息和金额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element" style="height: 40px; flex: 1 0 120px;">{{element.amountTotal}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="totalCnt">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">新增贷款笔数</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element" style="height: 40px; flex: 1 0 120px;">{{element.totalCnt}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="amountBalanceOut">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">月末未偿本金余额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element" style="height: 40px; flex: 1 0 120px;">{{element.amountBalanceOut}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="balanceCnt">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 100px;">剩余笔数</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element"  style="height: 40px; flex: 1 0 100px;">{{element.balanceCnt}}</cdk-cell>
+                        </ng-container> 
+                        <ng-container cdkColumnDef="balanceNormal">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 100px;">正常贷款余额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element" style="height: 40px; flex: 1 0 100px;">{{element.balanceNormal}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="delinqLoan1">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">1~30天滞纳贷款总额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element" style="height: 40px; flex: 1 0 120px;">{{element.delinqLoan1}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="delinqLoan2">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">31~60天滞纳贷款总额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element" style="height: 40px; flex: 1 0 120px;">{{element.delinqLoan2}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="delinqLoan3">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">61~90天滞纳贷款总额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element" style="height: 40px; flex: 1 0 120px;">{{element.delinqLoan3}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="delinqLoan4">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">91~120天滞纳贷款总额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element"  style="height: 40px; flex: 1 0 120px;">{{element.delinqLoan4}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="delinqLoan5">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">121~150天滞纳贷款总额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element"  style="height: 40px; flex: 1 0 120px;">{{element.delinqLoan5}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="delinqLoan6">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">151~180天滞纳贷款总额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element"   style="height: 40px; flex: 1 0 120px;">{{element.delinqLoan6}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="amountEarly">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">当月早偿金额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element"   style="height: 40px; flex: 1 0 120px;">{{element.amountEarly}}</cdk-cell>
+                        </ng-container>
+                        <ng-container cdkColumnDef="amountRec">
+                            <cdk-header-cell *cdkHeaderCellDef  style="height: 40px; flex: 1 0 120px;">注销贷款回收金额(元)</cdk-header-cell>
+                            <cdk-cell *matCellDef="let element"   style="height: 40px; flex: 1 0 120px;">{{element.amountRec}}</cdk-cell>
+                        </ng-container>
+                        <cdk-header-row *cdkHeaderRowDef="['lendDate', 'reportDate', 'amountTotal', 'totalCnt', 'amountBalanceOut', 'balanceCnt', 'balanceNormal', 'delinqLoan1', 'delinqLoan2', 'delinqLoan3', 'delinqLoan4', 'delinqLoan5', 'delinqLoan6', 'amountEarly', 'amountRec']"></cdk-header-row>
+                        <cdk-row *cdkRowDef="let row; columns: ['lendDate', 'reportDate', 'amountTotal', 'totalCnt', 'amountBalanceOut', 'balanceCnt', 'balanceNormal', 'delinqLoan1', 'delinqLoan2', 'delinqLoan3', 'delinqLoan4', 'delinqLoan5', 'delinqLoan6', 'amountEarly', 'amountRec'];"></cdk-row>
+                    </mat-ext-table>
+                </div>
+            </div>
+        </div>
+        <mat-paginator [pageSizeOptions]="[20, 35, 40]" [length]="resultLength" [pageSize]="pageSize"></mat-paginator>
+    </div>
+</div>

@@ -33,13 +33,18 @@
                                 border-radius: 0rem;
                                 z-index: 5;
                             ">测 算</button>
-                            <button type="button" class="btn btn-primary btn-sm" style="
+                            <a type="button"
+                                #exportReport
+                                href="#"
+                                target="_blank"
+                                class="btn btn-primary btn-sm" 
+                                style="
                                 position:  absolute;
                                 right: 0px;
                                 top: 10px;
                                 border-radius: 0rem;
                                 z-index: 5;
-                            ">查看报告</button>
+                            ">查看报告</a>
                             <mat-tab-group [selectedIndex]="activeTabIndex">
                                 <mat-tab label="概率分布测算">
                                     <chart-incomerate #incomerate [initType]="initType" [proposalId]= "proposalId" [selectedIndex]="_selectProposaIndex" [datas]="projectYieldRateData" [graphicDescElRef]="graphicDescDom" [proData]="projectInfo" ></chart-incomerate>
