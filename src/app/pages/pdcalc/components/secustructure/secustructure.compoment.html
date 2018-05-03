@@ -8,7 +8,7 @@
         <tr>
         <th scope="col">证券代码</th>
         <th scope="col">证券名称</th>
-        <th scope="col">发行金额(亿)</th>
+        <th scope="col">发行金额(万)</th>
         <th scope="col">分割比例(%)</th>
         <th scope="col">还本方式</th>
         <th scope="col">起息日</th>
@@ -24,13 +24,13 @@
         <tr *ngFor="let item of datas">
             <td>{{item.securitiesCode}}</td>
             <td>{{item.securitiesName}}</td>
-            <td>{{(item.securitiesSize / 100000000) | currency:'':true:'0.2-2'}}</td>
+            <td>{{(item.securitiesSize / 10000) | currency:'':true:'0.2-2'}}</td>
             <td>{{item.securitiesCycle | percent:'0.2-2'}}</td>
             <td>{{item.paybackType}}</td>
-            <td>{{item.valueDate | date: "yyyy-MM-dd"}}</td>
-            <td>{{item.maturityDate | date: "yyyy-MM-dd"}}</td>
+            <td>{{item.valueDate | jydate: "yyyy-MM-dd"}}</td>
+            <td>{{item.maturityDate | jydate: "yyyy-MM-dd"}}</td>
             <td>{{item.rateFormula}}</td>
-            <td>{{item.rate}}</td>
+            <td>{{item.rate | percent:'0.2-2'}}</td>
         </tr>
     </tbody>
 </table>

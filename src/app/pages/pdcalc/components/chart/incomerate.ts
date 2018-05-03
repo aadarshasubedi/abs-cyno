@@ -183,13 +183,13 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
         const yieldCurveList: any = this.chart.datas.yieldCurveList = [];
         let rateList: any = this.chart.datas.rateList = [];
         let rightRateList: any =  this.chart.datas.rightRateList = [];
-        this.chart.datas.periods = (this.datas.yieldCurve || []).map((item) => {
+        this.chart.datas.periods = (this.datas.yieldCurve || []).map((item, i) => {
             yieldCurveList.push({type: item.curveCode, name: item.curveName});
             return {
                 type: item.curveCode,
                 name: item.curveName,
                 showLine: true,
-                showlicha: false,
+                showlicha: i === 0,
                 data: (item.yieldCurveDatas || []).map((_item) => {
                     if (periodKeys.indexOf(_item.mtrty) < 0){
                         periodKeys.push(_item.mtrty);
@@ -561,7 +561,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
                         hoverL.setStyle('lineWidth', 2);
 
                         //更新备注说明
-                        this.graphicDescElRef.innerText = '图形说明: 有'+ rateDesc +'概率次级收益率大于' + perDesc;
+                        this.graphicDescElRef.innerText = '图形说明: 有'+ perDesc +'收益率概率次级大于' + rateDesc;
 
                         //添加利差提示信息
                         this.chart.datas.periods.forEach((element) => {

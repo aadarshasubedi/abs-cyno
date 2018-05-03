@@ -34,6 +34,7 @@ import { AnalyseDetail } from './components/detail/detail';
 import { StatAssetPoolRouterModule } from './statassetpool.router.module';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDatepickerModule, MAT_DATE_FORMATS, MatDateFormats, MAT_DATE_LOCALE_PROVIDER, MAT_DATE_LOCALE} from '@angular/material';
+import { JyPipesModule } from '../../../sdk/pipes';
 
 @NgModule({
     declarations: [
@@ -47,6 +48,7 @@ import {MatDatepickerModule, MAT_DATE_FORMATS, MatDateFormats, MAT_DATE_LOCALE_P
         AnalyseDetail
     ],
     imports: [
+        JyPipesModule,
         MatAutocompleteModule,
         MatProgressBarModule,
         MatDatepickerModule,

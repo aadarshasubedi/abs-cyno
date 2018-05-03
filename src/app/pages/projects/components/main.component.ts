@@ -54,6 +54,8 @@ export class MainComponent implements OnInit {
 
     private _selectSponsorOrgs: any;
 
+    sortTag: any = false;
+
     constructor(
         private projectsService: ProjectsService,
         private router: Router,
@@ -68,6 +70,7 @@ export class MainComponent implements OnInit {
         this._loadSponsorOrgList();
 
         this.tabGroup.selectedIndexChange.subscribe((index) => {
+            this.sortTag = false;
             this._resetParams();
             this.paginator.pageIndex = 0;
             this.selectType = index;
@@ -140,7 +143,9 @@ export class MainComponent implements OnInit {
                 issueMarket: this.selectType ? this.marketsLists[this.selectType - 1].paramCode : '',
                 projectTypeList: (this._selectProTypes || []).join(','),
                 sponsorOrgList: (this._selectSponsorOrgs || []).join(','),
-                searchText: (this.searchText || '').trim()
+                searchText: (this.searchText || '').trim(),
+                valueDate: this.sortTag,
+                sort: this.sortTag ? this.sortTag : ''
             }
         })
     }
@@ -196,6 +201,11 @@ export class MainComponent implements OnInit {
     }
 
     doSearch(){
+        this.searchSub.next(true);
+    }
+
+    handlerSort() {
+        this.sortTag = this.sortTag ? ( this.sortTag === 'asc' ? 'desc' : 'asc') : 'asc';
         this.searchSub.next(true);
     }
 }

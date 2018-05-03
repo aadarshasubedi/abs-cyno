@@ -1,7 +1,7 @@
 import { Component, OnInit,ChangeDetectionStrategy , NgZone, ChangeDetectorRef } from '@angular/core';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import { NavBarService } from './navbar.service';
-
+import { AuthGuard } from '../../services/auth-guard';
 @Component({
     selector: 'cyno-navbar',
     templateUrl: './navbar.html',
@@ -19,7 +19,8 @@ export class NavBarComponent implements OnInit {
     constructor(
         private scrollDispatcher: ScrollDispatcher,
         private checkRef: ChangeDetectorRef,
-        private _ngZone: NgZone
+        private _ngZone: NgZone,
+        private authGuard: AuthGuard
     ) { 
         NavBarService.breadcrumb.asObservable().subscribe((title) => {
             this.breadcrumbTitle = title;
@@ -41,6 +42,9 @@ export class NavBarComponent implements OnInit {
             this._scrolled = ($(window).scrollTop() > 10);
             this.checkRef.markForCheck();
         });
+    }
 
+    get userRealName() {
+        return this.authGuard.userInfo ? 'Hello, ' + this.authGuard.userInfo.sysUser.realName : '';
     }
 }

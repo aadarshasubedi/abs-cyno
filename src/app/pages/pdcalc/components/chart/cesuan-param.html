@@ -1,4 +1,4 @@
-<h1 mat-dialog-title >评级报告参数</h1>
+<h1 mat-dialog-title >参数设置</h1>
 <div mat-dialog-content  class="cesuan-param" style="overflow: visible;">
     <form #cesuanParam="ngForm">
     <div class="container-fluid">
@@ -44,7 +44,7 @@
                 <div style="text-align: left;font-size: 0.7rem;">
                     <mat-form-field style="width: 100%;">
                         <span matPrefix>选择分布: </span>
-                        <mat-select [(ngModel)]="cdDistribType" [disabled]="true" name="cdDistribType2" >
+                        <mat-select [(ngModel)]="cdDistribType1" [disabled]="true" name="cdDistribType2" >
                             <mat-option value="ND">对数正态分布</mat-option>
                             <mat-option value="DD">离散分布</mat-option>
                         </mat-select>
@@ -56,9 +56,10 @@
                 <div style="text-align: left;font-size: 0.7rem;">
                     <mat-form-field style="width: 100%;">
                         <span matPrefix>分布均值<span style="color: red;font-size: 1rem;position: relative;top: 4px;"> * </span>: </span>
-                        <input matInput [(ngModel)]="calculateParams.exValue" name="exValue" #exValue="ngModel" jyFloat required>
+                        <input matInput [(ngModel)]="calculateParams.per_exValue" name="exValue" #exValue="ngModel" jyFloat required>
                         <mat-error *ngIf="exValue.invalid">非空且为数字</mat-error>
-                        <mat-hint align="end" *ngIf="exValue.valid && (calculateParams.exValue < 0 || calculateParams.exValue > 1)" style="color: green;">建议输入0~1范围的数字</mat-hint>
+                        <span matSuffix style="color: #839008;">(%) &nbsp;</span>
+                        <mat-hint align="end" *ngIf="exValue.valid && (calculateParams.per_exValue < 0 || calculateParams.per_exValue > 100)" style="color: green;">建议输入0~100范围的数字</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -67,9 +68,10 @@
                 <div style="text-align: left;font-size: 0.7rem;">
                     <mat-form-field style="width: 100%;">
                         <span matPrefix>分布方差<span style="color: red;font-size: 1rem;position: relative;top: 4px;"> * </span>: </span>
-                        <input matInput [(ngModel)]="calculateParams.dxValue"  name="dxValue" #dxValue="ngModel" jyFloat required>
+                        <input matInput [(ngModel)]="calculateParams.per_dxValue"  name="dxValue" #dxValue="ngModel" jyFloat required>
                         <mat-error *ngIf="dxValue.invalid">非空且为数字</mat-error>
-                        <mat-hint align="end" *ngIf="dxValue.valid && (calculateParams.dxValue < 0 || calculateParams.dxValue > 0.2)" style="color: green;">建议输入0~0.2范围的数字</mat-hint>
+                        <span matSuffix style="color: #839008;">(%)&nbsp;</span>
+                        <mat-hint align="end" *ngIf="dxValue.valid && (calculateParams.per_dxValue < 0 || calculateParams.per_dxValue > 20)" style="color: green;">建议输入0~20范围的数字</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -93,6 +95,7 @@
                     <mat-form-field style="width: 100%;">
                         <span matPrefix>选择分布: </span>
                         <mat-select [(ngModel)]="cdDistribType" [disabled]="true" name="cdDistribType3">
+                            <mat-option value="">无分布</mat-option>
                             <mat-option value="ND">对数正态分布</mat-option>
                             <mat-option value="DD">离散分布</mat-option>
                         </mat-select>
@@ -104,10 +107,11 @@
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>第1年: </span>
-                            <input matInput [(ngModel)]="calculateParams.branchP1" name="branchP1" #branchP1="ngModel" jyFloat required [jyMax]="maxBranchP1" [jyMin]="0">
+                            <input matInput [(ngModel)]="calculateParams.per_branchP1" name="branchP1" #branchP1="ngModel" jyFloat required [jyMax]="maxBranchP1" [jyMin]="0">
                             <mat-error *ngIf="(branchP1.invalid)">
                                 请输入0~{{maxBranchP1}}数字
                             </mat-error>
+                            <span matSuffix style="color: #839008;">(%)&nbsp;</span>
                         </mat-form-field>
                     </div>
                 </div>
@@ -115,10 +119,11 @@
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>第2年: </span>
-                            <input matInput [(ngModel)]="calculateParams.branchP2" name="branchP2" #branchP2="ngModel" jyFloat required  [jyMax]="maxBranchP2" [jyMin]="0">
+                            <input matInput [(ngModel)]="calculateParams.per_branchP2" name="branchP2" #branchP2="ngModel" jyFloat required  [jyMax]="maxBranchP2" [jyMin]="0">
                             <mat-error *ngIf="(branchP2.invalid)">
                                 请输入0~{{maxBranchP2}}的数字
                             </mat-error>
+                            <span matSuffix style="color: #839008;">(%)&nbsp;</span>
                         </mat-form-field>
                     </div>
                 </div>
@@ -127,10 +132,11 @@
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>第3年: </span>
-                            <input matInput [(ngModel)]="calculateParams.branchP3" name="branchP3" #branchP3="ngModel"  jyFloat required  [jyMax]="maxBranchP3" [jyMin]="0">
+                            <input matInput [(ngModel)]="calculateParams.per_branchP3" name="branchP3" #branchP3="ngModel"  jyFloat required  [jyMax]="maxBranchP3" [jyMin]="0">
                             <mat-error *ngIf="(branchP3.invalid)">
                                 请输入0~{{maxBranchP3}}的数字
                             </mat-error>
+                            <span matSuffix style="color: #839008;">(%)&nbsp;</span>
                         </mat-form-field>
                     </div>
                 </div>
@@ -138,10 +144,11 @@
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>第4年: </span>
-                            <input matInput [(ngModel)]="calculateParams.branchP4" name="branchP4" #branchP4="ngModel" jyFloat required  [jyMax]="maxBranchP4" [jyMin]="0">
+                            <input matInput [(ngModel)]="calculateParams.per_branchP4" name="branchP4" #branchP4="ngModel" jyFloat required  [jyMax]="maxBranchP4" [jyMin]="0">
                             <mat-error *ngIf="(branchP4.invalid)">
                                 请输入0~{{maxBranchP4}}的数字
                             </mat-error>
+                            <span matSuffix style="color: #839008;">(%)&nbsp;</span>
                         </mat-form-field>
                     </div>
                 </div>
@@ -164,6 +171,7 @@
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>选择分布:</span>
                             <mat-select [(ngModel)]="cdDistribType" [disabled]="true" name="cdDistribType1">
+                                    <mat-option value="">无分布</mat-option>
                                 <mat-option value="ND">对数正态分布</mat-option>
                                 <mat-option value="DD">离散分布</mat-option>
                             </mat-select>
@@ -175,8 +183,9 @@
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
                             <span matPrefix>值:</span>
-                            <input matInput [(ngModel)]="calculateParams.earlyRate" name="earlyRate" #earlyRate="ngModel" jyFloat required>
+                            <input matInput [(ngModel)]="calculateParams.per_earlyRate" name="earlyRate" #earlyRate="ngModel" jyFloat required>
                             <mat-error *ngIf="earlyRate.invalid">非空且为数字</mat-error>
+                            <span matSuffix style="color: #839008;">(%)&nbsp;</span>
                         </mat-form-field>
                     </div>
                 </div>
@@ -221,8 +230,9 @@
                 <div style="text-align: left;font-size: 0.7rem;">
                     <mat-form-field style="width: 100%;">
                         <span matPrefix>回归率:</span>
-                        <input matInput [(ngModel)]="calculateParams.recRate" name="recRate" #recRate="ngModel" jyFloat required>
+                        <input matInput [(ngModel)]="calculateParams.per_recRate" name="recRate" #recRate="ngModel" jyFloat required>
                         <mat-error *ngIf="recRate.invalid">非空且为数字</mat-error>
+                        <span matSuffix style="color: #839008;">(%)&nbsp;</span>
                     </mat-form-field>
                 </div>
             </div>
@@ -234,7 +244,7 @@
     <button type="button" 
         [disabled]="!cesuanParam.form.valid"
         class="btn btn-primary btn-sm"
-        [mat-dialog-close]="calculateParams" 
+        [mat-dialog-close]="realCalculateParams" 
         style="
             border-radius: 0rem;
             z-index: 5;

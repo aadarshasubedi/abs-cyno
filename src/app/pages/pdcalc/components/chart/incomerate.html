@@ -25,7 +25,7 @@
                                         <mat-list>
                                             <mat-list-item *ngFor="let item of chart.datas.periods" style="height: 30px;"> 
                                                 <mat-checkbox style="flex: 1 1 auto;"  [(ngModel)]="item.showLine" (ngModelChange)="updateChartFromYieldCurve()">{{item.name}}</mat-checkbox>
-                                                <mat-radio-button [value]="item.showlicha" (change)="updateChartFromYieldCurve(item);"></mat-radio-button>
+                                                <mat-radio-button [checked]="item.showlicha" [value]="item.showlicha" (change)="updateChartFromYieldCurve(item);"></mat-radio-button>
                                             </mat-list-item>
                                         </mat-list>
                                 </div>
@@ -65,7 +65,7 @@
                                                 </div>
                                                 <div class="col-sm" style="padding-left: 0rem; padding-right: 0rem;text-align:left;">
                                                     <div style="font-size: 0.5rem;color: #bac3cc;">到期日</div>
-                                                    <div style="font-size: 0.5rem;color: #62686f;">{{item.maturityDate | date: "yyyy-MM-dd"}}</div>
+                                                    <div style="font-size: 0.5rem;color: #62686f;">{{item.maturityDate | jydate: "yyyy-MM-dd"}}</div>
                                                 </div>
                                             </div>
                                         </div>

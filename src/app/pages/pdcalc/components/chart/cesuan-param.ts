@@ -12,7 +12,9 @@ import { MessageService, LoadingService } from '../../../../../sdk/services';
 })
 export class CesuanParam implements OnInit {
 
-    cdDistribType: string = 'ND';
+    cdDistribType: string = '';
+
+    cdDistribType1 = "ND";
 
     //测算参数modal
     calculateParams: any = {};
@@ -42,36 +44,66 @@ export class CesuanParam implements OnInit {
                     return;
                 }
                 this.calculateParams = data.paraDto;
+
+                //格式化参数
+                this.calculateParams.per_exValue = this.formatePer(this.calculateParams.exValue);
+                this.calculateParams.per_dxValue = this.formatePer(this.calculateParams.dxValue);
+                this.calculateParams.per_branchP1 = this.formatePer(this.calculateParams.branchP1);
+                this.calculateParams.per_branchP2 = this.formatePer(this.calculateParams.branchP2);
+                this.calculateParams.per_branchP3 = this.formatePer(this.calculateParams.branchP3);
+                this.calculateParams.per_branchP4 = this.formatePer(this.calculateParams.branchP4);
+                this.calculateParams.per_earlyRate = this.formatePer(this.calculateParams.earlyRate);
+                this.calculateParams.per_recRate = this.formatePer(this.calculateParams.recRate);
                 this.changeDetectorRef.markForCheck();
         });
     }
 
     get maxBranchP1() {
-        const r = (1 * 1000000) - (this.calculateParams.branchP2 || 0) * 1000000
-            - (this.calculateParams.branchP3 || 0) * 1000000
-            - (this.calculateParams.branchP4 || 0) * 1000000;
-        return r < 0 ? 0 : r / 1000000;
+        const r = 100 - this.calculateParams.per_branchP2 - this.calculateParams.per_branchP3 - this.calculateParams.per_branchP4;
+        return ((  r * 10000 ) | 0 ) / 10000;
 
     }
     get maxBranchP2() {
-        const r = (1 * 1000000) - (this.calculateParams.branchP1 || 0) * 1000000
-            - (this.calculateParams.branchP3 || 0) * 1000000
-            - (this.calculateParams.branchP4 || 0) * 1000000;
-        return r < 0 ? 0 : r / 1000000;
+        const r = 100 - this.calculateParams.per_branchP1 - this.calculateParams.per_branchP3 - this.calculateParams.per_branchP4;
+        return ((  r * 10000 ) | 0 ) / 10000;
 
     }
     get maxBranchP3() {
-        const r = (1 * 1000000) - (this.calculateParams.branchP2 || 0) * 1000000
-            - (this.calculateParams.branchP1 || 0) * 1000000
-            - (this.calculateParams.branchP4 || 0) * 1000000;
-        return r < 0 ? 0 : r / 1000000;
+        const r = 100 - this.calculateParams.per_branchP1 - this.calculateParams.per_branchP2 - this.calculateParams.per_branchP4;
+        return ((  r * 10000 ) | 0 ) / 10000;
 
     }
     get maxBranchP4() {
-        const r = (1 * 1000000) - (this.calculateParams.branchP2 || 0) * 1000000
-            - (this.calculateParams.branchP3 || 0) * 1000000
-            - (this.calculateParams.branchP1 || 0) * 1000000;
-        return r < 0 ? 0 : r / 1000000;
+        const r = 100 - this.calculateParams.per_branchP1 - this.calculateParams.per_branchP2 - this.calculateParams.per_branchP3;
+        return ((  r * 10000 ) | 0 ) / 10000;
+    }
 
+    formatePer(v) {
+        return isNaN(v) ? '' : (((v * 10000) | 0 ) / 100) + '';
+    }
+
+    formatePer2Float(v) {
+        return isNaN(v) ? '' : v / 100;
+    }
+
+    get realCalculateParams() {
+        this.calculateParams.exValue = this.formatePer2Float(this.calculateParams.per_exValue);
+        this.calculateParams.dxValue = this.formatePer2Float(this.calculateParams.per_dxValue);
+        this.calculateParams.branchP1 = this.formatePer2Float(this.calculateParams.per_branchP1);
+        this.calculateParams.branchP2 = this.formatePer2Float(this.calculateParams.per_branchP2);
+        this.calculateParams.branchP3 = this.formatePer2Float(this.calculateParams.per_branchP3);
+        this.calculateParams.branchP4 = this.formatePer2Float(this.calculateParams.per_branchP4);
+        this.calculateParams.earlyRate = this.formatePer2Float(this.calculateParams.per_earlyRate);
+        this.calculateParams.recRate = this.formatePer2Float(this.calculateParams.per_recRate);
+        const d = Object.assign({}, this.calculateParams);
+        delete d.per_exValue;
+        delete d.per_dxValue;
+        delete d.per_branchP1;
+        delete d.per_branchP2;
+        delete d.per_branchP3;
+        delete d.per_branchP4;
+        delete d.per_earlyRate;
+        delete d.per_recRate;
+        return d;
     }
 }

@@ -26,12 +26,13 @@ import { MatJyDropDownModule } from '../../../sdk/compoments/dropdwon';
 import { TableModule} from '../../../sdk/compoments/table/module';
 import { MAT_PAGINATOR_INTL_PROVIDER } from '../../../sdk/compoments/paginator/matPaginatorIntl';
 import { ProjectsService } from './service/projects.service';
-
+import { JyPipesModule } from '../../../sdk/pipes';
 
 @NgModule({
     declarations: [ProjectsComponent, MainComponent],
     imports: [
         CommonModule,
+        JyPipesModule,
         MatJyDropDownModule,
         MatIconModule,
         MatMenuModule,

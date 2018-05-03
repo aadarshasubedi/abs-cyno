@@ -93,11 +93,11 @@
                         </ng-container>
                         <ng-container cdkColumnDef="assetDksend">
                             <cdk-header-cell *cdkHeaderCellDef>贷款发放起始日</cdk-header-cell>
-                            <cdk-cell *matCellDef="let element">{{element.lendBeginDate | date:"yyyy-MM-dd"}}</cdk-cell>
+                            <cdk-cell *matCellDef="let element">{{element.lendBeginDate | jydate:"yyyy-MM-dd"}}</cdk-cell>
                         </ng-container>
                         <ng-container cdkColumnDef="assetDkover">
                             <cdk-header-cell *cdkHeaderCellDef>贷款发放截止日</cdk-header-cell>
-                            <cdk-cell *matCellDef="let element">{{element.lendEndDate | date:"yyyy-MM-dd"}}</cdk-cell>
+                            <cdk-cell *matCellDef="let element">{{element.lendEndDate | jydate:"yyyy-MM-dd"}}</cdk-cell>
                         </ng-container>
                         <ng-container cdkColumnDef="handler">
                             <cdk-header-cell  style="flex: 0 0 170px;" *cdkHeaderCellDef>操作</cdk-header-cell>
