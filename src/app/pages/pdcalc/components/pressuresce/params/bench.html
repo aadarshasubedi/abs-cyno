@@ -12,9 +12,7 @@
                     <span matPrefix style="padding-left: 10px;">参考参数类型:</span>
                     <mat-select [(ngModel)]="param.PARA_TYPE" name="recCycle1">
                         <mat-option value="1G">评级报告参数数据</mat-option>
-                        <mat-option value="2P">资产池参数数据</mat-option>
                         <mat-option value="3A">动静态池分析数据</mat-option>
-                        <mat-option value="4h">历史样本参数数据</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -22,7 +20,7 @@
             <div class="col-2" style="padding: 0rem;color: #8f9396;font-size: 0.7rem;padding-left: 10px;">
                 <mat-form-field style="width: 100%;">
                     <span matPrefix>累计违约率:</span>
-                    <input matInput [(ngModel)]="param.VALUE_D" disabled="true" name="recCycle2" #recCycle2="ngModel" jyFloat required>
+                    <input matInput [(ngModel)]="param.PER_VALUE_D" disabled="true" name="recCycle2" #recCycle2="ngModel" jyFloat required>
                 </mat-form-field>
             </div>
             <div class="col-1" style="padding: 0rem;color: #8f9396;align-self: center;">
@@ -31,7 +29,7 @@
             <div class="col-2" style="padding: 0rem;color: #8f9396;font-size: 0.7rem;padding-left: 10px;">
                 <mat-form-field style="width: 100%;">
                     <span matPrefix>累计早偿率:</span>
-                    <input matInput [(ngModel)]="param.VALUE_E" disabled="true" name="recCycle3" #recCycle3="ngModel" jyFloat required>
+                    <input matInput [(ngModel)]="param.PER_VALUE_E" disabled="true" name="recCycle3" #recCycle3="ngModel" jyFloat required>
                 </mat-form-field>
             </div>
             <div class="col-1" style="padding: 0rem;color: #8f9396;align-self: center;">
@@ -40,7 +38,7 @@
             <div class="col-2" style="padding: 0rem;color: #8f9396;font-size: 0.7rem;padding-left: 10px;">
                 <mat-form-field style="width: 100%;">
                     <span matPrefix>回收率:</span>
-                    <input matInput [(ngModel)]="param.VALUE_R" disabled="true" name="recCycle4" #recCycle4="ngModel" jyFloat required>
+                    <input matInput [(ngModel)]="param.PER_VALUE_R" disabled="true" name="recCycle4" #recCycle4="ngModel" jyFloat required>
                 </mat-form-field>
             </div>
             <div class="col-1" style="padding: 0rem;color: #8f9396;align-self: center;">

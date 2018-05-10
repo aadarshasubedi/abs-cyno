@@ -1,8 +1,9 @@
-<div mat-dialog-content>
+<div mat-dialog-content style="height: 470px; max-height: unset;">
+    <h1 mat-dialog-title style="font-size: 1rem; padding: 0px;">{{title}} </h1>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-6" style="padding: 20px 0px;height: 370px;">
-                <mat-ext-table [dataSource]="dataSource" [scroll]="true" [scrollHeight]="340">
+            <div class="col-6" style="padding: 10px 0px;height: 280px;">
+                <mat-ext-table [dataSource]="dataSource" [scroll]="true" [scrollHeight]="280">
                     <ng-container cdkColumnDef="periods">
                         <cdk-header-cell *cdkHeaderCellDef>第N月</cdk-header-cell>
                         <cdk-cell *matCellDef="let element">{{element.periods}}</cdk-cell>
@@ -28,8 +29,12 @@
                 </mat-ext-table>
             </div>
            <div class="col-6">
-                <div echarts [options]="chartOption" style="height: 400px;"></div>
+                <div echarts [options]="chartOption" style="height: 360px;"></div>
             </div>
         </div>
+    </div>
+    <div mat-dialog-actions style="padding: 0px;justify-content: flex-end;">
+        <button mat-button mat-dialog-close>取 消</button>
+        <button mat-button [mat-dialog-close]="true">确 定</button>
     </div>
 </div>

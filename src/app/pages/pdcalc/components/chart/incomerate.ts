@@ -93,6 +93,8 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
     private _hasCustomerCesuan = false;
 
+    selectYieldCurveItem;
+
     //测算参数modal
     calculateParams: any = {
         //模拟次数
@@ -145,10 +147,11 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
     ngAfterViewInit() {}
 
-    updateChartFromYieldCurve(selectItem){
+    updateChartFromYieldCurve(selectItem) {
         if (selectItem) {
             this.chart.datas.periods.forEach((item) => {
                 item.showlicha = item === selectItem;
+                this.selectYieldCurveItem = selectItem;
             });
         }
         this.renderChart(true);
@@ -189,7 +192,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
                 type: item.curveCode,
                 name: item.curveName,
                 showLine: true,
-                showlicha: i === 0,
+                showlicha: this.selectYieldCurveItem ? (this.selectYieldCurveItem.type === item.curveCode) : (i === 0),
                 data: (item.yieldCurveDatas || []).map((_item) => {
                     if (periodKeys.indexOf(_item.mtrty) < 0){
                         periodKeys.push(_item.mtrty);
@@ -561,7 +564,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
                         hoverL.setStyle('lineWidth', 2);
 
                         //更新备注说明
-                        this.graphicDescElRef.innerText = '图形说明: 有'+ perDesc +'收益率概率次级大于' + rateDesc;
+                        this.graphicDescElRef.innerText = '图形说明: 有' + perDesc + '的概率证券收益率大于' + rateDesc;
 
                         //添加利差提示信息
                         this.chart.datas.periods.forEach((element) => {

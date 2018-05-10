@@ -103,4 +103,10 @@ export class StatAssetPoolService {
         return this.http.get('/cyno/cynoweb/staticpool/getCynoStaticPoolDetail.do',
         {params: new HttpParams({fromObject: {poolId: poolId}})}).pipe(jsonMap());
     }
+
+    //获取静态池基本信息
+    getStaticPoolInfo(poolId) {
+        return this.http.get('/cyno/cynoweb/staticpool/getStaticPoolInfo.do',
+        {params: new HttpParams({fromObject: {poolId: poolId}})}).pipe(jsonMap());
+    }
 }

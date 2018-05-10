@@ -4,7 +4,7 @@
         <h5 class="card-title project-title" style="flex: 0 0 auto;font-weight: 700;margin-right: 20px;">{{staticPool.poolName}}</h5>
         <button type="button" class="btn btn-link btn-sm" style="padding: 0px;"  [routerLink]="'/index/statassetpool/detail/' + poolId">查看样本明细</button>
         <div style="flex: 1;"></div>
-        <button mat-raised-button style="flex: 0 0 120px;" routerLink="/index/statassetpool/add">
+        <button mat-raised-button style="flex: 0 0 120px;" routerLink="/index/statassetpool/import/{{poolId}}">
             导入样本数据
         </button>
     </div>

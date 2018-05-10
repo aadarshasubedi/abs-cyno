@@ -67,6 +67,8 @@ export class BenchCurveset implements OnInit {
 
     type: string;
 
+    title;
+
     constructor(
         @Inject(MAT_DIALOG_DATA) datas: any,
         private ngZone: NgZone,
@@ -74,6 +76,8 @@ export class BenchCurveset implements OnInit {
     ) {
         this.datas = datas.datas;
         this.type = datas.type;
+
+        this.title = (this.type === 'D') ? '月新增违约率曲线' : (this.type === 'E' ? '月新增早偿率曲线' : '月新增回归率曲线');
      }
 
     ngOnInit(): void {
@@ -102,6 +106,11 @@ export class BenchCurveset implements OnInit {
     }
 
     private buildSource() {
+        let data = this.datas.paraMap.BASE_PARA['CURVE_' + this.type] || [];
+        data = data.map((item) => {
+            return Object.assign({}, item);
+        });
+        this.datas.paraMap.BASE_PARA['BAK_CURVE_' + this.type] = data;
         this.dataSource.data = this.datas.paraMap.BASE_PARA['CURVE_' + this.type];
     }
 

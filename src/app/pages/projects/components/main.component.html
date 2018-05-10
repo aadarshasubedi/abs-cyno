@@ -3,7 +3,7 @@
         <mat-tab label="我的关注"></mat-tab>
         <mat-tab [label]="item.paramName" *ngFor="let item of marketsLists"></mat-tab>
     </mat-tab-group>
-    <mat-form-field class="example-form-field project-search-field" style="position: absolute; right: 30px; top: 8px;z-index:10;">
+    <mat-form-field class="example-form-field project-search-field" style="position: absolute; right: 30px; z-index:10;">
         <input matInput type="text" placeholder="输入名称,代码" [(ngModel)]="searchText" style="font-size: 14px;" (change)="doSearch()"/>
         <button mat-button matSuffix mat-icon-button (click)="doSearch()">
             <mat-icon style="font-size: 20px;">search</mat-icon>

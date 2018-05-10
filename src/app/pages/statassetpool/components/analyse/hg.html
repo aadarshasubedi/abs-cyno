@@ -11,10 +11,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td style="color:red">12.83%</td>
-                    <td style="color:red">12.83%</td>
-                    <td style="color:red">12.83%</td>
-                    <td style="color:red">12.83%</td>
+                    <td style="color:red">{{staticPoolInfo.averageD | percent:'0.2-2'}}</td>
+                    <td style="color:red">{{staticPoolInfo.varianceD | percent:'0.2-2'}}</td>
+                    <td style="color:red">{{staticPoolInfo.averageE | percent:'0.2-2'}}</td>
+                    <td style="color:red">{{staticPoolInfo.recoveryRate | percent:'0.2-2'}}</td>
                 </tr>
             </tbody>
         </table>

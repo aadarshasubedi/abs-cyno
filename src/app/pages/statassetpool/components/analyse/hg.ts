@@ -30,6 +30,8 @@ export class analyseHg implements OnInit {
 
     isShoLoading = true;
 
+    staticPoolInfo: {[name: string]: any} = {};
+
     constructor(
         private statAssetPoolService: StatAssetPoolService,
         private messageService: MessageService,
@@ -41,7 +43,10 @@ export class analyseHg implements OnInit {
         this.route.params.subscribe((data) => {
             this.poolId = data.id;
         });
-        zip(this.statAssetPoolService.getRecoveryRate(this.poolId)).pipe(
+        zip(
+            this.statAssetPoolService.getRecoveryRate(this.poolId),
+            this.statAssetPoolService.getStaticPoolInfo(this.poolId)
+            ).pipe(
             catchError(() => {
                 return of({$error: true});
             })
@@ -53,6 +58,7 @@ export class analyseHg implements OnInit {
             }
             this.buildRecoveryRate(vs[0].list || []);
             this.isShoLoading = false;
+            this.staticPoolInfo = vs[1].detailInfo || {};
             this.changeDetectorRef.markForCheck();
         });
     }

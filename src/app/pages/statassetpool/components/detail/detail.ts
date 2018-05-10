@@ -25,7 +25,7 @@ export class AnalyseDetail implements OnInit {
 
     poolId;
 
-    staticPool;
+    staticPool: any = {};
 
     isShoLoading = true;
 

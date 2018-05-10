@@ -85,6 +85,7 @@ export class MainComponent implements OnInit {
         this.updateExportLink(0);
         this.tabGroup.selectedIndexChange.subscribe((index) => {
             this.updateExportLink(index);
+            this.selectTabIndex = index;
         })
 
         merge(this.route.params)

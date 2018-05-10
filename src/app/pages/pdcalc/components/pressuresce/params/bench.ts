@@ -87,7 +87,10 @@ export class BenchParam implements OnInit, OnChanges {
             VALUE_D:  ((data.paraMap.BASE_PARA.VALUE_D * 10000) | 0) / 10000,
             VALUE_E:  ((data.paraMap.BASE_PARA.VALUE_E * 10000) | 0) / 10000,
             VALUE_R:  ((data.paraMap.BASE_PARA.VALUE_R * 10000) | 0) / 10000,
-            PARA_TYPE: data.paraMap.BASE_PARA.PARA_TYPE
+            PARA_TYPE: data.paraMap.BASE_PARA.PARA_TYPE,
+            PER_VALUE_D:  ((data.paraMap.BASE_PARA.VALUE_D * 10000) | 0) / 100 + '%',
+            PER_VALUE_E:  ((data.paraMap.BASE_PARA.VALUE_E * 10000) | 0) / 100 + '%',
+            PER_VALUE_R:  ((data.paraMap.BASE_PARA.VALUE_R * 10000) | 0) / 100 + '%'
         };
         return _res;
     }
@@ -116,7 +119,14 @@ export class BenchParam implements OnInit, OnChanges {
             scrollStrategy: this.overlay.scrollStrategies.reposition()
         });
 
-        dialogRef.afterClosed().subscribe(() => {
+        dialogRef.afterClosed().subscribe((res) => {
+            if (res !== true && this.cacheParams.paraMap.BASE_PARA['BAK_CURVE_' + type]) {
+                this.cacheParams.paraMap.BASE_PARA['CURVE_' + type] = this.cacheParams.paraMap.BASE_PARA['BAK_CURVE_' + type];
+            }
+            console.log('xxxxxxxxxxxxxx');
+            const bak = this.cacheParams.paraMap.BASE_PARA;
+            bak['BAK_CURVE_' + type] = undefined;
+            delete bak['BAK_CURVE_' + type];
             //更新累计违约率
             let r = 0;
             const d = this.cacheParams.paraMap.BASE_PARA['CURVE_' + type] || [];
@@ -125,6 +135,7 @@ export class BenchParam implements OnInit, OnChanges {
             });
             this.cacheParams.paraMap['VALUE_' + type] = r;
             this.param['VALUE_' + type] = ((r * 10000) | 0 ) / 10000;
+            this.param['PER_VALUE_' + type] = ((r * 10000) | 0 ) / 100 + '%';
             this.changeDetectorRef.markForCheck();
         })
     }

@@ -6,6 +6,7 @@ import { MainComponent } from './components/main.component';
 import { AddComponent } from './components/add/add.component';
 import { AnalyseMainComponent } from './components/analyse/main';
 import { AnalyseDetail } from './components/detail/detail';
+import { ImportComponent } from './components/import/import';
 
 const routes: Routes = [{
     path: '',
@@ -15,7 +16,8 @@ const routes: Routes = [{
         {path: 'add', component: AddComponent},
         {path: 'edit/:id', component: AddComponent},
         {path: 'analyse/:id', component: AnalyseMainComponent},
-        {path: 'detail/:id', component: AnalyseDetail}
+        {path: 'detail/:id', component: AnalyseDetail},
+        {path: 'import/:id', component: ImportComponent}
     ]
 }];
 

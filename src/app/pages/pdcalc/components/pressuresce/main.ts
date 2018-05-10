@@ -1,5 +1,5 @@
 import { QueryList, Component, OnInit, ChangeDetectionStrategy, Input,
-    ViewEncapsulation, ViewChildren, AfterViewChecked, ChangeDetectorRef, ViewChild } from '@angular/core';
+    ViewEncapsulation, ViewChildren, AfterViewChecked, ChangeDetectorRef, ViewChild, NgZone, AfterViewInit, AfterContentInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTabGroup } from '@angular/material/tabs';
 import { CdkColumnDef } from '@angular/cdk/table';
@@ -20,7 +20,7 @@ declare const validator: any;
         'class': 'pressuresce-main'
     }
 })
-export class PressureSceMain implements OnInit, AfterViewChecked {
+export class PressureSceMain implements OnInit, AfterViewChecked, AfterContentInit{
 
     @Input() proData: any;
 
@@ -29,6 +29,8 @@ export class PressureSceMain implements OnInit, AfterViewChecked {
     @ViewChild(BenchParam) benchParam: BenchParam;
 
     params: any;
+
+    tabData = [];
 
     dataSource1: MatTableDataSource<any> = new MatTableDataSource<any>([]);
 
@@ -46,7 +48,7 @@ export class PressureSceMain implements OnInit, AfterViewChecked {
 
     morePrCalcExtres: any = {};
 
-    selectedIndex;
+    @Input() selectedIndex = 0;
 
     _init = false;
 
@@ -58,9 +60,12 @@ export class PressureSceMain implements OnInit, AfterViewChecked {
         private changeDetectorRef: ChangeDetectorRef,
         private pdcalsService: PdcalsService,
         private messageService: MessageService,
+        private ngZone: NgZone
     ) { }
 
     ngAfterViewChecked(){}
+
+    ngAfterContentInit(){}
 
     ngOnInit(): void {
         this.pdcalsService.iniPressurescePage(this.proposalId, this.initType).pipe( catchError(() => {
@@ -71,10 +76,10 @@ export class PressureSceMain implements OnInit, AfterViewChecked {
                 this.messageService.alertError('初始化默认情景参数失败: 服务端发生异常!');
                 return;
             }
-            this.selectedIndex = 0;
+            this.tabData = this.proData.list;
             this.params = data;
             this.renderClacResult();
-            this.changeDetectorRef.detectChanges();
+            this.changeDetectorRef.markForCheck();
         });
 
         this.tabGroup.selectedIndexChange.subscribe((index) => {
@@ -91,8 +96,21 @@ export class PressureSceMain implements OnInit, AfterViewChecked {
     private renderClacResult() {
         const securitiesId = this.proData.list[this.selectedIndex].securitiesId;
         this.dataSource1.data = this.params.resultMap[securitiesId].scenes || [];
-        this.dataSource2.data = this.params.resultMap[securitiesId].targetsIntPay || [];
-        this.dataSource3.data = this.params.resultMap[securitiesId].targetsPrin || [];
+
+        let r = this.params.resultMap[securitiesId].targetsIntPay || [];
+        r = r.map((item) => {
+            item.rateSceneCodeText = this.converRateSceneCodeText(item.rateSceneCode);
+            return item;
+        });
+        this.dataSource2.data = r;
+
+        r = this.params.resultMap[securitiesId].targetsPrin || [];
+        r = r.map((item) => {
+            item.rateSceneCodeText = this.converRateSceneCodeText(item.rateSceneCode);
+            return item;
+        });
+
+        this.dataSource3.data = r;
     }
 
     /**
@@ -163,5 +181,9 @@ export class PressureSceMain implements OnInit, AfterViewChecked {
         this.renderClacResult();
         this.changeDetectorRef.markForCheck();
         //this.renderMoreClacResult();
+    }
+
+    private converRateSceneCodeText(code) {
+        return code === 'BG' ? '悲观' : (code === 'LG' ? '乐观' : '基准');
     }
 }

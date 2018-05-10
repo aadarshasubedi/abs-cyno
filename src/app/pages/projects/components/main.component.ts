@@ -143,9 +143,8 @@ export class MainComponent implements OnInit {
                 issueMarket: this.selectType ? this.marketsLists[this.selectType - 1].paramCode : '',
                 projectTypeList: (this._selectProTypes || []).join(','),
                 sponsorOrgList: (this._selectSponsorOrgs || []).join(','),
-                searchText: (this.searchText || '').trim(),
-                valueDate: this.sortTag,
-                sort: this.sortTag ? this.sortTag : ''
+                projectName: (this.searchText || '').trim(),
+                orderBy: '[VALUE_DATE,' + (this.sortTag ? this.sortTag : '') + ']'
             }
         })
     }

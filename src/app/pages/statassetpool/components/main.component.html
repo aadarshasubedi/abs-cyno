@@ -103,7 +103,7 @@
                             <cdk-header-cell  style="flex: 0 0 170px;" *cdkHeaderCellDef>操作</cdk-header-cell>
                             <cdk-cell  style="flex: 0 0 170px;" *matCellDef="let element" class="opt-column">
                                 <button type="button" class="btn btn-link btn-sm" style="padding: 0px;" [routerLink]="'/index/statassetpool/edit/' + element.poolId">编辑</button>
-                                <button type="button" class="btn btn-link btn-sm" style="padding: 0px;">导入样本</button>
+                                <button type="button" class="btn btn-link btn-sm" style="padding: 0px;" [routerLink]="'/index/statassetpool/import/' + element.poolId">导入样本</button>
                                 <button type="button" class="btn btn-link btn-sm" style="padding: 0px;" [routerLink]="'/index/statassetpool/analyse/' + element.poolId">样本分析</button>
                             </cdk-cell>
                         </ng-container>

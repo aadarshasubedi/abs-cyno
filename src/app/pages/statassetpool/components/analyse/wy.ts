@@ -26,6 +26,8 @@ export class analyseWy implements OnInit {
 
     poolId: string;
 
+    staticPoolInfo: any = {};
+
     chartOption1: any;
 
     chartOption2: any;
@@ -57,7 +59,8 @@ export class analyseWy implements OnInit {
             this.statAssetPoolService.getDefaultRate(this.poolId),
             this.statAssetPoolService.getTotalWeightedDefaultRate(this.poolId),
             this.statAssetPoolService.getNewlyDefaultRate(this.poolId),
-            this.statAssetPoolService.getDefaultYearDistribution(this.poolId)
+            this.statAssetPoolService.getDefaultYearDistribution(this.poolId),
+            this.statAssetPoolService.getStaticPoolInfo(this.poolId)
         ).pipe(
             catchError(() => {
                 return of({$error: true});
@@ -72,6 +75,7 @@ export class analyseWy implements OnInit {
             this.buildTotalWeightedDefaultRate(vs[1].list || {});
             this.buildNewlyDefaultRate(vs[2].list || {});
             this.buildDefaultYearDistribution(vs[3].list || {});
+            this.staticPoolInfo = vs[4].detailInfo || {};
             this.changeDetectorRef.markForCheck();
 
             this.isShoLoading = false;

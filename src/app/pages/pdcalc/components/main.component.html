@@ -50,7 +50,7 @@
                                     <chart-incomerate #incomerate [initType]="initType" [proposalId]= "proposalId" [selectedIndex]="_selectProposaIndex" [datas]="projectYieldRateData" [graphicDescElRef]="graphicDescDom" [proData]="projectInfo" ></chart-incomerate>
                                 </mat-tab>
                                 <mat-tab label="情景假设测算">
-                                    <pressuresce-main [proData]="projectInfo" [initType]="initType" [proposalId]= "proposalId"></pressuresce-main>
+                                    <pressuresce-main [selectedIndex]="0" [proData]="projectInfo" [initType]="initType" [proposalId]= "proposalId"></pressuresce-main>
                                 </mat-tab>
                             </mat-tab-group>
                             <div #graphicDescDom style="

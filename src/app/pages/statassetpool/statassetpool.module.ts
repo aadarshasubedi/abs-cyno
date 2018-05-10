@@ -30,6 +30,7 @@ import { AnalyseMainComponent } from './components/analyse/main';
 import { analyseWy } from './components/analyse/wy';
 import { analyseZc } from './components/analyse/zc';
 import { analyseHg } from './components/analyse/hg';
+import { ImportComponent } from './components/import/import';
 import { AnalyseDetail } from './components/detail/detail';
 import { StatAssetPoolRouterModule } from './statassetpool.router.module';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -45,7 +46,8 @@ import { JyPipesModule } from '../../../sdk/pipes';
         analyseWy,
         analyseZc,
         analyseHg,
-        AnalyseDetail
+        AnalyseDetail,
+        ImportComponent
     ],
     imports: [
         JyPipesModule,

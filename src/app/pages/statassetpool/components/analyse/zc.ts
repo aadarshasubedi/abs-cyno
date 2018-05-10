@@ -26,6 +26,8 @@ export class analyseZc implements OnInit {
 
     poolId: string;
 
+    staticPoolInfo: any = {};
+
     chartOption1: any;
 
     chartOption2: any;
@@ -53,6 +55,7 @@ export class analyseZc implements OnInit {
             this.statAssetPoolService.getPrepaymentRate(this.poolId),
             this.statAssetPoolService.getTotalWeightedPrepaymentRate(this.poolId),
             this.statAssetPoolService.getNewlyPrepaymentRate(this.poolId),
+            this.statAssetPoolService.getStaticPoolInfo(this.poolId)
         ).pipe(
             catchError(() => {
                 return of({$error: true});
@@ -66,6 +69,7 @@ export class analyseZc implements OnInit {
             this.buildPrepaymentRate(vs[0].list  || {});
             this.buildTotalWeightedPrepaymentRate(vs[1].list || {});
             this.buildNewlyPrepaymentRate(vs[2].list || {});
+            this.staticPoolInfo = vs[3].detailInfo || {};
             this.changeDetectorRef.markForCheck();
 
             this.isShoLoading = false;
