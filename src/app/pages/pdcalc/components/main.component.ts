@@ -26,6 +26,8 @@ export class MainComponent implements OnInit {
 
     @ViewChild(PressureSceMain) pressureSceMain: PressureSceMain;
 
+    isLoading = false;
+
     proposalId: string;
 
     activeTabIndex = 0;
@@ -58,6 +60,7 @@ export class MainComponent implements OnInit {
 
     //初始胡
     ngOnInit() {
+        this.loadingService.showFull('加载中......');
         this.route.queryParams.subscribe( urlParam => {
             if (urlParam && urlParam._t === 'U') {
                 this.initType = 'U';
@@ -68,10 +71,13 @@ export class MainComponent implements OnInit {
             this.activeTabIndex = data.type;
             this.selectTabIndex = this.activeTabIndex;
             this.defaultSecCode = data.secCode;
+            if (data.initType) {
+                this.initType = data.initType;
+            }
         })
         this.chartIncomeRateComponent.selectProposaChange.subscribe((r) => {
             this._selectProposaIndex = r.index;
-            if (!this.projectInfo){
+            if (!this.projectInfo) {
                 return;
             }
             this.hasCustomerCesuan = r.hasCustomerCesuan;
@@ -82,9 +88,7 @@ export class MainComponent implements OnInit {
             });
         })
 
-        this.updateExportLink(0);
         this.tabGroup.selectedIndexChange.subscribe((index) => {
-            this.updateExportLink(index);
             this.selectTabIndex = index;
         })
 
@@ -108,13 +112,16 @@ export class MainComponent implements OnInit {
                 this.messageService.alertError('加载数据错误');
                 return observableOf({});
             })
-        ).subscribe(data => this.projectYieldRateData = data);
+        ).subscribe(data => {
+            this.projectYieldRateData = data;
+            this.loadingService.close();
+        });
 
     }
 
-    updateExportLink(index) {
-        const link = index > 0 ? '/cyno/cynoweb/prcalc/createPrReport.do' : '/cyno/cynoweb/pdcalc/createPdReport.do';
-        this.exportReport.nativeElement.href = link + '?proposalId=' + this.proposalId + '&initType=' + this.initType;
+    previewReport(){
+        const link = this.selectTabIndex > 0 ? '/cyno/cynoweb/prcalc/createPrReport.do' : '/cyno/cynoweb/pdcalc/createPdReport.do';
+        this.exportReport.nativeElement.src = link + '?proposalId=' + this.proposalId + '&initType=' + this.initType;
     }
 
     get projInfoAttrs() {
@@ -152,11 +159,13 @@ export class MainComponent implements OnInit {
     //测算
     doPrCalcByPara(){
         try {
-          const r = this.pressureSceMain.getLastParams();
-          this.pdcalsService.doPrCalcByPara(this.proposalId, r).pipe(catchError(() => {
+            this.loadingService.showFull('执行中.....');
+            const r = this.pressureSceMain.getLastParams();
+            this.pdcalsService.doPrCalcByPara(this.proposalId, r).pipe(catchError(() => {
             this.messageService.alertError('操作失败: 服务端执行异常');
             return observableOf({$error: true});
         })).subscribe((data: any) => {
+            this.loadingService.close();
             if (data.$error === true){
                 this.messageService.alertError('测算失败!');
                 return;

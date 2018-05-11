@@ -32,6 +32,7 @@ import { jyFormsModule } from '../../../sdk/services';
 import { TableModule} from '../../../sdk/compoments/table/module';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { JyPipesModule } from '../../../sdk/pipes';
+import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [
@@ -52,6 +53,7 @@ import { JyPipesModule } from '../../../sdk/pipes';
         MatIconModule,
         MatMenuModule,
         MatInputModule,
+        MatProgressSpinnerModule,
         MatButtonModule,
         MatGridListModule,
         MatSelectModule,

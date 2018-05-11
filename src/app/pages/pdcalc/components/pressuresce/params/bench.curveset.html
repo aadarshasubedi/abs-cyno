@@ -10,7 +10,7 @@
                     </ng-container>
                     <ng-container cdkColumnDef="rateRefer">
                         <cdk-header-cell *cdkHeaderCellDef>参数值%</cdk-header-cell>
-                        <cdk-cell *matCellDef="let element">{{element.rateRefer| number: '0.2-4'}}</cdk-cell>
+                        <cdk-cell *matCellDef="let element">{{element.rateRefer | percent:'0.2-4'}}</cdk-cell>
                     </ng-container>
                     <ng-container cdkColumnDef="adjustCoef">
                         <cdk-header-cell *cdkHeaderCellDef>调整系数</cdk-header-cell>
@@ -22,7 +22,7 @@
                     </ng-container>
                     <ng-container cdkColumnDef="rateBase">
                         <cdk-header-cell *cdkHeaderCellDef>基准值%</cdk-header-cell>
-                        <cdk-cell *matCellDef="let element">{{element.rateBase | number: '0.2-4'}}</cdk-cell>
+                        <cdk-cell *matCellDef="let element">{{element.rateBase | percent:'0.2-4'}}</cdk-cell>
                     </ng-container>
                     <cdk-header-row *cdkHeaderRowDef="columns"></cdk-header-row>
                     <cdk-row *cdkRowDef="let row; columns: columns;"></cdk-row>
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div mat-dialog-actions style="padding: 0px;justify-content: flex-end;">
-        <button mat-button mat-dialog-close>取 消</button>
-        <button mat-button [mat-dialog-close]="true">确 定</button>
+        <button mat-raised-button mat-dialog-close>取 消</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="true">确 定</button>
     </div>
 </div>

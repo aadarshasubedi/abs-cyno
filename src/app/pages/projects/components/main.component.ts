@@ -110,7 +110,14 @@ export class MainComponent implements OnInit {
             map(data => {
                 this.isLoadingResults = false;
                 this.resultsLength = data.count;
-                return data.list;
+                let d = data.list || [];
+                d = d.map((r) => {
+                    r._t = this.selectType === 0 ? 'U' : 'S';
+                    return r;
+                });
+
+                console.log('------');
+                return d;
             }),
             catchError((error) => {
                 this.isLoadingResults = false;
@@ -144,7 +151,7 @@ export class MainComponent implements OnInit {
                 projectTypeList: (this._selectProTypes || []).join(','),
                 sponsorOrgList: (this._selectSponsorOrgs || []).join(','),
                 projectName: (this.searchText || '').trim(),
-                orderBy: '[VALUE_DATE,' + (this.sortTag ? this.sortTag : '') + ']'
+                orderBy: '[SET_UP_DATE,' + (this.sortTag ? this.sortTag : '') + ']'
             }
         })
     }

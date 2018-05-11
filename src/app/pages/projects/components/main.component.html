@@ -19,7 +19,7 @@
         </ng-container>
         <ng-container cdkColumnDef="projectShortName">
             <cdk-header-cell *cdkHeaderCellDef style="flex: 1 0 70px; max-width: 160px; height: 40px;color: #000;font-weight: 700;text-align: left;"> 项目简称 </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="flex: 1 0 70px;  max-width: 160px;height: 35px;text-align: left;"> <a [routerLink]="'/index/pdcalc/pdcalc/' + element.proposalId + '/0'">{{element.projectShortName}}</a></cdk-cell>
+            <cdk-cell *cdkCellDef="let element" style="flex: 1 0 70px;  max-width: 160px;height: 35px;text-align: left;"> <a [routerLink]="'/index/pdcalc/pdcalc/' + element.proposalId + '/0/0/'+element._t">{{element.projectShortName}}</a></cdk-cell>
         </ng-container>
         <ng-container cdkColumnDef="projectType">
             <cdk-header-cell *cdkHeaderCellDef style="flex: 1 0 70px;max-width: 150px; height: 40px;color: #000;font-weight: 700;text-align: left;"> 
@@ -42,7 +42,7 @@
                     <mat-icon fontSet="fa" fontIcon="fa-filter"  style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
                 </button>
                 <mat-jydropdown #sponsorOrgFilterPanel [multiple]="true" (onSelectChange)="onFilterForSponsorOrgChange($event)">
-                    <mat-option  [value]="item.institutionCode" *ngFor="let item of _sponsorOrgsDatas">{{item.institutionName}}</mat-option>
+                    <mat-option  [value]="item.institutionCode" *ngFor="let item of _sponsorOrgsDatas">{{item.shortName}}</mat-option>
                 </mat-jydropdown>  
             </cdk-header-cell>
             <cdk-cell *cdkCellDef="let element" style="flex: 1 0 100px; max-width: 160px;height: 35px;text-align: left;"> {{element.sponsorOrg}} </cdk-cell>
@@ -54,7 +54,7 @@
                     <mat-icon fontSet="fa" fontIcon="fa-filter" [fontIcon]="!sortTag ? 'fa-sort' : 'fa-sort-' + sortTag" style="height:  18px;width:  18px;line-height: 18px;"></mat-icon>
                 </button>
             </cdk-header-cell>
-            <cdk-cell *cdkCellDef="let element" style="flex: 1 0 60px;max-width: 90px; height: 35px;text-align: left;"> {{element.valueDate | jydate:"yyyy-MM-dd"}} </cdk-cell>
+            <cdk-cell *cdkCellDef="let element" style="flex: 1 0 60px;max-width: 90px; height: 35px;text-align: left;"> {{element.setUpDate | jydate:"yyyy-MM-dd"}} </cdk-cell>
         </ng-container>
         <ng-container cdkColumnDef="securitiesInfo">
             <header-group-cell *cdkHeaderCellDef title="证券结构" style="color: #000;font-weight: 700;flex: 1 0 780px;">
@@ -75,7 +75,7 @@
             <group-row-cell *cdkCellDef="let element" style="flex: 1 0 780px;">
                 <jycdk-group-row *groupCellRowDef="let data; rows: element.list;">
                     <group-cell>
-                        <group-cell style="flex:1 0 70px;" ><a [routerLink]="'/index/pdcalc/pdcalc/' + element.proposalId + '/0/' + data.securitiesId">{{data.securitiesCode}}</a></group-cell>
+                        <group-cell style="flex:1 0 70px;" ><a [routerLink]="'/index/pdcalc/pdcalc/' + element.proposalId + '/0/' + data.securitiesId+ '/' + element._t">{{data.securitiesCode}}</a></group-cell>
                         <group-cell style="flex:1 0 70px;">{{data.securitiesType}}</group-cell> 
                         <group-cell style="flex:1 0 70px;">{{(data.securitiesSize / 10000) | currency:'':true:'0.2-2'}}</group-cell>  
                         <group-cell style="flex:1 0 90px; position: relative;height: 30px;">
@@ -85,7 +85,7 @@
                         <group-cell style="flex:1 0 60px;">{{data.rate | percent:'0.2-2'}}</group-cell> 
                         <group-cell style="flex:1 0 60px;">{{data.grade}}</group-cell>
                         <group-cell  style="flex:1 0 80px;">
-                            <a [routerLink]="'/index/pdcalc/pdcalc/' + element.proposalId + '/0/' + data.securitiesId">{{data.rateAvg | percent:'0.2-2'}}</a>
+                            <a [routerLink]="'/index/pdcalc/pdcalc/' + element.proposalId + '/0/' + data.securitiesId + '/' + element._t">{{data.rateAvg | percent:'0.2-2'}}</a>
                         </group-cell>
                         <group-cell style="flex:0 0 270px;"> 
                             <group-cell>{{data.rateQ1 | percent:'0.2-2'}}</group-cell>

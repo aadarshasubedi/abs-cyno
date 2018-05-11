@@ -33,6 +33,7 @@ export class ProjectsService {
                                 sponsorOrg: item.sponsorOrg,
                                 valueDate: item.valueDate,
                                 isFavorites: item.isFavorites,
+                                setUpDate: item.setUpDate,
                                 list: [item]
                             });
                             r.push(keys.get(g));
