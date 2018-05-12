@@ -2,7 +2,7 @@
 <scene-param [inputParams]="params"></scene-param>
 <div class="card card-region calc-result">
     <div class="card-header"  style="display: flex; align-items: center;background-color: #ffffff">
-        <div style="flex: 0 0 100px;">压力测算结果{{selectedIndex}}</div>
+        <div style="flex: 0 0 100px;">测算结果</div>
         <div style="flex: 1 1 50px;"></div>
         <mat-tab-group style="max-width:  600px;"  [selectedIndex]="selectedIndex">
             <mat-tab [label]="item.securitiesShortName" *ngFor="let item of tabData"></mat-tab>

@@ -24,6 +24,10 @@ export const Options = {
         url: '/cyno/cynoweb/pdcalc/savePdCalc.do'
     },
 
+    savePrCalc: {
+        url: '/cyno/cynoweb/prcalc/savePrCalc.do'
+    },
+
     iniPressurescePage: {
         url: '/cyno/cynoweb/prcalc/initPage.do'
     },

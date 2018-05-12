@@ -192,7 +192,7 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
                 type: item.curveCode,
                 name: item.curveName,
                 showLine: true,
-                showlicha: this.selectYieldCurveItem ? (this.selectYieldCurveItem.type === item.curveCode) : (i === 0),
+                showlicha: this.selectYieldCurveItem ? (this.selectYieldCurveItem.type === item.curveCode) : (item.isCompare === 'Y'),
                 data: (item.yieldCurveDatas || []).map((_item) => {
                     if (periodKeys.indexOf(_item.mtrty) < 0){
                         periodKeys.push(_item.mtrty);

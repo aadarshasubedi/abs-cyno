@@ -28,6 +28,8 @@ export class PressureSceMain implements OnInit, AfterViewChecked, AfterContentIn
 
     @ViewChild(BenchParam) benchParam: BenchParam;
 
+    _hasCustomerCesuan = false;
+
     params: any;
 
     tabData = [];

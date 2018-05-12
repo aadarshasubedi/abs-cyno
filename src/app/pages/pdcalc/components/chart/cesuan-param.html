@@ -206,7 +206,7 @@
                         </span>回收率曲线</div>
                     <div style="text-align: left;font-size: 0.7rem;">
                         <mat-form-field style="width: 100%;">
-                            <span matPrefix>回归周期:</span>
+                            <span matPrefix>回收周期:</span>
                             <mat-select [(ngModel)]="calculateParams.recCycle" name="recCycle" required #recCycle="ngModel">
                                 <mat-option [value]="1">第1期</mat-option>
                                 <mat-option [value]="2">第2期</mat-option>
@@ -229,7 +229,7 @@
             <div class="col-4" style="padding: 0rem;color: #8f9396">
                 <div style="text-align: left;font-size: 0.7rem;">
                     <mat-form-field style="width: 100%;">
-                        <span matPrefix>回归率:</span>
+                        <span matPrefix>回收率:</span>
                         <input matInput [(ngModel)]="calculateParams.per_recRate" name="recRate" #recRate="ngModel" jyFloat required>
                         <mat-error *ngIf="recRate.invalid">非空且为数字</mat-error>
                         <span matSuffix style="color: #839008;">(%)&nbsp;</span>

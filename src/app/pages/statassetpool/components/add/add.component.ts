@@ -54,8 +54,6 @@ export class AddComponent implements OnInit {
 
     updatePool;
 
-
-
     constructor(
         private statAssetPoolService: StatAssetPoolService,
         private messageService: MessageService,

@@ -66,6 +66,10 @@ export class PdcalsService {
         return this.http.get(Options.savePdCalc.url, {params: {proposalId: proposalId}}).pipe(jsonMap());
     }
 
+    savePrCalc(proposalId: string){
+        return this.http.get(Options.savePrCalc.url, {params: {proposalId: proposalId}}).pipe(jsonMap());
+    }
+
     /**
      * 获取压力情景默认参数
      * @param proposalId 产品ID

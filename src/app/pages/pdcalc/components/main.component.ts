@@ -143,9 +143,16 @@ export class MainComponent implements OnInit {
     /**
      * 保存测算结果
      */
-    savePdCalc(){
+    savePdCalc() {
         this.loadingService.showFull('执行中.....');
-        this.pdcalsService.savePdCalc(this.proposalId).pipe(catchError(() => {
+        let r: any;
+        //报错情景测算
+        if (this.selectTabIndex > 0) {
+            r = this.pdcalsService.savePrCalc(this.proposalId);
+        } else {
+            r = this.pdcalsService.savePdCalc(this.proposalId);
+        }
+        r.pipe(catchError(() => {
             this.messageService.alertError('操作失败: 服务端执行异常');
             return observableOf({$error: true});
         })).subscribe((data: any) => {
@@ -171,6 +178,7 @@ export class MainComponent implements OnInit {
                 return;
             }
             this.pressureSceMain.setLastData(data);
+            this.pressureSceMain._hasCustomerCesuan = true;
         });
         } catch(e) {
             this.messageService.alertError('测算失败!');

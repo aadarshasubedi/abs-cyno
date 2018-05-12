@@ -192,7 +192,7 @@ export class analyseWy implements OnInit {
         const _data: any = [];
         this.chartOption3 = {
             title: {
-                text: 'CYD加权新增违约率',
+                text: '加权新增违约率',
                 top: 10,
                 left:  200
             },

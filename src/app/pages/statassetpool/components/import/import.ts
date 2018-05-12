@@ -36,7 +36,7 @@ export class ImportComponent implements OnInit, AfterViewInit, OnDestroy {
             target: '/cyno/cynoweb/staticpool/uploadStaticPool.do',
             query: {poolId: this.poolId},
             maxFiles: 1,
-            chunkSize: 4 * 1024 * 1024,
+            chunkSize: 5 * 1024 * 1024,
             testChunks: false,
             maxChunkRetries: 0
         });

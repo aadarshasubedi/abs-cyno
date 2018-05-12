@@ -18,21 +18,14 @@
                 <div class="container-fluid">
                     <div class="row" style="flex-wrap: nowrap;">
                         <div class="col" style="flex: 1 1 auto;position:  relative;padding-left:  0px;padding-right: 0px;">
-                            <button mat-raised-button color="primary" *ngIf="incomerate._hasCustomerCesuan && selectTabIndex < 1" (click)="savePdCalc()" type="button" class="btn-sm" style="
-                                position:  absolute;
-                                right: 00px;
-                                top: 0px;
-                                border-radius: 0rem;
-                                z-index: 5;
+                            <div style="position: absolute;right: 0px;top: 0px;z-index: 5;">
+                            <button mat-raised-button color="primary" *ngIf="(incomerate._hasCustomerCesuan && selectTabIndex < 1) || pressureSceMain._hasCustomerCesuan && selectTabIndex > 0" (click)="savePdCalc()" type="button" class="btn-sm" style="
+                                    border-radius: 0rem;
                             ">保存测算结果</button>
-                            <button mat-raised-button *ngIf="selectTabIndex > 0" type="button" class="btn-sm" 
+                           <button mat-raised-button *ngIf="selectTabIndex > 0" type="button" class="btn-sm" 
                                 (click)="doPrCalcByPara()"
                                 style="
-                                position:  absolute;
-                                right: 100px;
-                                top: 0px;
                                 border-radius: 0rem;
-                                z-index: 5;
                             ">测 算</button>
                             <button 
                                 type="button"
@@ -42,12 +35,9 @@
                                 target="_blank"
                                 class="btn-sm" 
                                 style="
-                                position:  absolute;
-                                right: 0px;
-                                top: 0px;
                                 border-radius: 0rem;
-                                z-index: 5;
                             ">查看报告</button>
+                            </div>
                             <mat-tab-group [selectedIndex]="activeTabIndex">
                                 <mat-tab label="概率分布测算">
                                     <chart-incomerate #incomerate [initType]="initType" [proposalId]= "proposalId" [selectedIndex]="_selectProposaIndex" [datas]="projectYieldRateData" [graphicDescElRef]="graphicDescDom" [proData]="projectInfo" ></chart-incomerate>

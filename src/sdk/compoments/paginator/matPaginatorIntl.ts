@@ -8,6 +8,7 @@ export function MAT_PAGINATOR_INTL_PROVIDER_FACTORY() {
     r.itemsPerPageLabel = '每页';
     r.nextPageLabel = '下一页';
     r.lastPageLabel = '最后一页';
+    r.previousPageLabel = '上一页';
     return r;
 }
   
