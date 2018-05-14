@@ -12,8 +12,8 @@ function proxy_cookie_path(oldCookie) {
     return newCookie;
 }
 
-const proxyHost = 'http://192.168.20.17:8080';
-//const proxyHost = 'http://192.168.70.39:8001';
+//const proxyHost = 'http://192.168.20.17:8080';
+const proxyHost = 'http://192.168.70.39:8001';
 
 module.exports = {
     "/proxy/test": {
