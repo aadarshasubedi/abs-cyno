@@ -61,7 +61,7 @@
                                 <cdk-cell *matCellDef="let element">第{{element.term}}期</cdk-cell>
                             </ng-container>
                             <ng-container cdkColumnDef="rate">
-                                <cdk-header-cell *cdkHeaderCellDef>加权累计违约率</cdk-header-cell>
+                                <cdk-header-cell *cdkHeaderCellDef>加权累计早偿率</cdk-header-cell>
                                 <cdk-cell *matCellDef="let element">{{element.rate | percent:'0.2-2'}}</cdk-cell>
                             </ng-container>
                             <cdk-header-row *cdkHeaderRowDef="['term', 'rate']"></cdk-header-row>
@@ -87,7 +87,7 @@
                                 <cdk-cell *matCellDef="let element">第{{element.term}}期</cdk-cell>
                             </ng-container>
                             <ng-container cdkColumnDef="rate">
-                                <cdk-header-cell *cdkHeaderCellDef>加权累计违约率</cdk-header-cell>
+                                <cdk-header-cell *cdkHeaderCellDef>加权累计早偿率</cdk-header-cell>
                                 <cdk-cell *matCellDef="let element">{{element.rate | percent:'0.2-2'}}</cdk-cell>
                             </ng-container>
                             <cdk-header-row *cdkHeaderRowDef="['term', 'rate']"></cdk-header-row>

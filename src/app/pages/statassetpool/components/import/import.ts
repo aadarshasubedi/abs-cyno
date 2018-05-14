@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, NgZone} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { MessageService } from '../../../../../sdk/services';
 declare class Resumable { assignBrowse: any; on: any; upload: any; constructor(options: any)};
 
 @Component({
@@ -26,7 +26,9 @@ export class ImportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(
         private ngZone: NgZone,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router,
+        private messageService: MessageService
     ) {
         this.route.params.subscribe(param => this.poolId = param.id);
      }
@@ -56,6 +58,9 @@ export class ImportComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.disabled = false;
                 this.progress = 100;
                 this.uploadMsg = 'success';
+                this.messageService.alertInfo('导入成功').afterClosed().subscribe(() => {
+                    this.router.navigateByUrl('index/statassetpool/analyse/' + this.poolId);
+                });
             });
         });
 
