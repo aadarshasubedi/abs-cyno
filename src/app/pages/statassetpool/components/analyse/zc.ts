@@ -185,7 +185,7 @@ export class analyseZc implements OnInit {
         const _data: any = [];
         this.chartOption3 = {
             title: {
-                text: 'CYD加权新增早偿率',
+                text: '加权新增早偿率',
                 top: 10,
                 left:  200
             },

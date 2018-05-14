@@ -28,7 +28,7 @@
                         <mat-ext-table [dataSource]="dataSource1" [scroll]="false">
                             <ng-container cdkColumnDef="t1">
                                 <cdk-header-cell *cdkHeaderCellDef >一个月回收率( % )</cdk-header-cell>
-                                <cdk-cell *matCellDef="let element">{{element.t2 | percent:'0.2-2'}}</cdk-cell>
+                                <cdk-cell *matCellDef="let element">{{element.t1 | percent:'0.2-2'}}</cdk-cell>
                             </ng-container>
                             <ng-container cdkColumnDef="t2">
                                 <cdk-header-cell *cdkHeaderCellDef>二个月回收率( % )</cdk-header-cell>

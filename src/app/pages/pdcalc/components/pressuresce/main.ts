@@ -54,6 +54,8 @@ export class PressureSceMain implements OnInit, AfterViewChecked, AfterContentIn
 
     _init = false;
 
+    _isTarget = true;
+
     get isSecondary() {
         return this.proData && this.proData.list && (this.selectedIndex === (this.proData.list.length - 1));
     }
@@ -105,7 +107,7 @@ export class PressureSceMain implements OnInit, AfterViewChecked, AfterContentIn
             return item;
         });
         this.dataSource2.data = r;
-
+        this._isTarget = this.params.resultMap[securitiesId].isTarget !== 'Y';
         r = this.params.resultMap[securitiesId].targetsPrin || [];
         r = r.map((item) => {
             item.rateSceneCodeText = this.converRateSceneCodeText(item.rateSceneCode);

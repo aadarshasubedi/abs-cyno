@@ -78,11 +78,12 @@
                                                 <cdk-row *cdkRowDef="let row; columns: columns2;" style="border:none; background-color: #fbeeee;"></cdk-row>
                                             </mat-ext-table>
                                             <div style="font-size: 0.7rem;color: #cecaca;">
-                                                在基准利率情景下，当资产池累计违约率达到5.20%且累计早偿率为12.00%的场景设置下，次级仍可以获取期间收益。
+                                                在基准利率情景下，当资产池累计违约率达到{{(dataSource2.data[1] && dataSource2.data[1].accumDefRate) | percent:'0.2-2' }}且累计早偿率为{{(dataSource2.data[1] && dataSource2.data[1].accumEarlyRate) | percent:'0.2-2'}}的场景设置下，次级的收益{{_isTarget ? '仍可以获得保证' : '率为'}} {{(_isTarget ? null : (dataSource2.data[1] && dataSource2.data[1].irr)) | percent:'0.2-2'}}。
+                                                
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <mat-ext-table [dataSource]="dataSource3">
+                                        <div class="col-6"  *ngIf="_isTarget">
+                                            <mat-ext-table [dataSource]="dataSource3" *ngIf="_isTarget">
                                                 <ng-container cdkColumnDef="rateSceneCode">
                                                     <cdk-header-cell *cdkHeaderCellDef>利率情景</cdk-header-cell>
                                                     <cdk-cell *matCellDef="let element">{{element.rateSceneCodeText}}</cdk-cell>
@@ -107,7 +108,7 @@
                                                 <cdk-row *cdkRowDef="let row; columns: columns2;" style="border:none; background-color: #fbeeee;"></cdk-row>
                                             </mat-ext-table>
                                             <div style="font-size: 0.7rem;color: #cecaca;">
-                                                在基准利率情景下，当资产池累计违约率达到5.20%且累计早偿率为12.00%的场景设置下，次级的本金仍可以获得保证。
+                                                在基准利率情景下，当资产池累计违约率达到{{(dataSource3.data[1] && dataSource3.data[1].accumDefRate) | percent:'0.2-2' }}且累计早偿率为{{(dataSource3.data[1] && dataSource3.data[1].accumEarlyRate) | percent:'0.2-2'}}的场景设置下,次级的本金仍可以获得保证。
                                             </div>
                                         </div>
                                     </div>
