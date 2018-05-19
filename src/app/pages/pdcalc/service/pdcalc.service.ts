@@ -91,4 +91,18 @@ export class PdcalsService {
     doPrCalcByPara(proposalId: string, params: any) {
         return this.http.post(Options.doPrCalcByPara.url + '?proposalId=' + proposalId, params).pipe(jsonMap());
     }
+
+    /**
+     * 获取参考参数类型列表
+     * @param proposalId 
+     * @param initType 
+     */
+    initParaCombox(proposalId: string, initType: string) {
+        return this.http.get(Options.initParaCombox.url, {params: { proposalId: proposalId, initType: initType}});
+    }
+
+    getPrCalcParaById(proposalId: string, initType: string, paraSource: string, poolId: string) {
+        return this.http.get(Options.getPrCalcParaById.url, {params:
+             { proposalId: proposalId, initType: initType, paraSource: paraSource, poolId: poolId}});
+    }
 }

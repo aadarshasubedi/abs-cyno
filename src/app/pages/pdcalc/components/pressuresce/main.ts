@@ -117,6 +117,10 @@ export class PressureSceMain implements OnInit, AfterViewChecked, AfterContentIn
         this.dataSource3.data = r;
     }
 
+    onParamsUpdate(params){
+        this.params = Object.assign({}, this.params, {paraMap: params});
+    }
+
     /**
      * 处理更多结果
      */

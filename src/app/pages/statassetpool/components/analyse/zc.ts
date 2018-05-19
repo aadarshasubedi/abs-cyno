@@ -87,7 +87,6 @@ export class analyseZc implements OnInit {
                 left: 50,
                 top: 50,
                 right: 30,
-                bottom: 140,
                 borderWidth: 1
             },
             xAxis: {
@@ -100,7 +99,8 @@ export class analyseZc implements OnInit {
                 bottom: 10,
                 left: 50,
                 right: 30,
-                padding: 1
+                padding: 1,
+                type: 'scroll'
             },
             yAxis: {
                 type: 'value',
@@ -122,7 +122,6 @@ export class analyseZc implements OnInit {
         r.legend.data = [];
         r.series = [];
         r.xAxis.data = [];
-        r.grid.bottom = Math.ceil((Object.keys(data).length / 6)) * 35;
         Object.keys(data).forEach((key) => {
             r.legend.data.push(key);
             let xLabel;

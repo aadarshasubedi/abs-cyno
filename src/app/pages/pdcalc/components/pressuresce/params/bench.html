@@ -10,9 +10,8 @@
             <div class="col-3" style="padding: 0rem;color: #8f9396;font-size: 0.7rem; ">
                 <mat-form-field style="width: 100%;">
                     <span matPrefix style="padding-left: 10px;">参考参数类型:</span>
-                    <mat-select [(ngModel)]="param.PARA_TYPE" name="recCycle1">
-                        <mat-option value="1G">评级报告参数数据</mat-option>
-                        <mat-option value="3A">动静态池分析数据</mat-option>
+                    <mat-select [(ngModel)]="param.PARA_TYPE" name="recCycle1" (ngModelChange)="onPayTypeChange($event)">
+                        <mat-option [value]="item.PARA_SOURCE" *ngFor="let item of payTypeList">{{item.PARA_NAME}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

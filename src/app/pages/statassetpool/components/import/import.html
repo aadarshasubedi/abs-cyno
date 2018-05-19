@@ -32,7 +32,7 @@
                     上传成功
                 </div>
                 <div class="col-md-auto" style="padding: 0px;min-width: 400px;color:gray;font-size:0.8rem;color: red;" *ngIf="uploadMsg === 'error'">
-                    上传失败
+                    上传失败 {{uploadErrorMsg}}
                 </div>
             </div>
         </div>

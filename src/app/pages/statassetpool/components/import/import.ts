@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, NgZone} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MessageService } from '../../../../../sdk/services';
+import { MessageService, LoadingService } from '../../../../../sdk/services';
 declare class Resumable { assignBrowse: any; on: any; upload: any; constructor(options: any)};
-
+import { StatAssetPoolService } from '../../service/statassetpool.service';
 @Component({
     templateUrl: './import.html'
 })
@@ -20,6 +20,8 @@ export class ImportComponent implements OnInit, AfterViewInit, OnDestroy {
 
     poolId;
 
+    uploadErrorMsg: string;
+
     @ViewChild('uploadBtn') uploadBtn: any;
 
     private resumable: Resumable;
@@ -28,7 +30,9 @@ export class ImportComponent implements OnInit, AfterViewInit, OnDestroy {
         private ngZone: NgZone,
         private route: ActivatedRoute,
         private router: Router,
-        private messageService: MessageService
+        private loadingService: LoadingService,
+        private messageService: MessageService,
+        private statAssetPoolService: StatAssetPoolService
     ) {
         this.route.params.subscribe(param => this.poolId = param.id);
      }
@@ -50,21 +54,43 @@ export class ImportComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.uploading = true;
                 this.progress = 0;
             });
+            this.loadingService.showFull('导入中....');
             this.resumable.upload();
         });
 
-        this.resumable.on('fileSuccess', (file) => {
+        this.resumable.on('fileSuccess', (file, message) => {
+            this.loadingService.close();
+            const resp = JSON.parse(message);
+            if (resp.isException === true) {
+                this.ngZone.run(() => {
+                    this.disabled = false;
+                    this.progress = 100;
+                    this.uploadMsg = 'error';
+                    this.uploadErrorMsg = resp.expInfo;
+                });
+                return;
+            }
             this.ngZone.run(() => {
                 this.disabled = false;
                 this.progress = 100;
                 this.uploadMsg = 'success';
-                this.messageService.alertInfo('导入成功').afterClosed().subscribe(() => {
+                this.messageService.confirm('导入成功, 是否要进行样本分析').afterClosed().subscribe((isOk) => {
+                    if (isOk === true){
+                        this.statAssetPoolService.staticPoolAnalysis(this.poolId).subscribe(() => {
+                            this.router.navigateByUrl('index/statassetpool/analyse/' + this.poolId);
+                        }, (error) => {
+                            this.uploadMsg = 'error';
+                            this.uploadErrorMsg = error.expInfo;
+                        });
+                        return;
+                    }
                     this.router.navigateByUrl('index/statassetpool/analyse/' + this.poolId);
                 });
             });
         });
 
-        this.resumable.on('fileError',  (file) => {
+        this.resumable.on('fileError',  (file, error) => {
+            this.loadingService.close();
             this.ngZone.run(() => {
                 this.disabled = false;
                 this.color = 'warn';

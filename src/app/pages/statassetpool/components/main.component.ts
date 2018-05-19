@@ -11,7 +11,7 @@ import { of} from 'rxjs/observable/of';
 import {catchError} from 'rxjs/operators/catchError';
 import { debounceTime} from 'rxjs/operators/debounceTime';
 import { HttpParams} from '@angular/common/http';
-import { MessageService } from '../../../../sdk/services';
+import { MessageService, LoadingService } from '../../../../sdk/services';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
 import { zip } from 'rxjs/observable/zip';
@@ -71,7 +71,9 @@ export class MainComponent implements OnInit {
 
     constructor(
         private statAssetPoolService: StatAssetPoolService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private router: Router,
+        private loadingService: LoadingService,
     ) { }
 
     ngOnInit(): void {
@@ -246,5 +248,17 @@ export class MainComponent implements OnInit {
                 }
             })
         }
+    }
+
+    staticPoolAnalysis(poolId) {
+        this.loadingService.showFull('分析中....');
+        this.statAssetPoolService.staticPoolAnalysis(poolId).subscribe(() => {
+            this.loadingService.close();
+            this.router.navigateByUrl('index/statassetpool/analyse/' + poolId);
+        }, (error) => {
+            this.loadingService.close();
+            this.messageService.alertError(error.expInfo);
+        });;
+
     }
 }

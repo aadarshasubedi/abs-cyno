@@ -109,4 +109,11 @@ export class StatAssetPoolService {
         return this.http.get('/cyno/cynoweb/staticpool/getStaticPoolInfo.do',
         {params: new HttpParams({fromObject: {poolId: poolId}})}).pipe(jsonMap());
     }
+
+    //导入样本数据测算分析
+    staticPoolAnalysis(poolId) {
+        return this.http.get('/cyno/cynoweb/staticpool/staticPoolAnalysis.do',
+        {params: new HttpParams({fromObject: {poolId: poolId}})}).pipe(jsonMap());
+    }
+
 }

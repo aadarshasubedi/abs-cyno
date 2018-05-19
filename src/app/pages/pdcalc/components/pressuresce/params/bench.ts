@@ -1,6 +1,6 @@
 import { QueryList, Component, OnInit, ChangeDetectionStrategy,
     ViewEncapsulation, ViewChildren, AfterViewChecked, ChangeDetectorRef,
-    SimpleChanges, Input, OnChanges } from '@angular/core';
+    SimpleChanges, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { PdcalsService } from '../../../service/pdcalc.service';
@@ -20,8 +20,16 @@ export class BenchParam implements OnInit, OnChanges {
 
     @Input() inputParams;
 
+    @Input() proposalId;
+
+    @Input() initType;
+
+    @Output() paramsUpdate: EventEmitter<any> = new EventEmitter<any>(); 
+
     columns = [];
-    
+
+    payTypeList = [];
+
     dataSource = new MatTableDataSource([]);
 
     param: any = {};
@@ -47,6 +55,11 @@ export class BenchParam implements OnInit, OnChanges {
     ngOnInit(): void {
         this.render();
         this._init = true;
+
+        this.pdcalsService.initParaCombox(this.proposalId, this.initType).subscribe((resp: any) => {
+            this.payTypeList = resp.paraSources || [];
+          },  (error) => {});
+
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -65,6 +78,16 @@ export class BenchParam implements OnInit, OnChanges {
         this.cacheParams = this.inputParams;
         this.dataSource.data = this.converToTableData();
         this.changeDetectorRef.detectChanges();
+    }
+
+    onPayTypeChange(event) {
+        const t = this.payTypeList.filter( r => r.PARA_SOURCE === event)[0];
+        this.pdcalsService.getPrCalcParaById(this.proposalId, this.initType, event, t.POOL_ID).subscribe((resp: any) => {
+            this.paramsUpdate.emit(resp.paraMap);
+        }, (error) => {
+            this.messageService.alertError(error.expInfo || '获取参数失败!');
+        });
+
     }
 
     private converToTableData() {

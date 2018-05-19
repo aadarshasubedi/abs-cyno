@@ -38,6 +38,14 @@ export const Options = {
 
     doPrCalcByPara: {
         url: '/cyno/cynoweb/prcalc/prCalcByPara.do'
+    },
+
+    initParaCombox: {
+        url: '/cyno/cynoweb/prcalc/initParaCombox.do'
+    },
+
+    getPrCalcParaById: {
+        url: '/cyno/cynoweb/prcalc/getPrCalcParaById.do'
     }
 
 }
