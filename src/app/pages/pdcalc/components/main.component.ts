@@ -90,6 +90,9 @@ export class MainComponent implements OnInit {
 
         this.tabGroup.selectedIndexChange.subscribe((index) => {
             this.selectTabIndex = index;
+            if (this.selectTabIndex === 0){
+                this.projectYieldRateData = Object.assign({}, this.projectYieldRateData || {});
+            }
         })
 
         merge(this.route.params)
@@ -158,7 +161,14 @@ export class MainComponent implements OnInit {
         })).subscribe((data: any) => {
             this.loadingService.close();
             if (data.$error !== true){
-                this.messageService.alertInfo('操作成功');
+                this.messageService.alertInfo('操作成功').afterClosed().subscribe(() => {
+                    this.router.navigate(['/index/redirec-url'], {
+                        queryParams: {
+                            redirtUrl: '/index/pdcalc/pdcalc/' + this.proposalId
+                            + '/' + (this.selectTabIndex || '0') + '/' + (this.defaultSecCode || '0') + '/' + (this.initType || 'U')
+                        }
+                    })
+                });
             }
         })
     }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-
+import { RedirtUrl } from './redirt-url';
 const routes: Routes = [
     {
         path: 'pdcalc',
@@ -22,6 +22,14 @@ const routes: Routes = [
         path: 'dyncassetpool',
         loadChildren: './dyncassetpool/dyncassetpool.module#DyncAssetPoolModule',
         data: {title: '动态池分析'}
+    },
+    {
+        path: 'redirec-url',
+        component: RedirtUrl
+    },
+    {
+        path: 'redirec-url1',
+        component: RedirtUrl
     }
 ];
 

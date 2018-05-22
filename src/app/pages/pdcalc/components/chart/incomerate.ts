@@ -141,7 +141,9 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
 
     ngOnChanges(changes: SimpleChanges) {
         if ('datas' in changes && this.datas) {
-            this.renderChart();
+            setTimeout(() => {
+                this.renderChart();
+            }, 10);
         }
     }
 
@@ -170,8 +172,9 @@ export class ChartIncomeRateComponent implements OnInit, OnChanges, AfterViewIni
     }
 
     private buildZr() {
-        if (this.zr){
-            this.zr.clear();
+        if (this.zr) {
+            this.zr.dispose();
+            this.zr = null;
         }
         const zr = this.zr ? this.zr : (this.zr = zrender.init(this.sylRateChart.nativeElement));
         this.chart.width = zr.getWidth() - 2 * this.chart.hoffset;

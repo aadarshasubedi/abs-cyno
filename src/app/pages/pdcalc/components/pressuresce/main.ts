@@ -72,12 +72,12 @@ export class PressureSceMain implements OnInit, AfterViewChecked, AfterContentIn
     ngAfterContentInit(){}
 
     ngOnInit(): void {
-        this.pdcalsService.iniPressurescePage(this.proposalId, this.initType).pipe( catchError(() => {
-            return observableOf({$error: true});
+        this.pdcalsService.iniPressurescePage(this.proposalId, this.initType).pipe( catchError((error) => {
+            return observableOf({$error: true, detail: error});
         }) ).subscribe((data: any) => {
             this._init = true;
             if (data.$error === true) {
-                this.messageService.alertError('初始化默认情景参数失败: 服务端发生异常!');
+                this.messageService.snackError(data.detail.expInfo);
                 return;
             }
             this.tabData = this.proData.list;
