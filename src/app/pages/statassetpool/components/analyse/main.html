@@ -4,6 +4,9 @@
         <h5 class="card-title project-title" style="flex: 0 0 auto;font-weight: 700;margin-right: 20px;">{{staticPool.poolName}}</h5>
         <button type="button" class="btn btn-link btn-sm" style="padding: 0px;"  [routerLink]="'/index/statassetpool/detail/' + poolId">查看样本明细</button>
         <div style="flex: 1;"></div>
+        <a mat-raised-button style="flex: 0 0 120px;" style="margin-right: 10px;" [href]="'/cyno/cynoweb/staticpool/exportStaticPoolAnalysis.do?poolId=' + poolId" target="templateDowload">
+            导出分析结果
+        </a>
         <button mat-raised-button style="flex: 0 0 120px;" routerLink="/index/statassetpool/import/{{poolId}}">
             导入样本数据
         </button>
@@ -34,4 +37,5 @@
             </mat-tab>
         </mat-tab-group>
     </div>
+    <iframe src="#" style="display: none;" name="templateDowload"></iframe>
 </div>
